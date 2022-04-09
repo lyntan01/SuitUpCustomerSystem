@@ -1,0 +1,19 @@
+<h2>View All Staff (Temp, j to see if it works)</h2>
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>Staff ID</th>
+				<th>First Name</th>				
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let staff of staffs">
+				<td>{{staff.staffId}}</td>
+				<td>{{staff.firstName}}</td>
+                <td>{{staff.lastName}}</td>	
+                <td>{{staff.username}}</td>	
+                <td>{{staff.accessRightEnum}}</td>			
+			</tr>
+		</tbody>
+	</table>
