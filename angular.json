@@ -27,7 +27,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "./node_modules/primeicons/primeicons.css",
+              "./node_modules/primeng/resources/themes/nova/theme.css",
+              "./node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -66,6 +69,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {            
+            "proxyConfig": "proxy.conf.json"
+            },
           "configurations": {
             "production": {
               "browserTarget": "SuitUpCustomerSystem:build:production"

@@ -1,19 +1,36 @@
-<h2>View All Staff (Temp, j to see if it works)</h2>
-	
+<p>
+	{{message}}
+</p>
+
+<h2>View All Stores (Temp, j to see if it works)</h2>
+
+<p-table [value]="stores">
+	<ng-template pTemplate="header">
+		<tr>					
+			<th>Store ID</th>
+			<th>Store Name</th>					
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-store>
+		<tr>
+			<td>{{store.storeId}}</td>				
+			<td>{{store.storeName}}</td>					
+		</tr>
+	</ng-template>
+</p-table>
+
+<!-- 	
 	<table border="1">
 		<thead>
 			<tr>
-				<th>Staff ID</th>
-				<th>First Name</th>				
+				<th>Store ID</th>
+				<th>Store Name</th>				
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let staff of staffs">
-				<td>{{staff.staffId}}</td>
-				<td>{{staff.firstName}}</td>
-                <td>{{staff.lastName}}</td>	
-                <td>{{staff.username}}</td>	
-                <td>{{staff.accessRightEnum}}</td>			
+			<tr *ngFor="let store of stores">
+				<td>{{store.storeId}}</td>
+				<td>{{store.storeName}}</td>		
 			</tr>
 		</tbody>
-	</table>
+	</table> -->

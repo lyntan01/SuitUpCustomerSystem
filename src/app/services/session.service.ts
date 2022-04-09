@@ -3,29 +3,21 @@ import { Injectable } from '@angular/core';
 import { Staff } from '../models/staff';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SessionService {
-
-  constructor() { }
+  constructor() {}
 
   // Temp, hard-coded, not linked to web services
-  getStaff(): Staff[] | null
-		{		
-			try
-			{
-				return JSON.parse(sessionStorage['staff']);
-			}
-			catch
-			{
-				return null;
-			}
-		}
+  getStaff(): Staff[] | null {
+    try {
+      return JSON.parse(sessionStorage['staff']);
+    } catch {
+      return null;
+    }
+  }
 
-
-
-		setStaff(staff: Staff[]): void
-		{
-			sessionStorage['staff'] = JSON.stringify(staff);
-		}
+  setStaff(staff: Staff[]): void {
+    sessionStorage['staff'] = JSON.stringify(staff);
+  }
 }

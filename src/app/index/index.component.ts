@@ -1,23 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Staff } from '../models/staff';
-import { StaffService } from '../services/staff.service';
+import { Store } from '../models/store';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
+  stores: Store[];
+  message: string | undefined;
 
-  staffs: Staff[] | null;
-
-  constructor(private staffService: StaffService) {
-    this.staffs = new Array();
-   }
-
-  ngOnInit(): void {
-    this.staffs = this.staffService.getStaff();
+  constructor(private storeService: StoreService) {
+    this.stores = new Array();
   }
 
+  ngOnInit(): void {
+    this.storeService.getStores().subscribe({
+      next: (response) => {
+        this.stores = response;
+        this.message = "Success message"
+      },
+      error: (error) => {
+        this.message = "Error message"
+        console.log('********** IndexComponent.ts: ' + error);
+      },
+    });
+  }
 }
