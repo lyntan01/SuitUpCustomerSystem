@@ -1,4 +1,6 @@
-// import { Address } from './address'
+import { Address } from './address';
+import { Appointment } from './appointment';
+import { Staff } from './staff';
 
 export class Store {
     storeId: number | undefined;
@@ -7,7 +9,9 @@ export class Store {
     openingHour: string | undefined;
     closingHour: string | undefined;
     contactNumber: string | undefined;
-    // address: Address | undefined;
+    address: Address | undefined;
+    appointments: Appointment[] | undefined;
+    staff: Staff[] | undefined;
 
     constructor(
         storeId?: number,

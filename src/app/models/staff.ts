@@ -1,5 +1,5 @@
 import { AccessRightEnum } from './enum/access-right-enum';
-// import { Store } from './store'
+import { Store } from './store';
 
 export class Staff {
     staffId: number | undefined;
@@ -8,7 +8,7 @@ export class Staff {
     accessRightEnum: AccessRightEnum | undefined;
     username: string | undefined;
     password: string | undefined;
-    // storeEntity: Store | undefined;
+    storeEntity: Store | undefined;
     
     constructor(
         staffId?: number, 
