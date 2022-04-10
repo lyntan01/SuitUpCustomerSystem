@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AccessRightErrorComponent } from './admin/access-right-error/access-right-error.component';
 import { LoginComponent } from './admin/login/login.component';
 import { SignUpComponent } from './admin/sign-up/sign-up.component';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { SignUpComponent } from './admin/sign-up/sign-up.component';
     TableModule,
     MenubarModule,
     MenuModule,
-    ButtonModule
+    ButtonModule,
+    CardModule,
+    ImageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,38 @@
-<p>login works!</p>
+<div *ngIf="sessionService.getIsLogin() == false" class="login-container">
+  <div style="height: 30vh;"></div>
+  <p-card header="Login">
+    <div class="p-field p-grid login-input">
+        <div
+            *ngIf="loginError == true"
+            style="text-align: right; color: red"
+        >
+            {{ errorMessage }}
+        </div>
+        <span class="p-float-label p-input-icon-left username">
+            <i class="pi pi-user"></i>
+            <input
+                type="text"
+                id="username"
+                pInputText
+                [(ngModel)]="username"
+                (keyup.enter)="customerLogin()"
+            />
+            <label for="username">Username</label>
+        </span>
+        <span class="p-float-label p-input-icon-left">
+            <i class="pi pi-lock"></i>
+            <input
+                type="password"
+                id="password"
+                pInputText
+                [(ngModel)]="password"
+                (keyup.enter)="customerLogin()"
+            />
+            <label for="password">Password</label>
+        </span>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button label="Login" id="login-button"></p-button>
+    </ng-template>
+  </p-card>
+</div>

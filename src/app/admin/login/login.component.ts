@@ -7,13 +7,26 @@ import { SessionService } from 'src/app/services/session.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  username: string | undefined;
+  password: string | undefined;
+  errorMessage: string | undefined;
+  loginError: boolean;
 
-  ngOnInit(): void {
+  constructor(
+    private router: Router,
+    public sessionService: SessionService,
+    // private customerService: CustomerService
+  ) {
+    this.loginError = false;
   }
 
+  ngOnInit(): void {}
+
+  customerLogin(): void {
+    
+  }
 }

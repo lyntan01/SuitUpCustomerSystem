@@ -70,3 +70,29 @@ p-menubarsub.p-element {
 .mybutton {
     @include styleclass('bg-blue-500 text-white hover:bg-blue-600 border-round transition-colors transition-duration-150 p-3 border-none');
 } */
+
+
+
+
+/* Login */
+.p-card {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.login-container {
+    text-align: center;
+    vertical-align: middle;
+    background-image: url('src/assets/images/login_card_image.jpg');
+    height: 90vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size: 100% 100%;
+    /* position: relative;
+    top: -20px; */
+}
+
+#login-button button {
+    background-color: #02075D !important;
+    border-color: #02075D !important;
+}
