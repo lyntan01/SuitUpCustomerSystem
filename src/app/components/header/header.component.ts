@@ -29,6 +29,8 @@ export class HeaderComponent implements OnInit {
       this.userButton = '';
     }
 
+    this.login = this.sessionService.getIsLogin();
+
     this.items = [
       {
         label: 'Home',

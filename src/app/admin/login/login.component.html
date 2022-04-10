@@ -1,23 +1,25 @@
 <div *ngIf="sessionService.getIsLogin() == false" class="login-container">
-  <div style="height: 30vh;"></div>
+  <div style="height: 25vh;"></div>
   <p-card header="Login">
     <div class="p-field p-grid login-input">
         <div
             *ngIf="loginError == true"
-            style="text-align: right; color: red"
+            style="margin-bottom: 10px;"
         >
-            {{ errorMessage }}
+            <!-- {{ errorMessage }} -->
+            <p-message severity="error" text="{{errorMessage}}"></p-message>
         </div>
-        <span class="p-float-label p-input-icon-left username">
+        <span class="p-float-label p-input-icon-left email">
             <i class="pi pi-user"></i>
             <input
                 type="text"
-                id="username"
+                id="email"
                 pInputText
-                [(ngModel)]="username"
-                (keyup.enter)="customerLogin()"
+                [(ngModel)]="email"
+                (keyup.enter)="customerLogin()" 
+                required="true"
             />
-            <label for="username">Username</label>
+            <label for="email">Email</label>
         </span>
         <span class="p-float-label p-input-icon-left">
             <i class="pi pi-lock"></i>
@@ -27,12 +29,13 @@
                 pInputText
                 [(ngModel)]="password"
                 (keyup.enter)="customerLogin()"
+                required="true"
             />
             <label for="password">Password</label>
         </span>
     </div>
     <ng-template pTemplate="footer">
-        <p-button label="Login" id="login-button"></p-button>
+        <p-button label="Login" id="login-button" (onClick)="customerLogin()"></p-button>
     </ng-template>
   </p-card>
 </div>

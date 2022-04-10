@@ -75,9 +75,13 @@ p-menubarsub.p-element {
 
 
 /* Login */
-.p-card {
+.login-container .p-card {
     width: 30%;
     margin: 0 auto;
+}
+
+.login-container .p-card-footer {
+    padding: 0 !important;
 }
 
 .login-container {
@@ -95,4 +99,8 @@ p-menubarsub.p-element {
 #login-button button {
     background-color: #02075D !important;
     border-color: #02075D !important;
+}
+
+.login-input span.email {
+    margin-bottom: 1.5em;
 }
