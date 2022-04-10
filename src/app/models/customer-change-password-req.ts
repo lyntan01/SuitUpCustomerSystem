@@ -1,10 +1,10 @@
 export class CustomerChangePasswordReq {
-  username: String | undefined;
+  email: String | undefined;
   oldPassword: String | undefined;
   newPassword: String | undefined;
 
-  constructor(username?: String, oldPassword?: String, newPassword?: String) {
-    this.username = username;
+  constructor(email?: String, oldPassword?: String, newPassword?: String) {
+    this.email = email;
     this.oldPassword = oldPassword;
     this.newPassword = newPassword;
   }
