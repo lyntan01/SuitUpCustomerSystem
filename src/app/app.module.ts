@@ -9,6 +9,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,7 +42,8 @@ import { ImageModule } from 'primeng/image';
     MenuModule,
     ButtonModule,
     CardModule,
-    ImageModule
+    ImageModule,
+    InputTextModule
   ],
   providers: [],
   bootstrap: [AppComponent]
