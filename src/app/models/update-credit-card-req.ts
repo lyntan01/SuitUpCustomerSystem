@@ -4,13 +4,13 @@ export class UpdateCreditCardReq {
   email: string | undefined;
   password: string | undefined;
   newCreditCard: CreditCard | undefined;
-  expireDate: Number | undefined;
+  expireDate: Date | undefined;
 
   constructor(
     email?: string,
     password?: string,
     newCreditCard?: CreditCard,
-    expireDate?: Number
+    expireDate?: Date
   ) {
     this.email = email;
     this.password = password;

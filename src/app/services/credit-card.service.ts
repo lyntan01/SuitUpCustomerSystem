@@ -8,6 +8,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { CreditCard } from '../models/credit-card';
+import { SessionService } from './session.service';
+import { UpdateCreditCardReq } from '../models/update-credit-card-req';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -19,11 +21,28 @@ const httpOptions = {
 export class CreditCardService {
   baseUrl: string = '/api/CreditCard';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private sessionService: SessionService
+  ) {}
 
   getCreditCards(): Observable<CreditCard[]> {
     return this.httpClient
       .get<CreditCard[]>(this.baseUrl + '/retrieveAllCreditCards')
+      .pipe(catchError(this.handleError));
+  }
+
+  getCreditCardById(creditCardId: number): Observable<CreditCard> {
+    return this.httpClient
+      .get<CreditCard>(
+        this.baseUrl +
+          '/' +
+          creditCardId +
+          '?email=' +
+          this.sessionService.getEmail() +
+          '&password=' +
+          this.sessionService.getPassword()
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -34,7 +53,32 @@ export class CreditCardService {
   }
 
   deleteCreditCard(creditCardId?: number): Observable<any> {
-    return this.httpClient.delete<any>(this.baseUrl + '/');
+    return this.httpClient
+      .delete<any>(
+        this.baseUrl +
+          '/' +
+          creditCardId +
+          '?email=' +
+          this.sessionService.getEmail() +
+          '&password=' +
+          this.sessionService.getPassword()
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  updateCreditCard(creditCard?: CreditCard): Observable<any> {
+    let updateCreditCardReq: UpdateCreditCardReq = new UpdateCreditCardReq(
+      this.sessionService.getCurrentCustomer()?.email,
+      this.sessionService.getCurrentCustomer()?.password,
+      creditCard,
+      creditCard?.expiryDate
+    );
+
+    return this.httpClient.post<any>(
+      this.baseUrl,
+      updateCreditCardReq,
+      httpOptions
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

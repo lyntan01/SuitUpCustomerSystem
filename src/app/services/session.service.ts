@@ -31,7 +31,6 @@ export class SessionService {
     } else {
       return undefined;
     }
-
   }
 
   setCurrentCustomer(currentCustomer: Customer | null): void {
@@ -42,7 +41,7 @@ export class SessionService {
     const email = sessionStorage.getItem('email');
 
     if (typeof email === 'string') {
-      return email; 
+      return email;
     } else {
       return undefined;
     }
@@ -56,7 +55,7 @@ export class SessionService {
     const password = sessionStorage.getItem('password');
 
     if (typeof password === 'string') {
-      return password; 
+      return password;
     } else {
       return undefined;
     }
@@ -143,34 +142,34 @@ export class SessionService {
 
   checkAccessRight(path: string): boolean {
     if (!this.getIsLogin()) {
-        if (
-            path == '/profile' ||
-            path == '/viewAllCreditCards' ||
-            path == '/changePassword' ||
-            path == '/createNewCreditCard' ||
-            path == '/changePassword' ||
-            path == '/checkout' ||
-            path == '/checkoutConfirmation' ||
-            path == '/viewAllOrders' ||
-            path.startsWith('/viewOrderItemDetails') ||
-            path == '/viewAllAppointments' ||
-            path == '/viewAppointmentDetails'
-        ) {
-            return false;
-        } else {
-            return true;
-        }
+      if (
+        path == '/profile' ||
+        path == '/viewAllCreditCards' ||
+        path == '/changePassword' ||
+        path == '/createNewCreditCard' ||
+        path == '/changePassword' ||
+        path == '/checkout' ||
+        path == '/checkoutConfirmation' ||
+        path == '/viewAllOrders' ||
+        path.startsWith('/viewOrderItemDetails') ||
+        path == '/viewAllAppointments' ||
+        path == '/viewAppointmentDetails'
+      ) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
-        if (
-            path == 'accessRightError' ||
-            path == 'login' ||
-            path == 'signup' ||
-            path == 'forgetPassword'
-        ) {
-            return false;
-        } else {
-            return true;
-        }
+      if (
+        path == 'accessRightError' ||
+        path == 'login' ||
+        path == 'signup' ||
+        path == 'forgetPassword'
+      ) {
+        return false;
+      } else {
+        return true;
+      }
     }
-}
+  }
 }
