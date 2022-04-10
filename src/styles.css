@@ -104,3 +104,36 @@ p-menubarsub.p-element {
 .login-input span.email {
     margin-bottom: 1.5em;
 }
+
+
+/* Index Page */
+.index-banner-top {
+    background-image: url('src/assets/images/index-hero-banner.png');
+    /* height: 90vh; */
+    height: 570px;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed;  */
+    /* background-size: 100% 100%; */
+    background-size: contain;
+}
+
+.index-button {
+    position: relative;
+    top: 380px;
+    left: 62vw;
+    color: white !important;
+}
+
+.index-banner-second {
+    background-image: url('src/assets/images/index-hero-banner-2.png');
+    height: 570px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.index-button-2 {
+    position: relative;
+    top: 400px;
+    left: 17vw;
+    color: white !important;
+}
