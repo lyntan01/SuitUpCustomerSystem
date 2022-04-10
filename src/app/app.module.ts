@@ -43,6 +43,7 @@ import { DeliveryAddressComponent } from './cart/delivery-address/delivery-addre
 import { PaymentMethodComponent } from './cart/payment-method/payment-method.component';
 import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
 import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores.component';
+import { ViewAllStandardProductComponent } from './view-all-standard-product/view-all-standard-product.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     DeliveryAddressComponent,
     PaymentMethodComponent,
     OrderSummaryComponent,
-    ViewAllStoresComponent
+    ViewAllStoresComponent,
+    ViewAllStandardProductComponent
   ],
   imports: [
     BrowserModule,
