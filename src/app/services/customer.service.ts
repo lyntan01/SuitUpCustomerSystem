@@ -11,6 +11,8 @@ import { SessionService } from './session.service';
 import { Customer } from '../models/customer';
 import { CreateCustomerReq } from '../models/create-customer-req';
 import { CustomerChangePasswordReq } from '../models/customer-change-password-req';
+import { UpdateAddressReq } from '../models/update-address-req';
+import { UpdateProfileReq } from '../models/update-profile-req';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -77,6 +79,18 @@ export class CustomerService {
   }
 
   // include update profile method — need to add update profile req model first
+  updateProfile(password: string, firstName: string, lastName: string) {
+    let updateProfileReq: UpdateProfileReq = new UpdateProfileReq(
+      this.sessionService.getEmail(),
+      password,
+      firstName,
+      lastName
+    );
+
+    return this.httpClient
+      .post<any>(this.baseUrl + '/updateProfile', updateProfileReq, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = '';
