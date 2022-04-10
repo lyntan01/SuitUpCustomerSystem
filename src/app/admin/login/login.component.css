@@ -1,0 +1,31 @@
+
+/* Login */
+.login-container .p-card {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.login-container .p-card-footer {
+    padding: 0 !important;
+}
+
+.login-container {
+    text-align: center;
+    vertical-align: middle;
+    background-image: url('src/assets/images/login_card_image.jpg');
+    height: 90vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size: 100% 100%;
+    /* position: relative;
+    top: -20px; */
+}
+
+#login-button button {
+    background-color: #02075D !important;
+    border-color: #02075D !important;
+}
+
+.login-input span.email {
+    margin-bottom: 1.5em;
+}
