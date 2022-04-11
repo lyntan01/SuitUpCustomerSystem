@@ -1,0 +1,13 @@
+.signup-container {
+  text-align: center;
+  vertical-align: middle;
+  background-image: url("src/assets/images/login_card_image.jpg");
+  height: 90vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+.signup-input {
+  margin-bottom: 1.5em;
+}
