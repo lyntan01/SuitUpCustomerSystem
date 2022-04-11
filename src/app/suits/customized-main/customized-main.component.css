@@ -1,0 +1,22 @@
+.main {
+    height:100%;
+}
+
+.image {
+    height: 50%;
+    width: auto;
+}
+
+.buttons-div {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+}
+
+.p-button-outlined {
+    color: #02075D;
+    border-radius: 0;
+    font-size: 24px;
+    padding: 20px;
+}

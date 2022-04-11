@@ -66,6 +66,7 @@ import { OrderSummaryComponent } from './cart/order-summary/order-summary.compon
 import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores.component';
 import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view-my-measurements.component';
 import { ViewAllSupportTicketsComponent } from './account/view-all-support-tickets/view-all-support-tickets.component';
+import { CustomizedMainComponent } from './suits/customized-main/customized-main.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { ViewAllSupportTicketsComponent } from './account/view-all-support-ticke
     ViewAllStoresComponent,
     ViewMyMeasurementsComponent,
     ViewAllSupportTicketsComponent,
+    CustomizedMainComponent
   ],
   imports: [
     BrowserModule,
