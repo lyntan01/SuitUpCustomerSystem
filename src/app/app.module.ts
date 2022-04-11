@@ -12,6 +12,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -73,7 +74,7 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     DeliveryAddressComponent,
     PaymentMethodComponent,
     OrderSummaryComponent,
-    ViewAllStoresComponent
+    ViewAllStoresComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,9 +90,10 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     ImageModule,
     InputTextModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    PasswordModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

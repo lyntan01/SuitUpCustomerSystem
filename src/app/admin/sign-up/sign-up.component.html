@@ -1,1 +1,137 @@
-<p>sign-up works!</p>
+<div
+  *ngIf="sessionService.getIsLogin() == false && !registered"
+  class="signup-container"
+>
+  <div style="height: 6vh"></div>
+  <div class="p-fluid">
+    <p-card
+      [style]="{
+        width: '30rem',
+        padding: '0 2em 1em',
+        margin: '0em auto'
+      }"
+    >
+      <ng-template pTemplate="header">
+        <br />
+        <h2>Sign Up</h2>
+      </ng-template>
+
+      <div *ngIf="signupError == true" class="errorMsg">
+        <!-- {{ errorMessage }} -->
+        <p-message severity="error" text="{{ errorMessage }}"></p-message>
+      </div>
+
+      <form
+        #createCustomerForm="ngForm"
+        (ngSubmit)="customerRegister(createCustomerForm)"
+      >
+        <div class="p-fluid p-grid signup-input">
+          <div class="p-field p-col-12">
+            <span class="p-float-label signup-input">
+              <input
+                type="text"
+                id="email"
+                pInputText
+                [(ngModel)]="newCustomer.email"
+                name="email"
+                required="true"
+              />
+              <label for="email">Email</label>
+            </span>
+          </div>
+
+          <div class="p-col-12"></div>
+          <span class="p-float-label">
+            <p-password
+              id="password"
+              name="password"
+              [(ngModel)]="newCustomer.password"
+              required="true"
+              [toggleMask]="true"
+            ></p-password>
+            <label for="password">Password</label>
+          </span>
+        </div>
+
+        <div></div>
+
+        <div class="p-field p-col-12">
+          <span class="p-float-label signup-input">
+            <input
+              type="text"
+              id="firstName"
+              pInputText
+              [(ngModel)]="newCustomer.firstName"
+              name="firstName"
+              required="true"
+            />
+            <label for="firstName">First Name</label>
+          </span>
+        </div>
+
+        <div class="p-field p-col-12">
+          <span class="p-float-label signup-input">
+            <input
+              type="text"
+              id="lastName"
+              pInputText
+              [(ngModel)]="newCustomer.lastName"
+              name="lastName"
+              required="true"
+            />
+            <label for="lastName">Last Name</label>
+          </span>
+        </div>
+        <div class="p-field p-col-12">
+          <span class="p-float-label signup-input">
+            <input
+              type="contactNumber"
+              id="contactNumber"
+              pInputText
+              [(ngModel)]="newCustomer.contactNumber"
+              name="contactNumber"
+              required="true"
+            />
+            <label for="contactNumber">Contact Number</label>
+          </span>
+        </div>
+        <div class="p-grid">
+          <div class="p-field p-col-6 default-button signup-input">
+            <span>
+              <p-button label="Clear" (onClick)="clear()"></p-button>
+            </span>
+          </div>
+          <div class="p-field p-col-6 default-button">
+            <span>
+              <p-button label="Sign Up" type="submit"></p-button>
+            </span>
+          </div>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>
+
+<div
+  *ngIf="sessionService.getIsLogin() == false && registered"
+  class="signup-container"
+>
+  <div style="height: 30vh"></div>
+  <p-card
+    [style]="{
+      width: '25rem',
+      padding: '0 2em 1em',
+      margin: '0em auto'
+    }"
+  >
+    <p>You have successfully signed up!</p>
+    <ng-template pTemplate="footer" [style]="{ margin: '1rem 0' }">
+      <p-button
+        class="default-button"
+        label="Proceed to login"
+        icon="pi pi-sign-in"
+        routerLink="/login"
+      ></p-button>
+    </ng-template>
+  </p-card>
+</div>
