@@ -13,6 +13,7 @@ import { AccessRightErrorComponent } from './admin/access-right-error/access-rig
 import { LoginComponent } from './admin/login/login.component';
 import { SignUpComponent } from './admin/sign-up/sign-up.component';
 import { CreateNewAppointmentComponent } from './appointments/create-new-appointment/create-new-appointment.component';
+import { CartComponent } from './cart/cart/cart.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { DeliveryAddressComponent } from './cart/delivery-address/delivery-address.component';
 import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'accessRightError', component: AccessRightErrorComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'cart', component: CartComponent },
   { path: 'addNewAddress', component: AddNewAddressComponent },
   { path: 'addNewCreditCard', component: AddNewCreditCardComponent },
   { path: 'changePassword', component: ChangePasswordComponent },

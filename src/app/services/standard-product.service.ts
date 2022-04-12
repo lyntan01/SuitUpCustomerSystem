@@ -36,7 +36,7 @@ export class StandardProductService {
     standardProductId: number
   ): Observable<StandardProduct> {
     return this.httpClient
-      .get<StandardProduct>(this.baseUrl + '/' + standardProductId)
+      .get<StandardProduct>(this.baseUrl + '/retrieveStandardProduct/' + standardProductId)
       .pipe(catchError(this.handleError));
   }
 
@@ -50,7 +50,7 @@ export class StandardProductService {
     categoryId: number
   ): Observable<StandardProduct> {
     return this.httpClient
-      .get<StandardProduct>(this.baseUrl + '/' + categoryId)
+      .get<StandardProduct>(this.baseUrl + '/retrieveStandardProductsByCategory/' + categoryId)
       .pipe(catchError(this.handleError));
   }
 

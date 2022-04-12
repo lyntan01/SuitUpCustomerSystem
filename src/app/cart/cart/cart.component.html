@@ -1,1 +1,107 @@
-<p>cart works!</p>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{ width: '40em' }"></p-confirmDialog>
+<div class="cart-container">
+  <p-card header="My Cart">
+    <p-button
+      label="Initialize test cart"
+      (onClick)="initialiseTestCart()"
+      class="default-button"
+    ></p-button>
+    <p-table [value]="cart">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 5%; text-align: center">S/N</th>
+          <th>Image</th>
+          <th style="width: 40%">Product Name</th>
+          <th style="width: 15%; text-align: center">Unit Price</th>
+          <th style="width: 10%; text-align: center">Quantity</th>
+          <th style="width: 10%; text-align: center">Subtotal</th>
+          <th style="width: 8%"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-orderItem let-rowIndex="rowIndex">
+        <tr>
+          <td>{{ rowIndex + 1 }}</td>
+          <td>
+            <div class="p-d-flex p-ai-center">
+              <img
+                src="http://localhost:8080/SuitUp-war/resources/images/productImages/{{
+                  orderItem.product?.image
+                }}"
+                alt="{{ orderItem.product?.name }}"
+                height="130"
+                class="p-mr-4 shadow-4"
+              />
+            </div>
+          </td>
+          <td>{{ orderItem.product.name }}</td>
+          <td class="text-center">
+            {{ orderItem.product.unitPrice | currency }}
+          </td>
+          <td class="text-center">
+            <p-inputNumber
+              [(ngModel)]="orderItem.quantity"
+              id="quantity"
+              name="quantity"
+              [showButtons]="true"
+              buttonLayout="vertical"
+              spinnerMode="vertical"
+              inputId="vertical"
+              decrementButtonClass="p-button-secondary"
+              incrementButtonClass="p-button-secondary"
+              incrementButtonIcon="pi pi-plus"
+              decrementButtonIcon="pi pi-minus"
+              [min]="0"
+              [max]="orderItem?.product?.quantityOnHand || 100"
+              (onInput)="cartChangeQuantity($event, orderItem)"
+            >
+            </p-inputNumber>
+          </td>
+          <td class="text-center">{{ orderItem.subTotal | currency }}</td>
+          <td class="text-center">
+            <button
+              type="button"
+              icon="pi pi-times"
+              class="p-button-danger p-button-raised p-button-rounded"
+              (click)="deleteOrderItem(orderItem)"
+              pButton
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr *ngIf="totalNumItems > 0">
+          <td colspan="5" class="text-right">Total:</td>
+          <td class="text-center">
+            <div *ngIf="!promotion">
+              {{ getTotal() | currency }}
+            </div>
+            <div *ngIf="promotion">
+              <span class="original-price">{{ getTotal() | currency }}</span>
+              &nbsp;
+              <span>{{ getDiscountedTotal(getTotal()) | currency }}</span>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          <div class="p-mr-2">
+            You have {{ cart ? cart.length : 0 }} products.
+          </div>
+          <div class="p-mr-2" *ngIf="cart.length > 0">
+            <p-button
+              type="button"
+              (click)="checkoutCart()"
+              label="Checkout Cart"
+              class="default-button"
+            ></p-button>
+          </div>
+        </div>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+
+<!-- resources/images/productImages/{{orderItem.product?.image}} -->

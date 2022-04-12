@@ -1,0 +1,25 @@
+.cart-container {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+td div {
+    vertical-align: middle;
+}
+
+/* .p-text-center {
+    text-align: center !important;
+}
+
+.p-text-right {
+    text-align: right !important;
+}
+
+.p-text-left {
+    text-align: left !important;
+} */
+
+:host >>> .p-inputnumber-input {
+    width: 100%;
+}
