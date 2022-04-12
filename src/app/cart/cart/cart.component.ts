@@ -187,6 +187,8 @@ export class CartComponent implements OnInit {
     // }
   }
 
+  applyPromotionCode(applyPromotionCodeForm: NgForm): void {}
+
   checkoutCart(): void {
     if (this.sessionService.getIsLogin()) {
       this.sessionService.setCart(this.cart);

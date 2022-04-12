@@ -13,6 +13,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -92,6 +95,9 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     MessagesModule,
     MessageModule,
     PasswordModule,
+    ToastModule,
+    ConfirmDialogModule,
+    InputNumberModule
   ],
   providers: [],
   bootstrap: [AppComponent],

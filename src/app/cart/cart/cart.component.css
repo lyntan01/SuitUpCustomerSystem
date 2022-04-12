@@ -8,17 +8,10 @@ td div {
     vertical-align: middle;
 }
 
-/* .p-text-center {
-    text-align: center !important;
+.smallSpace {
+    font-size: 0.5em;
+    color: transparent;
 }
-
-.p-text-right {
-    text-align: right !important;
-}
-
-.p-text-left {
-    text-align: left !important;
-} */
 
 :host >>> .p-inputnumber-input {
     width: 100%;

@@ -71,7 +71,47 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <tr *ngIf="totalNumItems > 0">
-          <td colspan="5" class="text-right">Total:</td>
+          <td colspan="4">
+          <div>
+            <form
+              #applyPromotionCodeForm="ngForm"
+              (ngSubmit)="applyPromotionCode(applyPromotionCodeForm)"
+            >
+              APPLY COUPON CODE: &nbsp;
+              <input
+                type="text"
+                id="couponCode"
+                name="couponCode"
+                placeholder="Enter coupon code"
+                [(ngModel)]="promotionCode"
+                pInputText
+              />
+              <span class="smallSpace">s</span>
+              <p-button
+                id="couponButton"
+                type="submit"
+                label="Apply"
+                class="default-button"
+              ></p-button>
+            </form>
+            <div style="height: 1em">
+              <span class="smallSpace">s</span>
+            </div>
+            <div id="coupon-card" *ngIf="promotion">
+              <span>Coupon Code: {{ promotion?.promotionCode }}</span>
+              <br />
+              <span
+                >Discount Rate: {{ promotion?.discountString | percent }}</span
+              >
+              <br />
+              <span
+                >Minimum Spend:
+                {{ promotion?.minimumSpending | currency }}</span
+              >
+            </div>
+          </div>
+        </td>
+          <td class="text-right">Total:</td>
           <td class="text-center">
             <div *ngIf="!promotion">
               {{ getTotal() | currency }}
@@ -103,5 +143,3 @@
     </p-table>
   </p-card>
 </div>
-
-<!-- resources/images/productImages/{{orderItem.product?.image}} -->
