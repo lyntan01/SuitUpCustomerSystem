@@ -1,3 +1,55 @@
 <div class="account-container p-grid">
   <app-account-menu class="p-col"></app-account-menu>
+
+  <div class="p-md-9 p-col-10 account-card">
+    <h2>My Appointments</h2>
+
+    <p>View your appointments</p>
+
+    <hr style="opacity: 0.1" />
+
+    <div>
+      <p-table [value]="appointments">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="appointmentDate">
+              Appointment Date<p-sortIcon field="appointmentDate"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="appointmentType">
+              Appointment Type<p-sortIcon field="appointmentType"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="store">
+              Store<p-sortIcon field="store"></p-sortIcon>
+            </th>
+            <!-- <th pSortableColumn="cardExpiryDate">
+              Expiry Date<p-sortIcon field="cardExpiryDate"></p-sortIcon>
+            </th> -->
+            <th style="width: 5rem"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-appointment>
+          <tr>
+            <td>
+              {{ formattedDate(appointment.appointmentDateTime) }}
+            </td>
+            <td>
+              {{ appointment.appointmentTypeEnum }}
+            </td>
+            <td>{{ storeName }}</td>
+
+            <!-- <td>{{ creditCard.holderName }}</td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are
+            {{ appointments ? appointments.length : 0 }} appointments.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
 </div>

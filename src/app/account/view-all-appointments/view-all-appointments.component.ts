@@ -14,6 +14,7 @@ import { SessionService } from 'src/app/services/session.service';
 export class ViewAllAppointmentsComponent implements OnInit {
   appointments: Appointment[];
   customer: Customer;
+  storeName: string;
 
   constructor(
     public sessionService: SessionService,
@@ -23,6 +24,7 @@ export class ViewAllAppointmentsComponent implements OnInit {
   ) {
     this.customer = this.sessionService.getCurrentCustomer();
     this.appointments = new Array();
+    this.storeName = 'SuitUp';
   }
 
   ngOnInit(): void {
@@ -37,6 +39,13 @@ export class ViewAllAppointmentsComponent implements OnInit {
         console.log('********** Retrieve all appointments' + error);
       },
     });
+  }
+
+  formattedDate(date: Date): String {
+    console.log(date);
+    return (
+      date.toString().substring(5, 7) + ' / ' + date.toString().substring(2, 4)
+    );
   }
 
   checkLogin() {

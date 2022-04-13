@@ -9,6 +9,8 @@ import { catchError } from 'rxjs/operators';
 import { SessionService } from './session.service';
 import { CreateAppointmentReq } from '../models/create-appointment-req';
 import { Appointment } from '../models/appointment';
+import { Store } from '../models/store';
+import { Customer } from '../models/customer';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -26,19 +28,19 @@ export class AppointmentService {
   ) {}
 
   createAppointment(
-    email: string,
-    password: string,
+    customer: Customer,
     appointment: Appointment,
-    storeId: number
-  ): Observable<Appointment> {
+    store: Store,
+    password: string
+  ): Observable<number> {
     let createAppointmentReq: CreateAppointmentReq = new CreateAppointmentReq(
-      email,
-      password,
+      customer,
       appointment,
-      storeId
+      store,
+      password
     );
     return this.httpClient
-      .put<Appointment>(this.baseUrl, createAppointmentReq, httpOptions)
+      .put<number>(this.baseUrl, createAppointmentReq, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
