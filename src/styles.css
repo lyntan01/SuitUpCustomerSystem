@@ -107,3 +107,19 @@ p-menubarsub.p-element {
   background-color: #02075d !important;
   border-color: #02075d !important;
 }
+
+.account-container {
+  width: 90vw;
+  margin: 1em auto;
+  display: flex;
+}
+
+.account-card {
+  background: #ffffff;
+  padding: 1em 4em;
+  margin-top: 0.5em;
+  border-radius: 10px;
+  width: 100%;
+  margin-left: 40px;
+  margin-top: 20px;
+}
