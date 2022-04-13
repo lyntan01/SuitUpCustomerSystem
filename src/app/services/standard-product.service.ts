@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 
 import { StandardProduct } from '../models/standard-product';
 import { Category } from '../models/category';
+import { Tag } from '../models/tag';
 import { SessionService } from './session.service';
 
 const httpOptions = {
@@ -36,7 +37,9 @@ export class StandardProductService {
     standardProductId: number
   ): Observable<StandardProduct> {
     return this.httpClient
-      .get<StandardProduct>(this.baseUrl + '/' + standardProductId)
+      .get<StandardProduct>(
+        this.baseUrl + '/retrieveStandardProduct/' + standardProductId
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -50,7 +53,23 @@ export class StandardProductService {
     categoryId: number
   ): Observable<StandardProduct> {
     return this.httpClient
-      .get<StandardProduct>(this.baseUrl + '/' + categoryId)
+      .get<StandardProduct>(
+        this.baseUrl + '/retrieveStandardProductsByCategory/' + categoryId
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getTags(): Observable<Tag[]> {
+    return this.httpClient
+      .get<Tag[]>(this.baseUrl + '/retrieveAllTags')
+      .pipe(catchError(this.handleError));
+  }
+
+  getStandardProductsByTag(tagId: number): Observable<StandardProduct> {
+    return this.httpClient
+      .get<StandardProduct>(
+        this.baseUrl + '/retrieveStandardProductsByTag/' + tagId
+      )
       .pipe(catchError(this.handleError));
   }
 

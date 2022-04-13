@@ -16,6 +16,11 @@ import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
+import { SliderModule } from 'primeng/slider';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DataViewModule } from 'primeng/dataview';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -97,7 +102,12 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     PasswordModule,
     ToastModule,
     ConfirmDialogModule,
-    InputNumberModule
+    InputNumberModule,
+    CheckboxModule,
+    SliderModule,
+    MultiSelectModule,
+    DataViewModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
