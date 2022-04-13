@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Appointment } from 'src/app/models/appointment';
 import { Customer } from 'src/app/models/customer';
 import { AppointmentTypeEnum } from 'src/app/models/enum/appointment-type-enum';
+import { Store } from 'src/app/models/store';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { SessionService } from 'src/app/services/session.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-create-new-appointment',
@@ -21,13 +24,17 @@ export class CreateNewAppointmentComponent implements OnInit {
   yearRange: string =
     new Date().getFullYear() + ':' + (new Date().getFullYear() + 10);
   minDate: Date = new Date();
-  appointmentTypeEnum: String[];
+  appointmentTypeEnum: string[];
   selectedAppointmentType: AppointmentTypeEnum | undefined;
+  stores: Store[];
+  selectedStore: Store;
+  password: string | undefined;
 
   constructor(
     public sessionService: SessionService,
     private router: Router,
-    private appointService: AppointmentService
+    private appointService: AppointmentService,
+    private storeService: StoreService
   ) {
     this.createAppointmentError = false;
     this.currentCustomer = this.sessionService.getCurrentCustomer();
@@ -35,11 +42,24 @@ export class CreateNewAppointmentComponent implements OnInit {
     this.newAppointment = new Appointment();
     this.submitted = false;
     this.appointmentTypeEnum = Object.values(AppointmentTypeEnum);
+    this.stores = new Array();
     console.log(this.appointmentTypeEnum);
+    this.selectedStore = new Store();
+    this.password = this.sessionService.getPassword();
   }
 
   ngOnInit(): void {
     this.checkLogin();
+
+    this.storeService.getStores().subscribe({
+      next: (response) => {
+        this.stores = response;
+        console.log(this.stores);
+      },
+      error: (error) => {
+        console.log('********** Retrieve all stores' + error);
+      },
+    });
   }
 
   checkLogin() {
@@ -57,17 +77,46 @@ export class CreateNewAppointmentComponent implements OnInit {
     this.display = true;
   }
 
-  // roundToNearestHour(date: Date): Date {
-  //   date.setMinutes(date.getMinutes() + 30);
-  //   date.setMinutes(0, 0, 0);
-  //   console.log(date);
+  createAppointment(createAppointmentForm: NgForm) {
+    // console.log(createCustomerForm);
+    // console.log(this.newCustomer);
+    let enumComparator = AppointmentTypeEnum.ALTERATION;
 
-  //   return date;
-  // }
+    if (
+      String(this.newAppointment.appointmentTypeEnum) === String(enumComparator)
+    ) {
+      this.newAppointment.isFree = false;
+    } else {
+      this.newAppointment.isFree = true;
+    }
 
-  nextDay(date: Date): Date {
-    this.minDate.setDate(this.minDate.getDate() + 1);
-    this.minDate.setHours(12, 0);
-    return date;
+    console.log(this.password);
+    this.submitted = true;
+    let tempAppointment: Appointment = Object.assign({}, this.newAppointment);
+
+    if (createAppointmentForm.valid) {
+      this.appointService
+        .createAppointment(
+          this.currentCustomer,
+          tempAppointment,
+          this.selectedStore,
+          this.sessionService.getPassword()
+        )
+        .subscribe(
+          (response) => {
+            let newAppointmentId: number = response;
+
+            this.createAppointmentError = false;
+          },
+          (error) => {
+            this.createAppointmentError = true;
+            this.submitted = false;
+            this.errorMessage =
+              'An error has occurred while signing in: ' + error;
+
+            console.log(error);
+          }
+        );
+    }
   }
 }

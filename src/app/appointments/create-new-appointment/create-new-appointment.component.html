@@ -33,7 +33,10 @@
           <div *ngIf="createAppointmentError == true" class="errorMsg">
             {{ errorMessage }}
           </div>
-          <form #createAppointmentForm="ngForm" (ngSubmit)="void()">
+          <form
+            #createAppointmentForm="ngForm"
+            (ngSubmit)="createAppointment(createAppointmentForm)"
+          >
             <div class="p-fluid">
               <div class="p-field p-grid space-input">
                 <div>
@@ -41,7 +44,7 @@
                   <p-dropdown
                     name="appointmentType"
                     [options]="appointmentTypeEnum"
-                    [(ngModel)]="selectedAppointmentType"
+                    [(ngModel)]="newAppointment.appointmentTypeEnum"
                     placeholder="Select a Appointment Type"
                     [showClear]="true"
                   ></p-dropdown>
@@ -80,9 +83,31 @@
                   </div>
                 </div>
               </div>
+
+              <div class="p-field p-grid space-input">
+                <div>
+                  <h5>Select Store</h5>
+                  <p-dropdown
+                    name="store"
+                    [options]="stores"
+                    optionLabel="storeName"
+                    [(ngModel)]="selectedStore"
+                    placeholder="Select a Store"
+                    [showClear]="true"
+                  ></p-dropdown>
+                </div>
+              </div>
             </div>
           </form>
         </div>
+        <ng-template pTemplate="footer">
+          <p-button
+            icon="pi pi-check"
+            (click)="createAppointment(createAppointmentForm)"
+            label="Create Appointment"
+            styleClass="p-button-text"
+          ></p-button>
+        </ng-template>
       </p-dialog>
     </section>
   </div>

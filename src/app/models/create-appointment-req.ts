@@ -1,20 +1,22 @@
-import { Appointment } from "./appointment";
+import { Appointment } from './appointment';
+import { Customer } from './customer';
+import { Store } from './store';
 
 export class CreateAppointmentReq {
-    email: string | undefined;
-    password: string | undefined;
-    appointment: Appointment | undefined;
-    storeId: number | undefined;
+  customer: Customer | undefined;
+  appointment: Appointment | undefined;
+  store: Store | undefined;
+  password: string | undefined;
 
-    constructor(
-        email?: string,
-        password?: string,
-        appointment?: Appointment,
-        storeId?: number,
-    ) {
-        this.email = email;
-        this.password = password;
-        this.appointment = appointment;
-        this.storeId = storeId;
-    }
+  constructor(
+    customer?: Customer,
+    appointment?: Appointment,
+    store?: Store,
+    password?: string
+  ) {
+    this.customer = customer;
+    this.appointment = appointment;
+    this.store = store;
+    this.password = password;
+  }
 }
