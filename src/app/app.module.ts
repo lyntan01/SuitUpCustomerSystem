@@ -19,6 +19,9 @@ import { PanelModule } from 'primeng/panel';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -104,6 +107,9 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     InputMaskModule,
     CalendarModule,
     DropdownModule,
+    ToastModule,
+    ConfirmDialogModule,
+    InputNumberModule
   ],
   providers: [],
   bootstrap: [AppComponent],
