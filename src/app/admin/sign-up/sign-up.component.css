@@ -11,3 +11,7 @@
 .signup-input {
   margin-bottom: 1.5em;
 }
+
+.clear-margin {
+  margin: 0;
+}

@@ -78,17 +78,16 @@ export class CustomerService {
       .pipe(catchError(this.handleError));
   }
 
-  // include update profile method — need to add update profile req model first
-  updateProfile(password: string, firstName: string, lastName: string) {
+  updateProfile(currentCustomer: Customer): Observable<number> {
     let updateProfileReq: UpdateProfileReq = new UpdateProfileReq(
-      this.sessionService.getEmail(),
-      password,
-      firstName,
-      lastName
+      currentCustomer
     );
-
     return this.httpClient
-      .post<any>(this.baseUrl + '/updateProfile', updateProfileReq, httpOptions)
+      .post<number>(
+        this.baseUrl + '/updateProfile',
+        updateProfileReq,
+        httpOptions
+      )
       .pipe(catchError(this.handleError));
   }
 

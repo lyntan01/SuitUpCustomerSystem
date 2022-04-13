@@ -32,34 +32,34 @@ const routes: Routes = [
   { path: 'addNewAddress', component: AddNewAddressComponent },
   { path: 'addNewCreditCard', component: AddNewCreditCardComponent },
   { path: 'changePassword', component: ChangePasswordComponent },
-  { path: 'viewProfile', component: ViewProfileComponent },
+  { path: 'profile', component: ViewProfileComponent },
   { path: 'viewAllAddresses', component: ViewAllAddressesComponent },
   { path: 'viewAllCreditCards', component: ViewAllCreditCardsComponent },
   { path: 'viewAllOrders', component: ViewAllOrdersComponent },
-  { path: 'viewAllAppointments', component: ViewAllAppointmentsComponent},
+  { path: 'viewAllAppointments', component: ViewAllAppointmentsComponent },
   { path: 'viewAllStores', component: ViewAllStoresComponent },
   { path: 'viewOrderItemDetails', component: ViewOrderItemDetailsComponent },
   { path: 'createNewAppointment', component: CreateNewAppointmentComponent },
   { path: 'viewAllProducts', component: ViewAllProductsComponent },
   { path: 'viewProductDetails', component: ViewProductDetailsComponent },
   {
-      path: 'viewProductDetails/:productId',
-      component: ViewProductDetailsComponent,
+    path: 'viewProductDetails/:productId',
+    component: ViewProductDetailsComponent,
   },
   {
     path: 'checkout',
     component: CheckoutComponent,
     children: [
-        { path: '', redirectTo: 'deliveryAddress', pathMatch: 'full' },
-        { path: 'deliveryAddress', component: DeliveryAddressComponent },
-        { path: 'paymentMethod', component: PaymentMethodComponent },
-        { path: 'orderSummary', component: OrderSummaryComponent },
+      { path: '', redirectTo: 'deliveryAddress', pathMatch: 'full' },
+      { path: 'deliveryAddress', component: DeliveryAddressComponent },
+      { path: 'paymentMethod', component: PaymentMethodComponent },
+      { path: 'orderSummary', component: OrderSummaryComponent },
     ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
