@@ -6,7 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { SessionService } from '../../services/session.service';
 import { OrderLineItem } from 'src/app/models/order-line-item';
 import { Promotion } from 'src/app/models/promotion';
-// import { PromotionService } from '../../services/promotion.service';
+import { PromotionService } from '../../services/promotion.service';
 import { StandardProductService } from 'src/app/services/standard-product.service'; // TESTING
 import { StandardProduct } from 'src/app/models/standard-product'; // TESTING
 import { Product } from 'src/app/models/product';
@@ -23,6 +23,7 @@ export class CartComponent implements OnInit {
   promotionCode: string;
   promotion: Promotion | undefined;
   totalNumItems: number;
+  total: number;
   orderLineItem: OrderLineItem; // TESTING
   product: StandardProduct; // TESTING
 
@@ -32,13 +33,14 @@ export class CartComponent implements OnInit {
     public sessionService: SessionService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    // private promotionService: PromotionService,
+    private promotionService: PromotionService,
     private standardProductService: StandardProductService // TESTING
   ) {
     this.cart = new Array();
     this.promotionCode = '';
     this.promotion = undefined;
     this.totalNumItems = 0.0;
+    this.total = 0.0;
     this.orderLineItem = new OrderLineItem(); // TESTING
     this.product = new StandardProduct(); // TESTING
   }
@@ -78,6 +80,8 @@ export class CartComponent implements OnInit {
 
     this.sessionService.setCart(this.cart);
     this.totalNumItems = this.cart.length;
+
+    this.total = this.getTotal();
   }
 
   getTotal(): number {
@@ -85,32 +89,92 @@ export class CartComponent implements OnInit {
     let total: number = 0;
     for (let i = 0; i < this.cart.length; i++) {
       let orderItem: OrderLineItem = this.cart[i];
+      total += this.getUnitPrice(orderItem.product);
       // total += orderItem.product?.unitCost || 0;
-      if (orderItem instanceof StandardProduct) {
-        let product : StandardProduct = <StandardProduct>orderItem.product;
-        total += product.unitPrice || 0;
-      } else if (orderItem instanceof CustomizedProduct) {
-        let product : CustomizedProduct = <CustomizedProduct>orderItem.product;
-        total += product.totalPrice || 0;
-      }
+      // if (orderItem.product instanceof StandardProduct) {
+      //   let product: StandardProduct = <StandardProduct>orderItem.product;
+      //   total += product.unitPrice || 0;
+      // } else if (orderItem.product instanceof CustomizedProduct) {
+      //   let product: CustomizedProduct = <CustomizedProduct>orderItem.product;
+      //   total += product.totalPrice || 0;
+      // }
     }
     return total;
   }
 
+  // Helper method
+  // returns -1 if product or unit price is null
+  getUnitPrice(product: Product | undefined) : number {
+    if (product instanceof StandardProduct) {
+      let standardProduct: StandardProduct = <StandardProduct>product;
+      return standardProduct.unitPrice || -1;
+    } else if (product instanceof CustomizedProduct) {
+      let customizedProduct: CustomizedProduct = <CustomizedProduct>product;
+      return customizedProduct.totalPrice || -1;
+    }
+    return -1;
+  }
+
   getDiscountedTotal(total: number): number {
     console.log('********** CartComponent.ts: getDiscountedTotal()');
-    if (this.promotion) {
+    if (this.promotion && this.promotion.promotionCode) {
       // return total - total * this.coupon.discountRate;
-      return this.getTotal();
-    } else {
-      return 0;
+      this.promotionService
+        .getDiscountedAmount(this.promotion.promotionCode, this.total)
+        .subscribe({
+          next: (response) => {
+            return response;
+          },
+          error: (error) => {
+            console.log(
+              '********** CartComponent.ts: getDiscountedTotal() :' + error
+            );
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Invalid',
+              detail: error.split('error has occurred: ')[1],
+            });
+          },
+        });
+    }
+    return 0;
+  }
+
+  applyPromotionCode(applyPromotionCodeForm: NgForm): void {
+    if (applyPromotionCodeForm.valid) {
+      if (this.promotionCode.length == 0) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Invalid',
+          detail: 'Please enter a promotion code',
+        });
+      } else {
+        this.promotionService
+          .getPromotionByPromotionCode(this.promotionCode)
+          .subscribe(
+            (response) => {
+              this.promotion = response;
+            },
+            (error) => {
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Invalid',
+                detail: 'Promotion Code is invalid',
+              });
+              console.log(
+                '********** CartComponent.ts: applyPromotionCode() : ' + error
+              );
+            }
+          );
+        this.total = this.getDiscountedTotal(this.total);
+      }
     }
   }
 
   cartChangeQuantity(event: any, orderItem: OrderLineItem): void {
-    // if (orderItem) {
-    //     let quantity = orderItem.quantity;
-    //     let prevSubtotal = orderItem.subTotal;
+    if (orderItem) {
+        let quantity = orderItem.quantity;
+        let prevSubtotal = orderItem.subTotal;
     //     let unitPrice = orderItem.product?.unitPrice;
     //     if (this.cart && prevSubtotal && quantity == 0) {
     //         this.removeFromCart(prevSubtotal, orderItem.orderItemNumber);
@@ -130,8 +194,8 @@ export class CartComponent implements OnInit {
     //             this.total += subTotalToAdd;
     //         }
     //     }
-    //     this.sessionService.setCart(this.cart);
-    // }
+        this.sessionService.setCart(this.cart);
+    }
   }
 
   deleteOrderItem(orderItem: OrderLineItem) {
@@ -186,8 +250,6 @@ export class CartComponent implements OnInit {
     //     this.coupon = undefined;
     // }
   }
-
-  applyPromotionCode(applyPromotionCodeForm: NgForm): void {}
 
   checkoutCart(): void {
     if (this.sessionService.getIsLogin()) {
