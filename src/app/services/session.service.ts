@@ -23,14 +23,8 @@ export class SessionService {
     sessionStorage.setItem('isLogin', JSON.stringify(isLogin));
   }
 
-  getCurrentCustomer(): Customer | undefined {
-    const currentCustomer = sessionStorage.getItem('currentCustomer');
-
-    if (typeof currentCustomer === 'string') {
-      return JSON.parse(currentCustomer); //as Customer
-    } else {
-      return undefined;
-    }
+  getCurrentCustomer(): Customer {
+    return JSON.parse(sessionStorage['currentCustomer']);
   }
 
   setCurrentCustomer(currentCustomer: Customer | null): void {
@@ -51,18 +45,12 @@ export class SessionService {
     sessionStorage.setItem('email', email);
   }
 
-  getPassword(): string | undefined {
-    const password = sessionStorage.getItem('password');
-
-    if (typeof password === 'string') {
-      return password;
-    } else {
-      return undefined;
-    }
+  getPassword(): string {
+    return sessionStorage['password'];
   }
 
-  setPassword(password: string): void {
-    sessionStorage.setItem('password', password);
+  setPassword(password: string | undefined): void {
+    sessionStorage['password'] = password;
   }
 
   getCart(): OrderLineItem[] | undefined {
