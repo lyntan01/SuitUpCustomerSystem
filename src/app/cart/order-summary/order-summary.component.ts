@@ -29,11 +29,10 @@ export class OrderSummaryComponent implements OnInit {
         private router: Router,
         private sessionService: SessionService,
         private messageService: MessageService,
-        private specificationService: SpecificationService,
-        private productService: ProductService,
-        private orderService: OrderService,
-        private addressService: AddressService,
-        private customerService: CustomerService
+        // private productService: ProductService,
+        // private orderService: OrderService,
+        // private addressService: AddressService,
+        // private customerService: CustomerService
     ) {
         this.cart = [];
         this.total = 0;
