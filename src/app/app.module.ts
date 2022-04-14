@@ -19,6 +19,19 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
+import { SliderModule } from 'primeng/slider';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DataViewModule } from 'primeng/dataview';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -104,6 +117,19 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     StepsModule,
     DividerModule,
     DropdownModule,
+    ToolbarModule,
+    DialogModule,
+    PanelModule,
+    InputMaskModule,
+    CalendarModule,
+    DropdownModule,
+    ToastModule,
+    ConfirmDialogModule,
+    InputNumberModule,
+    CheckboxModule,
+    SliderModule,
+    MultiSelectModule,
+    DataViewModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

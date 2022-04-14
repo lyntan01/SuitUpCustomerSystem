@@ -120,4 +120,21 @@ p-menubarsub.p-element {
 .checkout-component .p-card {
   box-shadow: none !important;
   padding-top: 2em !important;
+
+  /* ACCOUNT */
+.account-container {
+  width: 90vw;
+  margin: 1em auto;
+  display: flex;
+}
+
+.account-card {
+  background: #ffffff;
+  padding: 1em 4em;
+  margin-top: 0.5em;
+  border-radius: 10px;
+  width: 100%;
+  margin-left: 40px;
+  margin-top: 20px;
+
 }

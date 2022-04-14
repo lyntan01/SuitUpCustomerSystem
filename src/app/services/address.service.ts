@@ -8,9 +8,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
-import { Address } from '../models/address';
 import { UpdateAddressReq } from '../models/update-address-req';
 import { CreateAddressReq } from '../models/create-address-req';
+import { Customer } from '../models/customer';
+import { Address } from '../models/address';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -27,44 +28,17 @@ export class AddressService {
     private sessionService: SessionService
   ) {}
 
-  getCurrentCustomerAddresses(): Observable<Address[]> {
+  getAddresses(): Observable<Address[]> {
     return this.httpClient
       .get<Address[]>(
         this.baseUrl +
-          '/retrieveAllAddressesByCustomer?email=' +
-          this.sessionService.getEmail() +
-          '&password=' +
-          this.sessionService.getPassword()
-      )
-      .pipe(catchError(this.handleError));
-  }
-
-  getAddressById(addressId: number): Observable<Address> {
-    return this.httpClient
-      .get<Address>(
-        this.baseUrl +
-          '/retrieveAddress/' +
-          addressId +
+          '/retrieveAllAddressesByCustomer' +
           '?email=' +
           this.sessionService.getEmail() +
           '&password=' +
           this.sessionService.getPassword()
       )
       .pipe(catchError(this.handleError));
-  }
-
-  createAddress(address?: Address): Observable<any> {
-    let createAddressReq: CreateAddressReq = new CreateAddressReq(
-      this.sessionService.getCurrentCustomer()?.email,
-      this.sessionService.getCurrentCustomer()?.password, 
-      address
-    );
-
-    return this.httpClient.put<any>(
-      this.baseUrl,
-      createAddressReq,
-      httpOptions
-    );
   }
 
   updateAddress(address?: Address): Observable<any> {
@@ -79,6 +53,17 @@ export class AddressService {
       updateAddressReq,
       httpOptions
     );
+
+  createNewAddress(newAddress: Address): Observable<number> {
+    let createAddressReq: CreateAddressReq = new CreateAddressReq(
+      this.sessionService.getCurrentCustomer().email,
+      this.sessionService.getPassword(),
+      newAddress
+    );
+
+    return this.httpClient
+      .put<number>(this.baseUrl, createAddressReq, httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   deleteAddress(addressId?: number): Observable<any> {

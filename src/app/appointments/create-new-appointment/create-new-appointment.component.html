@@ -1,1 +1,173 @@
-<p>create-new-appointment works!</p>
+<!-- <p>create-new-appointment works!</p> -->
+
+<div class="grid grid-nogutter surface-section text-800">
+  <div
+    class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center"
+  >
+    <section>
+      <span class="block text-6xl font-bold mb-1 black"
+        >Scheldue an appointment</span
+      >
+      <div class="text-6xl suitup font-bold mb-3">with us to cater to you.</div>
+      <p class="mt-0 mb-4 text-700 line-height-3">
+        Require alteration, measurement or a consultation? Fret not! We have it
+        all.
+      </p>
+
+      <button
+        pButton
+        pRipple
+        label="Book Appointment"
+        type="button"
+        (click)="showDialog()"
+        class="mr-3 p-button-raised default"
+      ></button>
+
+      <p-dialog
+        header="Appointment Booking"
+        [(visible)]="display"
+        [modal]="true"
+        [style]="{ width: '40vw', height: '900px' }"
+      >
+        <div>
+          <div *ngIf="createAppointmentError == true" class="errorMsg">
+            {{ errorMessage }}
+          </div>
+          <form
+            #createAppointmentForm="ngForm"
+            (ngSubmit)="createAppointment(createAppointmentForm)"
+          >
+            <div class="p-fluid">
+              <div class="p-field p-grid space-input">
+                <div>
+                  <h5>Select Appointment Type</h5>
+                  <p-dropdown
+                    name="appointmentType"
+                    [options]="appointmentTypeEnum"
+                    [(ngModel)]="newAppointment.appointmentTypeEnum"
+                    placeholder="Select a Appointment Type"
+                    [showClear]="true"
+                  ></p-dropdown>
+                </div>
+              </div>
+
+              <div class="p-field p-grid space-input">
+                <h5>Select Appointment Date</h5>
+                <div>
+                  <p-calendar
+                    appendTo="body"
+                    #appointmentDate="ngModel"
+                    id="appointmentDate"
+                    name="appointmentDate"
+                    [minDate]="minDate"
+                    placeholder="MM/YY"
+                    [required]="true"
+                    [showIcon]="true"
+                    [showTime]="true"
+                    inputId="time"
+                    [stepMinute]="15"
+                    [(ngModel)]="newAppointment.appointmentDateTime"
+                  ></p-calendar>
+                </div>
+                <div
+                  *ngIf="
+                    appointmentDate.invalid &&
+                    (appointmentDate.dirty ||
+                      appointmentDate.touched ||
+                      submitted)
+                  "
+                  class="errorText"
+                >
+                  <div *ngIf="appointmentDate.errors?.['required']">
+                    Appointment date is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-field p-grid space-input">
+                <div>
+                  <h5>Select Store</h5>
+                  <p-dropdown
+                    name="store"
+                    [options]="stores"
+                    optionLabel="storeName"
+                    [(ngModel)]="selectedStore"
+                    placeholder="Select a Store"
+                    [showClear]="true"
+                  ></p-dropdown>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <ng-template pTemplate="footer">
+          <p-button
+            icon="pi pi-check"
+            (click)="createAppointment(createAppointmentForm)"
+            label="Create Appointment"
+            styleClass="p-button-text"
+          ></p-button>
+        </ng-template>
+      </p-dialog>
+    </section>
+  </div>
+  <div class="col-12 md:col-6 overflow-hidden">
+    <img
+      src="../../../assets/images/Untitled.jpg"
+      alt="Image"
+      class="md:ml-auto block md:h-full"
+      style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
+    />
+  </div>
+</div>
+
+<div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
+  <div class="mb-3 font-bold text-2xl">
+    <!-- <span class="text-900">Our Services </span> -->
+    <span class="suitup">Our Services</span>
+  </div>
+  <div class="text-700 text-sm mb-6">
+    Check out the variety of services we have to offer.
+  </div>
+  <div class="grid">
+    <div class="col-12 md:col-4 mb-4 mt-4 px-5">
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-sliders-h text-4xl suitup"></i>
+      </span>
+      <div class="text-900 mb-3 font-medium">Alteration</div>
+      <span class="text-700 text-sm line-height-3"
+        >Require an adjustment in fitting? Come down to have your pieces altered
+        with our in-store alteration.</span
+      >
+    </div>
+    <div class="col-12 md:col-4 mb-4 mt-4 px-5">
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-pencil text-4xl suitup"></i>
+      </span>
+      <div class="text-900 mb-3 font-medium">Measurent</div>
+      <span class="text-700 text-sm line-height-3"
+        >A free measurements session with attention to detail for your next
+        made-to-measure order.</span
+      >
+    </div>
+    <div class="col-12 md:col-4 mb-4 mt-4 px-5">
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-user text-4xl suitup"></i>
+      </span>
+      <div class="text-900 mb-3 font-medium">Consultation</div>
+      <span class="text-700 text-sm line-height-3"
+        >A 1-to-1 consultation with our experienced drapers to customise your
+        next suit.</span
+      >
+    </div>
+  </div>
+</div>

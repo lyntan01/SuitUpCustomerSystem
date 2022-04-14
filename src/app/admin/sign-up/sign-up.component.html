@@ -2,18 +2,18 @@
   *ngIf="sessionService.getIsLogin() == false && !registered"
   class="signup-container"
 >
-  <div style="height: 6vh"></div>
+  <div style="height: 7vh"></div>
   <div class="p-fluid">
     <p-card
       [style]="{
         width: '30rem',
-        padding: '0 2em 1em',
+        padding: '0 2em 0em',
         margin: '0em auto'
       }"
     >
       <ng-template pTemplate="header">
         <br />
-        <h2>Sign Up</h2>
+        <h2 class="clear-margin">Sign Up</h2>
       </ng-template>
 
       <div *ngIf="signupError == true" class="errorMsg">

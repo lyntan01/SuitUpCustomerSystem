@@ -1,1 +1,240 @@
-<p>view-all-addresses works!</p>
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+<div class="account-container p-grid">
+  <app-account-menu class="p-col"></app-account-menu>
+
+  <div class="p-md-9 p-col-10 account-card">
+    <h2>My Addresses</h2>
+
+    <p>Manage your addresses</p>
+
+    <hr style="opacity: 0.1" />
+
+    <div class="cc-container">
+      <p-toolbar>
+        <ng-template pTemplate="right">
+          <p-button
+            (click)="showBasicDialog()"
+            icon="pi pi-plus"
+            label="Add New Address"
+          ></p-button>
+        </ng-template>
+      </p-toolbar>
+
+      <br />
+
+      <div>
+        <p-dialog
+          header="Add a Address"
+          [(visible)]="displayBasic"
+          [modal]="true"
+          [style]="{ width: '50vw' }"
+        >
+          <p-panel header="">
+            <div>
+              <form #createAddressForm="ngForm">
+                <div class="p-fluid">
+                  <div class="p-field p-grid space-input">
+                    <label for="name">Name</label>
+                    <div>
+                      <input
+                        #name="ngModel"
+                        id="name"
+                        name="name"
+                        type="text"
+                        [(ngModel)]="newAddress.name"
+                        required
+                        pInputText
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        name.invalid &&
+                        (name.dirty || name.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="name.errors?.['required']">
+                        Name is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-field p-grid space-input">
+                    <label for="phoneNumber"> Phone Number </label>
+                    <div>
+                      <input
+                        #phoneNumber="ngModel"
+                        id="phoneNumber"
+                        type="text"
+                        name="phoneNumber"
+                        [(ngModel)]="newAddress.phoneNumber"
+                        required
+                        pInputText
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        phoneNumber.invalid &&
+                        (phoneNumber.dirty || phoneNumber.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="phoneNumber.errors?.['required']">
+                        Phone Number is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-field p-grid space-input">
+                    <label for="addressLineOne">Address Line One</label>
+                    <div>
+                      <input
+                        #addressLineOne="ngModel"
+                        id="addressLineOne"
+                        type="text"
+                        name="addressLineOne"
+                        [(ngModel)]="newAddress.addressLineOne"
+                        required
+                        pInputText
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        addressLineOne.invalid &&
+                        (addressLineOne.dirty ||
+                          addressLineOne.touched ||
+                          submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="addressLineOne.errors?.['required']">
+                        Address Line One is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-field p-grid space-input">
+                    <label for="addressLineTwo">Address Line Two</label>
+                    <div>
+                      <input
+                        #addressLineTwo="ngModel"
+                        id="addressLineTwo"
+                        type="text"
+                        name="addressLineTwo"
+                        [(ngModel)]="newAddress.addressLineTwo"
+                        required
+                        pInputText
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        addressLineTwo.invalid &&
+                        (addressLineTwo.dirty ||
+                          addressLineTwo.touched ||
+                          submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="addressLineTwo.errors?.['required']">
+                        Address Line Two is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-field p-grid space-input">
+                    <label for="postalCode">Postal Code</label>
+                    <div>
+                      <input
+                        #postalCode="ngModel"
+                        id="postalCode"
+                        type="text"
+                        name="postalCode"
+                        [(ngModel)]="newAddress.postalCode"
+                        required
+                        pInputText
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        postalCode.invalid &&
+                        (postalCode.dirty || postalCode.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="postalCode.errors?.['required']">
+                        Postal Code is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </p-panel>
+          <ng-template pTemplate="footer">
+            <p-button
+              icon="pi pi-check"
+              (click)="createNewAddress(createAddressForm)"
+              label="Save Address"
+              styleClass="p-button-text"
+            ></p-button>
+          </ng-template>
+        </p-dialog>
+      </div>
+
+      <p-table [value]="addresses">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">
+              Name<p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="phoneNumber">
+              Phone Number<p-sortIcon field="phoneNumber"></p-sortIcon>
+            </th>
+            <th pSortableColumn="addressLine">
+              Address<p-sortIcon field="addressLine"></p-sortIcon>
+            </th>
+            <th pSortableColumn="postalCode">
+              Postal Code<p-sortIcon field="postalCode"></p-sortIcon>
+            </th>
+            <th style="width: 5rem"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-address>
+          <tr>
+            <td>
+              {{ address.name }}
+            </td>
+
+            <td>{{ address.phoneNumber }}</td>
+            <td>{{ address.addressLineOne }}, {{ address.addressLineTwo }}</td>
+            <td>
+              {{ address.postalCode }}
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="deleteAddress(address)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are
+            {{ addresses ? addresses.length : 0 }} addresses.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

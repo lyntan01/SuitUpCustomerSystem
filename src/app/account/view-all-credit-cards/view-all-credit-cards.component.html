@@ -1,1 +1,234 @@
-<p>view-all-credit-cards works!</p>
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+<div class="account-container p-grid">
+  <app-account-menu class="p-col"></app-account-menu>
+
+  <div class="p-md-9 p-col-10 account-card">
+    <h2>My Credit Cards</h2>
+
+    <p>Manage your credit cards</p>
+
+    <hr style="opacity: 0.1" />
+
+    <div class="cc-container">
+      <div *ngIf="deleteCreditCardError == true" class="errorMsg">
+        {{ errorMessage }}
+      </div>
+
+      <p-toolbar>
+        <ng-template pTemplate="right">
+          <p-button
+            (click)="showBasicDialog()"
+            icon="pi pi-plus"
+            label="Add New Credit Card"
+          ></p-button>
+        </ng-template>
+      </p-toolbar>
+
+      <br />
+
+      <div>
+        <p-dialog
+          header="Add a Credit Card"
+          [(visible)]="displayBasic"
+          [modal]="true"
+          [style]="{ width: '50vw' }"
+        >
+          <p-panel header="">
+            <div>
+              <div *ngIf="createCreditCardError == true" class="errorMsg">
+                {{ errorMessage }}
+              </div>
+              <form #createCreditCardForm="ngForm">
+                <div class="p-fluid">
+                  <div class="p-field p-grid space-input">
+                    <label for="cardNumber">Credit Card Number</label>
+                    <div>
+                      <!-- <input
+                        #cardNumber="ngModel"
+                        id="cardNumber"
+                        name="cardNumber"
+                        type="tel"
+                        [(ngModel)]="newCreditCard.cardNumber"
+                        required
+                        pInputText
+                      /> -->
+                      <p-inputMask
+                        #cardNumber="ngModel"
+                        id="cardNumber"
+                        name="cardNumber"
+                        type="tel"
+                        mask="9999-9999-9999-9999"
+                        [(ngModel)]="newCreditCard.cardNumber"
+                        placeholder="XXXX-XXXX-XXXX-XXXX"
+                      ></p-inputMask>
+                    </div>
+                    <div
+                      *ngIf="
+                        cardNumber.invalid &&
+                        (cardNumber.dirty || cardNumber.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="cardNumber.errors?.['required']">
+                        Card Number is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-field p-grid space-input">
+                    <label for="expiryDate"> Expiry Date </label>
+                    <div>
+                      <p-calendar
+                        #expiryDate="ngModel"
+                        id="expiryDate"
+                        name="expiryDate"
+                        view="month"
+                        dateFormat="mm/y"
+                        [yearRange]="yearRange"
+                        [minDate]="minDate"
+                        placeholder="MM/YY"
+                        [required]="true"
+                        [yearNavigator]="true"
+                        [(ngModel)]="newCreditCard.expiryDate"
+                      ></p-calendar>
+                    </div>
+                    <div
+                      *ngIf="
+                        expiryDate.invalid &&
+                        (expiryDate.dirty || expiryDate.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="expiryDate.errors?.['required']">
+                        Expiry date is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-field p-grid space-input">
+                    <label for="cvv">CVV</label>
+                    <div>
+                      <input
+                        #cvv="ngModel"
+                        id="cvv"
+                        type="password"
+                        name="cvv"
+                        [(ngModel)]="newCreditCard.cvv"
+                        required
+                        pInputText
+                        maxlength="3"
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        cvv.invalid && (cvv.dirty || cvv.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="cvv.errors?.['required']">
+                        CVV is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-field p-grid space-input">
+                    <label for="name"> Card Holder Name</label>
+                    <div>
+                      <input
+                        #name="ngModel"
+                        id="name"
+                        name="name"
+                        type="text"
+                        [(ngModel)]="newCreditCard.holderName"
+                        required
+                        pInputText
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        name.invalid &&
+                        (name.dirty || name.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="name.errors?.['required']">
+                        Card Holder Name is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="p-grid p-jc-end">
+                    <div class="save-button">
+                      <span>
+                        <p-button label="Save" type="submit"></p-button>
+                      </span>
+                    </div>
+                  </div> -->
+                </div>
+              </form>
+            </div>
+          </p-panel>
+          <ng-template pTemplate="footer">
+            <p-button
+              icon="pi pi-check"
+              (click)="createNewCreditCard(createCreditCardForm)"
+              label="Save Credit Card"
+              styleClass="p-button-text"
+            ></p-button>
+          </ng-template>
+        </p-dialog>
+      </div>
+
+      <p-table [value]="creditCards">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="cardNumber">
+              Credit Card Number<p-sortIcon field="cardNumber"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="cardHolderName">
+              Name On Card<p-sortIcon field="cardHolderName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="cardExpiryDate">
+              Expiry Date<p-sortIcon field="cardExpiryDate"></p-sortIcon>
+            </th>
+            <th style="width: 5rem"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-creditCard>
+          <tr>
+            <td>
+              {{ creditCard.cardNumber }}
+            </td>
+
+            <td>{{ creditCard.holderName }}</td>
+            <td>
+              {{ formattedDate(creditCard.expiryDate) }}
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="deleteCreditCard(creditCard)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are
+            {{ creditCards ? creditCards.length : 0 }} credit cards.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
