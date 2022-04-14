@@ -1,3 +1,9 @@
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
 <div class="account-container p-grid">
   <app-account-menu class="p-col"></app-account-menu>
 
@@ -37,7 +43,7 @@
               <div *ngIf="createCreditCardError == true" class="errorMsg">
                 {{ errorMessage }}
               </div>
-              <form #createCreditCardForm="ngForm" (ngSubmit)="void()">
+              <form #createCreditCardForm="ngForm">
                 <div class="p-fluid">
                   <div class="p-field p-grid space-input">
                     <label for="cardNumber">Credit Card Number</label>
@@ -211,7 +217,7 @@
                 pRipple
                 icon="pi pi-trash"
                 class="p-button-danger"
-                (click)="void()"
+                (click)="deleteCreditCard(creditCard)"
               ></button>
             </td>
           </tr>
