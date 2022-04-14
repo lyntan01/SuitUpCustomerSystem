@@ -16,10 +16,6 @@ import { NgForm } from '@angular/forms';
   providers: [ConfirmationService, MessageService],
 })
 export class ViewAllCreditCardsComponent implements OnInit {
-  msgs: Message[];
-  deleteCreditCardError: boolean;
-  createCreditCardError: boolean;
-  errorMessage: string | undefined;
   creditCards: CreditCard[];
   currentCustomer: Customer;
   displayBasic: boolean;
@@ -37,14 +33,11 @@ export class ViewAllCreditCardsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) {
-    this.deleteCreditCardError = false;
-    this.createCreditCardError = false;
     this.currentCustomer = this.sessionService.getCurrentCustomer();
     this.creditCards = new Array();
     this.displayBasic = false;
     this.newCreditCard = new CreditCard();
     this.submitted = false;
-    this.msgs = new Array();
   }
 
   ngOnInit(): void {
@@ -60,22 +53,19 @@ export class ViewAllCreditCardsComponent implements OnInit {
           this.creditCards.forEach((cc) => {
             cc.cardNumber =
               '**** **** **** ' + cc.cardNumber?.substring(12, 16);
-            console.log(cc.cardNumber);
           });
         }
       },
       error: (error) => {
-        console.log('********** Retrieve all credit cards' + error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail:
+            'An error has occurred while attempting to retrieve credit cards: ' +
+            error,
+        });
       },
     });
-
-    // if (this.creditCards) {
-    //   this.creditCards.forEach((cc) => {
-    //     cc.cardNumber = cc.cardNumber
-    //       ?.replace(/.(?=.{4})/g, '*')
-    //       .replace(/.{4}(?=.)/g, '$& ');
-    //   });
-    // }
   }
 
   checkLogin() {
@@ -120,31 +110,24 @@ export class ViewAllCreditCardsComponent implements OnInit {
         (response) => {
           let newCreditCardId: number = response;
 
-          this.createCreditCardError = false;
           this.newCreditCard = new CreditCard();
           this.ngOnInit();
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail:
-              'Credit Card with ID: ' +
-              newCreditCardId +
-              ' successfully created.',
+            detail: 'New credit card successfully created.',
           });
+
+          createCreditCardForm.form.markAsPristine();
+          createCreditCardForm.form.markAsUntouched();
+          createCreditCardForm.form.updateValueAndValidity();
         },
         (error) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail:
-              'An error has occurred while creating credit card: ' + error,
+            detail: 'An error has occurred while saving credit card: ' + error,
           });
-          // this.createCreditCardError = true;
-          // this.submitted = false;
-          // this.errorMessage =
-          //   'An error has occurred while creating apppointment: ' + error;
-
-          // console.log(error);
         }
       );
     }
@@ -154,7 +137,7 @@ export class ViewAllCreditCardsComponent implements OnInit {
     console.log(creditCard);
     this.confirmationService.confirm({
       message:
-        'Are you sure that you want to delete this Credit Card : ' +
+        'Are you sure you would like to delete this Credit Card : ' +
         creditCard.cardNumber +
         '?',
       header: 'Delete Confirmation',
