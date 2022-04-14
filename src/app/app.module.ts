@@ -16,6 +16,8 @@ import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { StepsModule } from 'primeng/steps';
+import { DividerModule } from 'primeng/divider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -97,7 +99,10 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     PasswordModule,
     ToastModule,
     ConfirmDialogModule,
-    InputNumberModule
+    InputNumberModule,
+    StepsModule,
+    DividerModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent],
