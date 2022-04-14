@@ -126,6 +126,7 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     SliderModule,
     MultiSelectModule,
     DataViewModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

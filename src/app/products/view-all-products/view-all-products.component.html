@@ -16,11 +16,22 @@
           [options]="sortOptions"
           [(ngModel)]="sortKey"
           placeholder="Sort By"
-          (onChange)="onSortChange($event)"
           styleClass="p-mb-2 p-mb-md-0"
         ></p-dropdown>
       </div>
     </ng-template>
+    <!-- <ng-template pTemplate="header">
+      <div>
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sortKey"
+          placeholder="Sort By"
+          (onChange)="onSortChange($event)"
+          styleClass="p-mb-2 p-mb-md-0"
+        ></p-dropdown>
+      </div>
+    </ng-template> -->
+
     <ng-template let-standardProduct pTemplate="gridItem">
       <div>
         <a
@@ -42,7 +53,7 @@
               <div class="img-box">
                 <img
                   [src]="
-                    'http://localhost:8080/SuitUp-war//uploadedFiles/productImages/' +
+                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
                     standardProduct.image
                   "
                   [alt]="standardProduct.name"
