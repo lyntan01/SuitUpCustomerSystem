@@ -30,10 +30,9 @@ export class ViewAllProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('********** ViewAllProductsComponent.ts: NGONIT');
     this.activatedRoute.queryParams.subscribe((params) => {
       console.log(params);
-      
+
       let keyword: String | undefined = params['keyword'];
       let categoryIds: number[] | undefined = params['category'];
       let tagIds: number[] | undefined = params['tag'];
@@ -45,13 +44,11 @@ export class ViewAllProductsComponent implements OnInit {
       }
 
       this.fetchProducts(keyword, categoryIds, tagIds);
-      console.log('********** ViewAllProductsComponent.ts: IN ACTIVATED ROUTE');
       console.log('catid count = ' + categoryIds);
     });
   }
 
   fetchProducts(keyword?: String, categoryIds?: number[], tagIds?: number[]) {
-
     console.log('********** ViewAllProductsComponent.ts: FETCH');
     this.standardProductService.getStandardProducts().subscribe((response) => {
       this.standardProducts = response.filter((standardProduct) => {
@@ -85,10 +82,12 @@ export class ViewAllProductsComponent implements OnInit {
             for (let categoryId of categoryIds) {
               console.log('Catid = ' + categoryId);
               categoryShow = standardProduct.category?.categoryId == categoryId;
-              if (categoryShow) return true;
+              if (categoryShow) break;
               else return false;
             }
-          } else return true;
+          } else if (categoryIds == undefined) {
+            return true;
+          }
 
           if (tagIds) {
             for (let tagId of tagIds) {
@@ -100,7 +99,7 @@ export class ViewAllProductsComponent implements OnInit {
                 }
               }
             }
-          } else return true;
+          } else if (tagIds == undefined) return true;
 
           return false;
         }
