@@ -18,6 +18,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -102,7 +103,7 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     InputNumberModule,
     StepsModule,
     DividerModule,
-    
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

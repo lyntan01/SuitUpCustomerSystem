@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { SessionService } from 'src/app/services/session.service';
+import { AddressService } from 'src/app/services/address.service';
 import { Address } from '../../models/address';
 
 @Component({
@@ -12,21 +13,32 @@ import { Address } from '../../models/address';
   providers: [MessageService],
 })
 export class DeliveryAddressComponent implements OnInit {
-  deliveryAddress: Address;
+  newDeliveryAddress: Address;
+  selectedDeliveryAddress: Address | undefined;
   existingAddresses: Address[];
   submitted: boolean;
 
   constructor(
     private router: Router,
     private messageService: MessageService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private addressService: AddressService
   ) {
-    this.deliveryAddress = new Address();
+    this.newDeliveryAddress = new Address();
+    // this.selectedDeliveryAddress = undefined;
     this.existingAddresses = new Array();
     this.submitted = false;
   }
 
   ngOnInit(): void {
+    this.addressService.getCurrentCustomerAddresses().subscribe(
+      (response) => {
+        this.existingAddresses = response;
+      },
+      (error) => {
+        console.log('DeliveryAddressComponent: ' + error);
+      }
+    );
     // let tmpAddress = this.sessionService.getDeliveryAddress();
     // if (
     //   this.sessionService.getCurrentCustomer() != null &&
@@ -48,16 +60,27 @@ export class DeliveryAddressComponent implements OnInit {
     // }
   }
 
+  addNewAddress(): void {}
+
   nextPage(deliveryAddressForm: NgForm): void {
     this.submitted = true;
-    if (deliveryAddressForm.valid) {
-      this.sessionService.setDeliveryAddress(this.deliveryAddress);
+
+    console.log('this.selectedDeliveryAddress: ' + this.selectedDeliveryAddress);
+
+    if (this.selectedDeliveryAddress) {
+      // will take selected address by default, if both selected and new address created
+      this.sessionService.setDeliveryAddress(this.selectedDeliveryAddress);
+      console.log(this.sessionService.getDeliveryAddress()?.name);
+      this.router.navigate(['checkout/paymentMethod']);
+    } else if (deliveryAddressForm.valid) {
+      this.sessionService.setDeliveryAddress(this.newDeliveryAddress);
+      console.log(this.sessionService.getDeliveryAddress()?.name);
       this.router.navigate(['checkout/paymentMethod']);
     } else {
       this.messageService.add({
         severity: 'warn',
         summary: 'Warn',
-        detail: 'Address or Postal Code is not filled in',
+        detail: 'Please select an address or add a new address',
       });
     }
   }
