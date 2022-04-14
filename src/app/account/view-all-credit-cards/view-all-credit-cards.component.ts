@@ -109,8 +109,6 @@ export class ViewAllCreditCardsComponent implements OnInit {
       this.creditCardService.createNewCreditCard(tempCreditCard).subscribe(
         (response) => {
           let newCreditCardId: number = response;
-
-          this.createCreditCardError = false;
           this.displayBasic = false;
           this.submitted = true;
           this.newCreditCard = new CreditCard();
