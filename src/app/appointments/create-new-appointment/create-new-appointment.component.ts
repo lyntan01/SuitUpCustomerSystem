@@ -24,7 +24,7 @@ export class CreateNewAppointmentComponent implements OnInit {
   yearRange: string =
     new Date().getFullYear() + ':' + (new Date().getFullYear() + 10);
   minDate: Date = new Date();
-  appointmentTypeEnum: string[];
+  appointmentTypeEnum: AppointmentTypeEnum[];
   selectedAppointmentType: AppointmentTypeEnum | undefined;
   stores: Store[];
   selectedStore: Store;
@@ -90,7 +90,6 @@ export class CreateNewAppointmentComponent implements OnInit {
       this.newAppointment.isFree = true;
     }
 
-    console.log(this.password);
     this.submitted = true;
     let tempAppointment: Appointment = Object.assign({}, this.newAppointment);
 
@@ -112,7 +111,7 @@ export class CreateNewAppointmentComponent implements OnInit {
             this.createAppointmentError = true;
             this.submitted = false;
             this.errorMessage =
-              'An error has occurred while signing in: ' + error;
+              'An error has occurred while creating apppointment: ' + error;
 
             console.log(error);
           }

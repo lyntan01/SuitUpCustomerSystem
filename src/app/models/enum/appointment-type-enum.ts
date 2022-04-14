@@ -1,5 +1,5 @@
 export enum AppointmentTypeEnum {
-  ALTERATION = 'Alteration',
-  MEASUREMENT = 'Measurement',
-  CONSULTATION = 'Consultation',
+  ALTERATION = 'ALTERATION',
+  MEASUREMENT = 'MEASUREMENT',
+  CONSULTATION = 'CONSULTATION',
 }

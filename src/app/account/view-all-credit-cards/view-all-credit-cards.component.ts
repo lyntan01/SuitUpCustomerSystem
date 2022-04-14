@@ -7,6 +7,8 @@ import { CreditCardService } from 'src/app/services/credit-card.service';
 import { Customer } from 'src/app/models/customer';
 import { CreditCard } from 'src/app/models/credit-card';
 import { CustomerService } from 'src/app/services/customer.service';
+import { asLiteral } from '@angular/compiler/src/render3/view/util';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-view-all-credit-cards',
@@ -44,15 +46,32 @@ export class ViewAllCreditCardsComponent implements OnInit {
   ngOnInit(): void {
     this.checkLogin();
 
-    if (this.currentCustomer.creditCards) {
-      this.creditCards = this.currentCustomer.creditCards;
-      this.creditCards.forEach((cc) => {
-        cc.cardNumber = cc.cardNumber
-          ?.replace(/.(?=.{4})/g, '*')
-          .replace(/.{4}(?=.)/g, '$& ');
-      });
-    }
-    // console.log(this.creditCards);
+    this.creditCardService.getCreditCards(this.currentCustomer).subscribe({
+      next: (response) => {
+        this.creditCards = response;
+        console.log(this.creditCards);
+        this.currentCustomer.creditCards = this.creditCards;
+        this.sessionService.getCurrentCustomer().creditCards = this.creditCards;
+        if (this.creditCards) {
+          this.creditCards.forEach((cc) => {
+            cc.cardNumber =
+              '**** **** **** ' + cc.cardNumber?.substring(12, 16);
+            console.log(cc.cardNumber);
+          });
+        }
+      },
+      error: (error) => {
+        console.log('********** Retrieve all credit cards' + error);
+      },
+    });
+
+    // if (this.creditCards) {
+    //   this.creditCards.forEach((cc) => {
+    //     cc.cardNumber = cc.cardNumber
+    //       ?.replace(/.(?=.{4})/g, '*')
+    //       .replace(/.{4}(?=.)/g, '$& ');
+    //   });
+    // }
   }
 
   checkLogin() {
@@ -62,7 +81,7 @@ export class ViewAllCreditCardsComponent implements OnInit {
   }
 
   formattedDate(date: Date): String {
-    console.log(date);
+    // console.log(date);
     return (
       date.toString().substring(5, 7) + ' / ' + date.toString().substring(2, 4)
     );
@@ -79,5 +98,41 @@ export class ViewAllCreditCardsComponent implements OnInit {
   clear() {
     this.submitted = false;
     this.newCreditCard = new CreditCard();
+  }
+
+  createNewCreditCard(createCreditCardForm: NgForm) {
+    this.displayBasic = false;
+    this.submitted = true;
+    let temp = this.newCreditCard.cardNumber;
+    let split = temp?.split('-');
+    let ccWithoutDash = '';
+    if (split != undefined) {
+      for (let x of split) {
+        ccWithoutDash += x;
+      }
+    }
+    this.newCreditCard.cardNumber = ccWithoutDash;
+
+    let tempCreditCard: CreditCard = Object.assign({}, this.newCreditCard);
+
+    if (createCreditCardForm.valid) {
+      this.creditCardService.createNewCreditCard(tempCreditCard).subscribe(
+        (response) => {
+          let newCreditCardId: number = response;
+
+          this.createCreditCardError = false;
+          this.newCreditCard = new CreditCard();
+          this.ngOnInit();
+        },
+        (error) => {
+          this.createCreditCardError = true;
+          this.submitted = false;
+          this.errorMessage =
+            'An error has occurred while creating apppointment: ' + error;
+
+          console.log(error);
+        }
+      );
+    }
   }
 }

@@ -15,24 +15,17 @@
 
       <p-toolbar>
         <ng-template pTemplate="right">
-          <button
-            pButton
-            pRipple
-            label="Add New Credit Card"
+          <p-button
+            (click)="showBasicDialog()"
             icon="pi pi-plus"
-            routerLink="/addNewCreditCard"
-          ></button>
+            label="Add New Credit Card"
+          ></p-button>
         </ng-template>
       </p-toolbar>
 
       <br />
 
       <div>
-        <p-button
-          (click)="showBasicDialog()"
-          icon="pi pi-plus"
-          label="Add New Credit Card"
-        ></p-button>
         <p-dialog
           header="Add a Credit Card"
           [(visible)]="displayBasic"
@@ -177,7 +170,7 @@
           <ng-template pTemplate="footer">
             <p-button
               icon="pi pi-check"
-              (click)="displayBasic = false"
+              (click)="createNewCreditCard(createCreditCardForm)"
               label="Save Credit Card"
               styleClass="p-button-text"
             ></p-button>
