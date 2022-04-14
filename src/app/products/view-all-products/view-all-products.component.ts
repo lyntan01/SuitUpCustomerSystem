@@ -31,6 +31,8 @@ export class ViewAllProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
+      console.log(params);
+
       let keyword: String | undefined = params['keyword'];
       let categoryIds: number[] | undefined = params['category'];
       let tagIds: number[] | undefined = params['tag'];
@@ -42,65 +44,98 @@ export class ViewAllProductsComponent implements OnInit {
       }
 
       this.fetchProducts(keyword, categoryIds, tagIds);
+      console.log('catid count = ' + categoryIds);
     });
   }
 
   fetchProducts(keyword?: String, categoryIds?: number[], tagIds?: number[]) {
-    this.standardProductService.getStandardProducts().subscribe(
-      (response) => {
-        this.standardProducts = response.filter((standardProduct) => {
-          if (
-            standardProduct.quantityInStock &&
-            standardProduct.quantityInStock > 0
-          ) {
-            return true;
-          } else {
-            return false;
-          }
-        });
+    // console.log('********** ViewAllProductsComponent.ts: FETCH');
+    this.standardProductService.getStandardProducts().subscribe((response) => {
+      this.standardProducts = response.filter((standardProduct) => {
+        if (
+          standardProduct.quantityInStock &&
+          standardProduct.quantityInStock > 0
+        ) {
+          console.log(
+            '********** ViewAllProductsComponent.ts: FIRST FILTER ' +
+              standardProduct.productId
+          );
+          return true;
+        } else {
+          return false;
+        }
+      });
 
-        this.standardProducts = this.standardProducts.filter(
-          (standardProduct) => {
-            let searchShow: boolean | undefined = true;
-            let categoryShow: boolean | undefined = true;
-            let priceShow: boolean | undefined = true;
-            let tagShow: boolean | undefined = true;
+      this.standardProducts = this.standardProducts.filter(
+        (standardProduct) => {
+          let categoryShow: boolean | undefined = true;
+          let tagShow: boolean | undefined = true;
+          //   if (keyword) {
+          //     searchShow = standardProduct.name
+          //       ?.toLowerCase()
+          //       .includes(keyword?.toLowerCase());
+          //   }
 
-            if (keyword) {
-              searchShow = standardProduct.name
-                ?.toLowerCase()
-                .includes(keyword?.toLowerCase());
-            }
-
-            if (categoryIds) {
-              for (let categoryId of categoryIds) {
-                categoryShow =
-                  standardProduct.category?.categoryId == categoryId;
-                if (categoryShow) break;
+          if (categoryIds) {
+            for (let categoryId of categoryIds) {
+              console.log('Catid = ' + categoryId);
+              categoryShow = standardProduct.category?.categoryId == categoryId;
+              if (categoryShow) {
+                console.log(
+                  '********** ViewAllProductsComponent.ts: SECOND FILTER ' +
+                    standardProduct.productId
+                );
+                break;
               }
             }
-            // };
+          } else if (categoryIds == undefined) {
+            categoryShow = true;
+          }
 
-            if (tagIds) {
-              for (let tagId of tagIds) {
-                if (standardProduct.tags) {
-                  for (let tag of standardProduct.tags) {
-                    tagShow = tag.tagId == tagId;
-                    if (tagShow) break;
-                  }
+          if (tagIds) {
+            for (let tagId of tagIds) {
+              if (standardProduct.tags) {
+                for (let tag of standardProduct.tags) {
+                  tagShow = tag.tagId == tagId;
                 }
               }
             }
-          }
-        );
+          } else if (tagIds == undefined) tagShow = true;
 
-        // });
-      },
-      (error) => {
-        console.log('********** ViewAllProductsComponent.ts: ' + error);
-      }
-    );
+          if (categoryShow && tagShow) {
+            return true;
+          }
+          return false;
+        }
+      );
+      // );
+      // );
+    });
   }
+  // }
+  // };
+
+  //           if (tagIds) {
+  //             for (let tagId of tagIds) {
+  //               if (standardProduct.tags) {
+  //                 for (let tag of standardProduct.tags) {
+  //                   tagShow = tag.tagId == tagId;
+  //                   if (tagShow) break;
+  //                 }
+  //               }
+  //             }
+  //           }
+  //         }
+  //       );
+
+  //       // });
+  //     },
+  //     (error) => {
+  //       console.log('********** ViewAllProductsComponent.ts: ' + error);
+  //     }
+  //   );
+  // }
+
   onSortChange(event: any) {
     let value = event.value;
 

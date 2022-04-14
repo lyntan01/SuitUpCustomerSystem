@@ -1,1 +1,198 @@
-<p>delivery-address works!</p>
+<p-toast position="top-right"></p-toast>
+<div>
+  <form
+    #deliveryAddressForm="ngForm"
+    (ngSubmit)="nextPage(deliveryAddressForm)"
+  >
+    <p-card>
+      <ng-template pTemplate="title"> Delivery Address </ng-template>
+      <ng-template pTemplate="subtitle">
+        Choose your delivery address
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="grid">
+          <div class="col-5 flex align-items-center justify-content-center">
+            <div>
+              <p>Select an existing address:</p>
+              <br />
+            </div>
+            <div>
+              <p-dropdown
+                name="addressDropdown"
+                [options]="existingAddresses"
+                [(ngModel)]="selectedDeliveryAddress"
+                placeholder="Select an address"
+                optionLabel="name"
+                [showClear]="true"
+              >
+                <ng-template pTemplate="selectedItem">
+                  <div *ngIf="selectedDeliveryAddress">
+                    {{ selectedDeliveryAddress.name }}:
+                    {{ selectedDeliveryAddress.addressLineOne }}
+                    {{ selectedDeliveryAddress.addressLineTwo }}, S{{
+                      selectedDeliveryAddress.postalCode
+                    }}
+                  </div>
+                </ng-template>
+                <ng-template let-address pTemplate="item">
+                  <div>
+                    <span
+                      >{{ address.name }}: {{ address.addressLineOne }}
+                      {{ address.addressLineTwo }}, S{{
+                        address.postalCode
+                      }}</span
+                    >
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+          </div>
+          <div class="col-2">
+            <p-divider layout="vertical">
+              <b>OR</b>
+            </p-divider>
+          </div>
+          <div class="col-5 flex align-items-center justify-content-center">
+            <div class="p-fluid">
+              <div class="field">
+                <label for="addressName">Address Name</label>
+                <input
+                  #addressName="ngModel"
+                  id="addressName"
+                  name="addressName"
+                  type="text"
+                  maxlength="64"
+                  [(ngModel)]="newDeliveryAddress.name"
+                  [ngModelOptions]="{ standalone: true }"
+                  [ngClass]="{
+                    'ng-dirty':
+                      (addressName.invalid && submitted) ||
+                      (addressName.dirty && addressName.invalid)
+                  }"
+                  [required]="!selectedDeliveryAddress"
+                  pInputText
+                />
+                <small
+                  *ngIf="
+                    addressName.invalid &&
+                    (addressName.dirty || addressName.touched || submitted)
+                  "
+                  class="p-error"
+                  >Address Name is required.</small
+                >
+              </div>
+
+              <div class="field">
+                <label for="name">Phone Number</label>
+                <input
+                  #phoneNumber="ngModel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  type="text"
+                  maxlength="12"
+                  [(ngModel)]="newDeliveryAddress.phoneNumber"
+                  [ngClass]="{
+                    'ng-dirty':
+                      (phoneNumber.invalid && submitted) ||
+                      (phoneNumber.dirty && phoneNumber.invalid)
+                  }"
+                  [required]="!selectedDeliveryAddress"
+                  pInputText
+                />
+                <small
+                  *ngIf="
+                    phoneNumber.invalid &&
+                    (phoneNumber.dirty || phoneNumber.touched || submitted)
+                  "
+                  class="p-error"
+                  >Phone Number is required.</small
+                >
+              </div>
+
+              <div class="field">
+                <label for="addressTxt1">Address Line One</label>
+                <input
+                  #addressTxt1="ngModel"
+                  id="addressTxt1"
+                  name="addressTxt1"
+                  type="text"
+                  maxlength="256"
+                  [(ngModel)]="newDeliveryAddress.addressLineOne"
+                  [ngClass]="{
+                    'ng-dirty':
+                      (addressTxt1.invalid && submitted) ||
+                      (addressTxt1.dirty && addressTxt1.invalid)
+                  }"
+                  [required]="!selectedDeliveryAddress"
+                  pInputText
+                />
+                <small
+                  *ngIf="
+                    addressTxt1.invalid &&
+                    (addressTxt1.dirty || addressTxt1.touched || submitted)
+                  "
+                  class="p-error"
+                  >Address is required.</small
+                >
+              </div>
+
+              <div class="field">
+                <label for="addressTxt2">Address Line Two</label>
+                <input
+                  #addressTxt1="ngModel"
+                  id="addressTxt2"
+                  name="addressTxt2"
+                  type="text"
+                  maxlength="256"
+                  [(ngModel)]="newDeliveryAddress.addressLineTwo"
+                  pInputText
+                />
+              </div>
+
+              <div class="field">
+                <label for="postalCodeTxt">Postal Code</label>
+                <input
+                  #postalCodeTxt="ngModel"
+                  id="postalCodeTxt"
+                  name="postalCodeTxt"
+                  type="text"
+                  maxlength="6"
+                  placeholder="XXXXXX"
+                  [(ngModel)]="newDeliveryAddress.postalCode"
+                  minlength="6"
+                  pattern="\d{6}"
+                  title="Postal Code is not correctly formatted"
+                  [required]="!selectedDeliveryAddress"
+                  pInputText
+                />
+                <small
+                  *ngIf="
+                    postalCodeTxt.invalid &&
+                    (postalCodeTxt.dirty || postalCodeTxt.touched || submitted)
+                  "
+                  class="p-error"
+                  >Postal Code is required and format must be in SXXXXXX.</small
+                >
+              </div>
+
+              <p-button
+                label="Add New Delivery Address"
+                (onClick)="addNewAddress()"
+              ></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-end">
+          <p-button
+            type="submit"
+            label="Next"
+            icon="pi pi-angle-right"
+            iconPos="right"
+          ></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+  </form>
+</div>

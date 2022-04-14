@@ -1,1 +1,16 @@
-<p>checkout works!</p>
+<p-toast position="top-right"></p-toast>
+<form #orderForm="ngForm" (ngSubmit)="order(orderForm)"></form>
+<div class="cart-card">
+  <p-card
+    [style]="{
+      width: '80vw', 
+      margin: '2em auto'
+    }"
+  > <!-- padding: '0 0 1em', -->
+    <p-steps [model]="items"></p-steps>
+
+    <div class="checkout-component">
+      <router-outlet></router-outlet>
+    </div>
+  </p-card>
+</div>

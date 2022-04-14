@@ -35,19 +35,23 @@ export class FilterBarComponent implements OnInit {
 
   fetchCategories() {
     this.standardProductService.getCategories().subscribe((respond) => {
-      this.activatedRoute.queryParams.subscribe((params) => {
-        this.selectedCategories = new Array();
-        let urlCategoryIds: number[] | undefined = params['category'];
-        if (urlCategoryIds != undefined && !Array.isArray(urlCategoryIds)) {
-          urlCategoryIds = new Array(urlCategoryIds);
-        }
-        urlCategoryIds?.forEach((categoryId) => {
-          const temp: Category[] = this.categories.filter(
-            (cat) => cat.categoryId == +categoryId
-          );
-          this.selectedCategories = this.selectedCategories.concat(temp);
-        });
-      });
+      console.log('CATEGORY: ' + respond);
+      this.categories = respond;
+      // this.activatedRoute.queryParams.subscribe((params) => {
+      //   this.selectedCategories = new Array();
+      //   let urlCategoryIds: number[] | undefined = params['category'];
+      //   console.log('URL CATEGORY: ' + urlCategoryIds);
+      //   if (urlCategoryIds != undefined && !Array.isArray(urlCategoryIds)) {
+      //     urlCategoryIds = new Array(urlCategoryIds);
+      //   }
+      //   urlCategoryIds?.forEach((categoryId) => {
+      //     const temp: Category[] = this.categories.filter(
+      //       (cat) => cat.categoryId == +categoryId
+      //     );
+      //     this.selectedCategories = this.selectedCategories.concat(temp);
+      //     console.log('SELECTED CATEGORY: ' + this.selectedCategories);
+      //   });
+      // });
     });
   }
 
@@ -62,22 +66,28 @@ export class FilterBarComponent implements OnInit {
   }
 
   fetchTags() {
-    this.standardProductService.getTags().subscribe((res) => {
-      let selectedTagIds =
-        this.activatedRoute.snapshot.queryParamMap.getAll('tag');
-
-      if (selectedTagIds) {
-        selectedTagIds.forEach((tagId) => {
-          const temp: Tag[] = this.tags.filter((b) => b.tagId == +tagId);
-          this.selectedTags = this.selectedTags.concat(temp);
-        });
+    this.standardProductService.getTags().subscribe((response) => {
+      // console.log('TAGS: ' + respond);
+      for (let object of response) {
+        this.tags.push(object as Tag);
       }
+      this.tags = response;
+      // console.log('TAGS: ' + this.tags);
+      // let selectedTagIds =
+      //   this.activatedRoute.snapshot.queryParamMap.getAll('tag');
+
+      // if (selectedTagIds) {
+      //   selectedTagIds.forEach((tagId) => {
+      //     const temp: Tag[] = this.tags.filter((b) => b.tagId == +tagId);
+      //     this.selectedTags = this.selectedTags.concat(temp);
+      //   });
+      // }
     });
   }
 
   onTagChange(event: any) {
     let extractedTagIds = event.value.map((tag: Tag) => tag.tagId);
-    this.router.navigate(['/viewAllStandardProducts'], {
+    this.router.navigate(['/viewAllProducts'], {
       queryParams: {
         tag: extractedTagIds,
       },

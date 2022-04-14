@@ -17,8 +17,20 @@
   </div>
   <hr />
 
-  <div class="price-menu">
-    <h4>
+  <div class="tag-menu">
+    <h4>TAG</h4>
+    <p-multiSelect
+      [options]="tags"
+      [(ngModel)]="selectedTags"
+      defaultLabel="Filter Tags"
+      optionLabel="name"
+      selectedItemsLabel="{0} tags selected"
+      (onChange)="onTagChange($event)"
+    ></p-multiSelect>
+  </div>
+  <hr />
+
+  <!-- <div class="price-menu">
       PRICE: ${{ selectedPriceRange[0] + " - $" + selectedPriceRange[1] }}
     </h4>
     <p-slider
@@ -29,19 +41,6 @@
       [max]="1500"
       (onSlideEnd)="onPriceChange($event)"
     ></p-slider>
-  </div>
-  <hr />
-
-  <div class="tag-menu">
-    <h4>TAG</h4>
-    <p-multiSelect
-      [options]="tags"
-      [(ngModel)]="selectedTags"
-      defaultLabel="Filter Tags"
-      optionLabel="tag"
-      selectedItemsLabel="{0} tags selected"
-      (onChange)="onTagChange($event)"
-    ></p-multiSelect>
-  </div>
+  </div> -->
   <hr />
 </div>
