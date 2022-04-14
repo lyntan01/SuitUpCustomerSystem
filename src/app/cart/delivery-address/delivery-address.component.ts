@@ -31,6 +31,8 @@ export class DeliveryAddressComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkLogin();
+
     this.addressService.getAddresses().subscribe(
       (response) => {
         this.existingAddresses = response;
@@ -60,7 +62,13 @@ export class DeliveryAddressComponent implements OnInit {
     // }
   }
 
-  addNewAddress(): void {}
+  checkLogin() {
+    if (!this.sessionService.getIsLogin()) {
+      this.router.navigate(['/accessRightError']);
+    }
+  }
+
+  // addNewAddress(): void {}
 
   nextPage(deliveryAddressForm: NgForm): void {
     this.submitted = true;

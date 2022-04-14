@@ -122,6 +122,19 @@ p-menubarsub.p-element {
   padding-top: 2em !important;
 }
 
+.add-credit-card-button button {
+  background-color: white;
+  border-color: white;
+  color: midnightblue;
+}
+
+.add-credit-card-button button:hover {
+  background-color: var(--surface-200) !important;
+  border-color: white !important;
+  color: midnightblue !important;
+  /* text-decoration: underline; */
+}
+
 /* ACCOUNT */
 .account-container {
   width: 90vw;

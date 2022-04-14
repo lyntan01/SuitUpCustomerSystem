@@ -12,11 +12,9 @@
       <ng-template pTemplate="content">
         <div class="grid">
           <div class="col-5 flex align-items-center justify-content-center">
-            <div>
-              <p>Select an existing address:</p>
+            <div class="text-center">
+              <h4>Select an existing address:</h4>
               <br />
-            </div>
-            <div>
               <p-dropdown
                 name="addressDropdown"
                 [options]="existingAddresses"
@@ -52,8 +50,10 @@
               <b>OR</b>
             </p-divider>
           </div>
-          <div class="col-5 flex align-items-center justify-content-center">
+          <div class="col-5 flex align-items-center">
             <div class="p-fluid">
+              <h4>Add a new address</h4>
+              <br/>
               <div class="field">
                 <label for="addressName">Address Name</label>
                 <input
@@ -175,10 +175,10 @@
                 >
               </div>
 
-              <p-button
+              <!-- <p-button
                 label="Add New Delivery Address"
                 (onClick)="addNewAddress()"
-              ></p-button>
+              ></p-button> -->
             </div>
           </div>
         </div>

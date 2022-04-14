@@ -101,8 +101,8 @@ export class ViewAllCreditCardsComponent implements OnInit {
   }
 
   createNewCreditCard(createCreditCardForm: NgForm) {
-    this.displayBasic = false;
-    this.submitted = true;
+    // this.displayBasic = false;
+    // this.submitted = true;
     let temp = this.newCreditCard.cardNumber;
     let split = temp?.split('-');
     let ccWithoutDash = '';
@@ -121,6 +121,8 @@ export class ViewAllCreditCardsComponent implements OnInit {
           let newCreditCardId: number = response;
 
           this.createCreditCardError = false;
+          this.displayBasic = false;
+          this.submitted = true;
           this.newCreditCard = new CreditCard();
           this.ngOnInit();
           this.messageService.add({
@@ -139,14 +141,14 @@ export class ViewAllCreditCardsComponent implements OnInit {
             detail:
               'An error has occurred while creating credit card: ' + error,
           });
-          // this.createCreditCardError = true;
-          // this.submitted = false;
-          // this.errorMessage =
-          //   'An error has occurred while creating apppointment: ' + error;
-
-          // console.log(error);
         }
       );
+    } else {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill in credit card information',
+      });
     }
   }
 
