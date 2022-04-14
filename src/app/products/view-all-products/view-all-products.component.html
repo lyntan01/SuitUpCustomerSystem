@@ -1,1 +1,79 @@
-<p>view-all-products works!</p>
+<div class="standardProducts-container p-grid">
+  <app-filter-bar></app-filter-bar>
+
+  <p-dataView
+    [value]="standardProducts"
+    [paginator]="true"
+    [rows]="16"
+    layout="grid"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    filterBy="name"
+  >
+    <ng-template pTemplate="header">
+      <div>
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sortKey"
+          placeholder="Sort By"
+          styleClass="p-mb-2 p-mb-md-0"
+        ></p-dropdown>
+      </div>
+    </ng-template>
+    <!-- <ng-template pTemplate="header">
+      <div>
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sortKey"
+          placeholder="Sort By"
+          (onChange)="onSortChange($event)"
+          styleClass="p-mb-2 p-mb-md-0"
+        ></p-dropdown>
+      </div>
+    </ng-template> -->
+    <ng-template let-standardProduct pTemplate="gridItem">
+      <div>
+        <a
+          href="#"
+          routerLink="/viewstandardProductDetails/{{
+            standardProduct.standardProductId
+          }}"
+        >
+          <div class="standardProduct-grid-item card p-shadow-6">
+            <div class="standardProduct-grid-item-top">
+              <div>
+                <i class="pi pi-tag product-category-icon"></i>
+                <span class="standardProduct-category"
+                  >&nbsp;{{ standardProduct.category.name }}</span
+                >
+              </div>
+            </div>
+            <div class="standardProduct-grid-item-content">
+              <div class="img-box">
+                <img
+                  [src]="
+                    'http://localhost:8080/SuitUp-war//uploadedFiles/productImages/' +
+                    standardProduct.image
+                  "
+                  [alt]="standardProduct.name"
+                  class="standardProduct-img"
+                  width="80%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="standardProduct-name">
+              {{ standardProduct.name }}
+            </div>
+            <div class="standardstandardProduct-description">
+              {{ standardProduct.description }}
+            </div>
+            <div class="standardProduct-unitPrice">
+              {{ standardProduct.unitPrice }}
+            </div>
+          </div>
+        </a>
+      </div>
+    </ng-template>
+  </p-dataView>
+</div>

@@ -1,1 +1,47 @@
-<p>filter-bar works!</p>
+<div class="filter-bar">
+  <h3>Filters <i class="pi pi-filter"></i></h3>
+  <hr />
+  <div class="category-menu">
+    <h4>CATEGORIES</h4>
+    <div *ngFor="let category of categories" class="p-field-checkbox">
+      <p-checkbox
+        name="category"
+        value="category"
+        [value]="category"
+        [(ngModel)]="selectedCategories"
+        [inputId]="category.categoryId!.toString()"
+        (click)="onCategoryChange($event, category)"
+      ></p-checkbox>
+      <label>{{ category.name }}</label>
+    </div>
+  </div>
+  <hr />
+
+  <div class="tag-menu">
+    <h4>TAG</h4>
+    <p-multiSelect
+      [options]="tags"
+      [(ngModel)]="selectedTags"
+      defaultLabel="Filter Tags"
+      optionLabel="name"
+      selectedItemsLabel="{0} tags selected"
+      (onChange)="onTagChange($event)"
+    ></p-multiSelect>
+  </div>
+  <hr />
+
+  <!-- <div class="price-menu">
+    <h4>
+      PRICE: ${{ selectedPriceRange[0] + " - $" + selectedPriceRange[1] }}
+    </h4>
+    <p-slider
+      [(ngModel)]="selectedPriceRange"
+      [range]="true"
+      [step]="10"
+      [min]="0"
+      [max]="1500"
+      (onSlideEnd)="onPriceChange($event)"
+    ></p-slider>
+  </div> -->
+  <hr />
+</div>

@@ -1,0 +1,20 @@
+.filter-bar {
+    margin-right: 0.5em;
+}
+
+label {
+    font-size: 14px;
+}
+
+.p-field-checkbox {
+    margin-bottom: 0.5em;
+}
+
+h3,
+h4 {
+    margin: 0.5em 0;
+}
+
+hr {
+    margin: 1em 0;
+}
