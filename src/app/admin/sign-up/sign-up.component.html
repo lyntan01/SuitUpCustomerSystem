@@ -1,3 +1,10 @@
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+
 <div
   *ngIf="sessionService.getIsLogin() == false && !registered"
   class="signup-container"
@@ -16,92 +23,93 @@
         <h2 class="clear-margin">Sign Up</h2>
       </ng-template>
 
-      <div *ngIf="signupError == true" class="errorMsg">
-        <!-- {{ errorMessage }} -->
-        <p-message severity="error" text="{{ errorMessage }}"></p-message>
-      </div>
-
       <form
         #createCustomerForm="ngForm"
         (ngSubmit)="customerRegister(createCustomerForm)"
       >
-        <div class="p-fluid p-grid signup-input">
-          <div class="p-field p-col-12">
+        <div class="p-fluid">
+          <div>
             <span class="p-float-label signup-input">
               <input
-                type="text"
+                type="email"
                 id="email"
                 pInputText
                 [(ngModel)]="newCustomer.email"
                 name="email"
                 required="true"
+                maxlength="256"
               />
               <label for="email">Email</label>
             </span>
           </div>
 
-          <div class="p-col-12"></div>
-          <span class="p-float-label">
-            <p-password
-              id="password"
-              name="password"
-              [(ngModel)]="newCustomer.password"
-              required="true"
-              [toggleMask]="true"
-            ></p-password>
-            <label for="password">Password</label>
-          </span>
+          <div>
+            <span class="p-float-label signup-input">
+              <p-password
+                id="password"
+                name="password"
+                [(ngModel)]="newCustomer.password"
+                required="true"
+                [toggleMask]="true"
+              ></p-password>
+              <label for="password">Password</label>
+            </span>
+          </div>
+
+          <div>
+            <span class="p-float-label signup-input">
+              <input
+                type="text"
+                id="firstName"
+                pInputText
+                [(ngModel)]="newCustomer.firstName"
+                name="firstName"
+                required="true"
+                maxlength="32"
+              />
+              <label for="firstName">First Name</label>
+            </span>
+          </div>
+
+          <div>
+            <span class="p-float-label signup-input">
+              <input
+                type="text"
+                id="lastName"
+                pInputText
+                [(ngModel)]="newCustomer.lastName"
+                name="lastName"
+                required="true"
+                maxlength="32"
+              />
+              <label for="lastName">Last Name</label>
+            </span>
+          </div>
+
+          <div>
+            <span class="p-float-label signup-input">
+              <input
+                type="contactNumber"
+                id="contactNumber"
+                pInputText
+                [(ngModel)]="newCustomer.contactNumber"
+                name="contactNumber"
+                required="true"
+                maxlength="10"
+              />
+              <label for="contactNumber">Contact Number</label>
+            </span>
+          </div>
         </div>
 
-        <div></div>
-
-        <div class="p-field p-col-12">
-          <span class="p-float-label signup-input">
-            <input
-              type="text"
-              id="firstName"
-              pInputText
-              [(ngModel)]="newCustomer.firstName"
-              name="firstName"
-              required="true"
-            />
-            <label for="firstName">First Name</label>
-          </span>
-        </div>
-
-        <div class="p-field p-col-12">
-          <span class="p-float-label signup-input">
-            <input
-              type="text"
-              id="lastName"
-              pInputText
-              [(ngModel)]="newCustomer.lastName"
-              name="lastName"
-              required="true"
-            />
-            <label for="lastName">Last Name</label>
-          </span>
-        </div>
-        <div class="p-field p-col-12">
-          <span class="p-float-label signup-input">
-            <input
-              type="contactNumber"
-              id="contactNumber"
-              pInputText
-              [(ngModel)]="newCustomer.contactNumber"
-              name="contactNumber"
-              required="true"
-            />
-            <label for="contactNumber">Contact Number</label>
-          </span>
-        </div>
-        <div class="p-grid">
-          <div class="p-field p-col-6 default-button signup-input">
+        <div>
+          <div class="p-field default-button signup-input">
             <span>
               <p-button label="Clear" (onClick)="clear()"></p-button>
             </span>
           </div>
-          <div class="p-field p-col-6 default-button">
+
+          <div class="p-field default-button">
             <span>
               <p-button label="Sign Up" type="submit"></p-button>
             </span>

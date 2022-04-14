@@ -4,15 +4,17 @@ import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { SessionService } from 'src/app/services/session.service';
 import { NgForm } from '@angular/forms';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class SignUpComponent implements OnInit {
   newCustomer: Customer;
-  signupError: boolean;
   registered: boolean;
   errorMessage: string | undefined;
   submitted: boolean;
@@ -20,10 +22,11 @@ export class SignUpComponent implements OnInit {
   constructor(
     private router: Router,
     public sessionService: SessionService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.newCustomer = new Customer();
-    this.signupError = false;
     this.submitted = false;
     this.registered = false;
   }
@@ -36,8 +39,6 @@ export class SignUpComponent implements OnInit {
   }
 
   customerRegister(createCustomerForm: NgForm) {
-    // console.log(createCustomerForm);
-    // console.log(this.newCustomer);
     this.submitted = true;
     let tempCustomer: Customer = Object.assign({}, this.newCustomer);
 
@@ -46,16 +47,21 @@ export class SignUpComponent implements OnInit {
         (response) => {
           let newCustomerId: number = response;
 
-          this.signupError = false;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Account successfully created!',
+          });
+
           this.registered = true;
         },
         (error) => {
-          this.signupError = true;
           this.registered = false;
-          this.errorMessage =
-            'An error has occurred while signing in: ' + error;
-
-          console.log(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'An error has occurred while signing up: ' + error,
+          });
         }
       );
     }

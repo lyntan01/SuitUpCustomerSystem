@@ -8,14 +8,16 @@ import { Store } from 'src/app/models/store';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { SessionService } from 'src/app/services/session.service';
 import { StoreService } from 'src/app/services/store.service';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-new-appointment',
   templateUrl: './create-new-appointment.component.html',
   styleUrls: ['./create-new-appointment.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class CreateNewAppointmentComponent implements OnInit {
-  createAppointmentError: boolean;
   errorMessage: string | undefined;
   currentCustomer: Customer;
   display: boolean;
@@ -34,30 +36,31 @@ export class CreateNewAppointmentComponent implements OnInit {
     public sessionService: SessionService,
     private router: Router,
     private appointService: AppointmentService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
-    this.createAppointmentError = false;
-    this.currentCustomer = this.sessionService.getCurrentCustomer();
+    this.currentCustomer = new Customer();
     this.display = false;
     this.newAppointment = new Appointment();
     this.submitted = false;
     this.appointmentTypeEnum = Object.values(AppointmentTypeEnum);
     this.stores = new Array();
-    console.log(this.appointmentTypeEnum);
     this.selectedStore = new Store();
     this.password = this.sessionService.getPassword();
   }
 
   ngOnInit(): void {
-    this.checkLogin();
-
     this.storeService.getStores().subscribe({
       next: (response) => {
         this.stores = response;
-        console.log(this.stores);
       },
       error: (error) => {
-        console.log('********** Retrieve all stores' + error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error has occurred while retrieving all stores ' + error,
+        });
       },
     });
   }
@@ -68,18 +71,13 @@ export class CreateNewAppointmentComponent implements OnInit {
     }
   }
 
-  void() {
-    console.log('test');
-  }
-
   showDialog() {
-    // this.minDate = this.roundToNearestHour(this.minDate);
+    this.checkLogin();
+    this.currentCustomer = this.sessionService.getCurrentCustomer();
     this.display = true;
   }
 
   createAppointment(createAppointmentForm: NgForm) {
-    // console.log(createCustomerForm);
-    // console.log(this.newCustomer);
     let enumComparator = AppointmentTypeEnum.ALTERATION;
 
     if (
@@ -105,15 +103,29 @@ export class CreateNewAppointmentComponent implements OnInit {
           (response) => {
             let newAppointmentId: number = response;
 
-            this.createAppointmentError = false;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Appointment successfully created!',
+            });
+
+            this.newAppointment = new Appointment();
+
+            createAppointmentForm.form.markAsUntouched();
+            createAppointmentForm.form.markAsPristine();
+            createAppointmentForm.form.updateValueAndValidity();
+
+            this.display = false;
           },
           (error) => {
-            this.createAppointmentError = true;
             this.submitted = false;
-            this.errorMessage =
-              'An error has occurred while creating apppointment: ' + error;
 
-            console.log(error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'An error has occurred while creating appointment: ' + error,
+            });
           }
         );
     }

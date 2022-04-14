@@ -1,4 +1,9 @@
-<!-- <p>create-new-appointment works!</p> -->
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
 
 <div class="grid grid-nogutter surface-section text-800">
   <div
@@ -30,15 +35,12 @@
         [style]="{ width: '40vw', height: '900px' }"
       >
         <div>
-          <div *ngIf="createAppointmentError == true" class="errorMsg">
-            {{ errorMessage }}
-          </div>
           <form
             #createAppointmentForm="ngForm"
             (ngSubmit)="createAppointment(createAppointmentForm)"
           >
             <div class="p-fluid">
-              <div class="p-field p-grid space-input">
+              <div class="space-input">
                 <div>
                   <h5>Select Appointment Type</h5>
                   <p-dropdown
@@ -47,11 +49,12 @@
                     [(ngModel)]="newAppointment.appointmentTypeEnum"
                     placeholder="Select a Appointment Type"
                     [showClear]="true"
+                    [required]="true"
                   ></p-dropdown>
                 </div>
               </div>
 
-              <div class="p-field p-grid space-input">
+              <div class="space-input">
                 <h5>Select Appointment Date</h5>
                 <div>
                   <p-calendar
@@ -84,7 +87,7 @@
                 </div>
               </div>
 
-              <div class="p-field p-grid space-input">
+              <div class="space-input">
                 <div>
                   <h5>Select Store</h5>
                   <p-dropdown
@@ -123,7 +126,6 @@
 
 <div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
   <div class="mb-3 font-bold text-2xl">
-    <!-- <span class="text-900">Our Services </span> -->
     <span class="suitup">Our Services</span>
   </div>
   <div class="text-700 text-sm mb-6">

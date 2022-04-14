@@ -1,5 +1,12 @@
-<div class="account-container p-grid">
-  <app-account-menu class="p-col"></app-account-menu>
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+
+<div class="account-container">
+  <app-account-menu></app-account-menu>
   <div class="account-card">
     <h2>My Profile</h2>
     <p>Manage your profile</p>
@@ -8,15 +15,12 @@
     <br />
 
     <div>
-      <div *ngIf="updateProfileError == true" class="errorMsg">
-        {{ errorMessage }}
-      </div>
       <form
         #updateProfileForm="ngForm"
         (ngSubmit)="updateProfile(updateProfileForm)"
       >
         <div class="p-fluid">
-          <div class="p-field p-grid">
+          <div>
             <label for="email">Email</label>
             <div class="space-input">
               <input
@@ -32,7 +36,7 @@
             </div>
           </div>
 
-          <div class="p-field p-grid space-input">
+          <div class="space-input">
             <label for="firstName">First Name</label>
             <div>
               <input
@@ -43,6 +47,7 @@
                 [(ngModel)]="currentCustomer.firstName"
                 required
                 pInputText
+                maxlength="32"
               />
             </div>
             <div
@@ -58,7 +63,7 @@
             </div>
           </div>
 
-          <div class="p-field p-grid space-input">
+          <div class="space-input">
             <label for="lastName"> Last Name</label>
             <div>
               <input
@@ -69,6 +74,7 @@
                 [(ngModel)]="currentCustomer.lastName"
                 required
                 pInputText
+                maxlength="32"
               />
             </div>
             <div
@@ -84,7 +90,7 @@
             </div>
           </div>
 
-          <div class="p-field p-grid space-input">
+          <div class="space-input">
             <label for="contactNumber">Contact Number</label>
             <div>
               <input
@@ -95,6 +101,7 @@
                 [(ngModel)]="currentCustomer.contactNumber"
                 required
                 pInputText
+                maxlength="10"
               />
             </div>
             <div
@@ -110,7 +117,7 @@
             </div>
           </div>
 
-          <div class="p-grid p-jc-end">
+          <div>
             <div class="save-button">
               <span>
                 <p-button label="Save" type="submit"></p-button>
