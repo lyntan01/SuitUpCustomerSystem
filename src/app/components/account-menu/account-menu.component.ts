@@ -9,11 +9,13 @@ import { MenuItem } from 'primeng/api';
 })
 export class AccountMenuComponent implements OnInit {
   accountItems: MenuItem[];
+  measurementItems: MenuItem[];
   appointmentItems: MenuItem[];
   orderItems: MenuItem[];
 
   constructor(private router: Router) {
     this.accountItems = new Array();
+    this.measurementItems = new Array();
     this.appointmentItems = new Array();
     this.orderItems = new Array();
   }
@@ -41,6 +43,15 @@ export class AccountMenuComponent implements OnInit {
         routerLink: '/viewAllAddresses',
       },
     ];
+
+    this.measurementItems = [
+      {
+        label: 'My Measurements',
+        icon: 'pi pi-fw pi-user',
+        routerLink: '/viewMyMeasurements',
+      },
+    ];
+
     this.appointmentItems = [
       {
         label: 'My Appointments',

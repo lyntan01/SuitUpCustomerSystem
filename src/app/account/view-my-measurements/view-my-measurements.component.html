@@ -1,0 +1,647 @@
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+<div class="account-container p-grid">
+  <app-account-menu class="p-col"></app-account-menu>
+
+  <div class="p-md-9 p-col-10 account-card">
+    <h2>My measurements</h2>
+
+    <p>Edit your measurements</p>
+
+    <hr style="opacity: 0.1" />
+
+    <div>
+      <p-accordion [multiple]="true">
+        <p-accordionTab header="Jacket Measurement">
+          <form #updateJacketMeasurementForm="ngForm">
+            <div class="p-fluid">
+              <!---->
+              <div class="block_container">
+                <div class="p-field p-grid space-input">
+                  <label for="neck">Neck</label>
+                  <div>
+                    <input
+                      #neck="ngModel"
+                      id="neck"
+                      type="text"
+                      name="neck"
+                      [(ngModel)]="loadedJacketMeasurement.neck"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      neck.invalid && (neck.dirty || neck.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="neck.errors?.['required']">
+                      Neck measurement is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="frontLength">Front Length (Torso)</label>
+                  <div>
+                    <input
+                      #frontLength="ngModel"
+                      id="frontLength"
+                      name="frontLength"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.frontLength"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      frontLength.invalid &&
+                      (frontLength.dirty || frontLength.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="frontLength.errors?.['required']">
+                      Front Length (Torso) is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="chestGirth">Chest Girth</label>
+                  <div>
+                    <input
+                      #chestGirth="ngModel"
+                      id="chestGirth"
+                      name="chestGirth"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.chestGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      chestGirth.invalid &&
+                      (chestGirth.dirty || chestGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="chestGirth.errors?.['required']">
+                      Chest Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="frontChestWidth">Front Chest Width</label>
+                  <div>
+                    <input
+                      #frontChestWidth="ngModel"
+                      id="frontChestWidth"
+                      name="frontChestWidth"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.frontChestWidth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      frontChestWidth.invalid &&
+                      (frontChestWidth.dirty ||
+                        frontChestWidth.touched ||
+                        submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="frontChestWidth.errors?.['required']">
+                      Front Chest Width is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!---->
+              <div class="block_container">
+                <div class="p-field p-grid space-input">
+                  <label for="upperWaistGrith"
+                    >Upper Waist Girth (Stomach)</label
+                  >
+                  <div>
+                    <input
+                      #upperWaistGrith="ngModel"
+                      id="upperWaistGrith"
+                      name="upperWaistGrith"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.upperWaistGrith"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      upperWaistGrith.invalid &&
+                      (upperWaistGrith.dirty ||
+                        upperWaistGrith.touched ||
+                        submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="upperWaistGrith.errors?.['required']">
+                      Upper Waist Girth (Stomach) is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="hipGirth">Hip Girth</label>
+                  <div>
+                    <input
+                      #hipGirth="ngModel"
+                      id="hipGirth"
+                      name="hipGirth"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.hipGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      hipGirth.invalid &&
+                      (hipGirth.dirty || hipGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="hipGirth.errors?.['required']">
+                      Hip Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="armhole">Armhole</label>
+                  <div>
+                    <input
+                      #armhole="ngModel"
+                      id="armhole"
+                      name="armhole"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.armhole"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      armhole.invalid &&
+                      (armhole.dirty || armhole.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="armhole.errors?.['required']">
+                      Armhole length is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="shoulderWidth">Shoulder Width</label>
+                  <div>
+                    <input
+                      #shoulderWidth="ngModel"
+                      id="shoulderWidth"
+                      name="shoulderWidth"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.shoulderWidth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      shoulderWidth.invalid &&
+                      (shoulderWidth.dirty ||
+                        shoulderWidth.touched ||
+                        submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="shoulderWidth.errors?.['required']">
+                      Shoulder Width is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!---->
+              <div class="block_container">
+                <div class="p-field p-grid space-input">
+                  <label for="sleeveLength">Sleeve Length</label>
+                  <div>
+                    <input
+                      #sleeveLength="ngModel"
+                      id="sleeveLength"
+                      name="sleeveLength"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.sleeveLength"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      sleeveLength.invalid &&
+                      (sleeveLength.dirty || sleeveLength.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="sleeveLength.errors?.['required']">
+                      Sleeve Length is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="backwidth">Back Width</label>
+                  <div>
+                    <input
+                      #backwidth="ngModel"
+                      id="backwidth"
+                      name="backwidth"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.backwidth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      backwidth.invalid &&
+                      (backwidth.dirty || backwidth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="backwidth.errors?.['required']">
+                      Shoulder Width is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="bicepGirth">Bicep Girth</label>
+                  <div>
+                    <input
+                      #bicepGirth="ngModel"
+                      id="bicepGirth"
+                      name="bicepGirth"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.bicepGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      bicepGirth.invalid &&
+                      (bicepGirth.dirty || bicepGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="bicepGirth.errors?.['required']">
+                      Bicep Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="forearmGirth">Forearm Girth</label>
+                  <div>
+                    <input
+                      #forearmGirth="ngModel"
+                      id="forearmGirth"
+                      name="forearmGirth"
+                      type="text"
+                      [(ngModel)]="loadedJacketMeasurement.forearmGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      forearmGirth.invalid &&
+                      (forearmGirth.dirty || forearmGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="forearmGirth.errors?.['required']">
+                      Forearm Girth is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-field p-grid space-input">
+                <label for="wristGirth">Wrist Girth</label>
+                <div>
+                  <input
+                    #wristGirth="ngModel"
+                    id="wristGirth"
+                    name="wristGirth"
+                    type="text"
+                    class="smaller-width"
+                    [(ngModel)]="loadedJacketMeasurement.wristGirth"
+                    required
+                    pInputText
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    wristGirth.invalid &&
+                    (wristGirth.dirty || wristGirth.touched || submitted)
+                  "
+                  class="errorText"
+                >
+                  <div *ngIf="wristGirth.errors?.['required']">
+                    Wrist Girth is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-grid p-jc-end">
+                <div class="save-button">
+                  <span class="right-space">
+                    <p-button label="Clear" type="reset"></p-button>
+                  </span>
+
+                  <span>
+                    <p-button
+                      label="Save"
+                      type="submit"
+                      (click)="
+                        updateJacketMeasurement(updateJacketMeasurementForm)
+                      "
+                    ></p-button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </p-accordionTab>
+
+        <!--PANTS---------------------------------------->
+
+        <p-accordionTab header="Pants Measurement">
+          <form #updatePantsMeasurementForm="ngForm">
+            <div class="p-fluid">
+              <!---->
+              <div class="block_container">
+                <div class="p-field p-grid space-input">
+                  <label for="legsLength">Legs Length</label>
+                  <div>
+                    <input
+                      #legsLength="ngModel"
+                      id="legsLength"
+                      type="text"
+                      name="legsLength"
+                      [(ngModel)]="loadedPantsMeasurement.legsLength"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      legsLength.invalid &&
+                      (legsLength.dirty || legsLength.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="legsLength.errors?.['required']">
+                      Legs Length measurement is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="lowerWaistGirth">Lower Waist Girth</label>
+                  <div>
+                    <input
+                      #lowerWaistGirth="ngModel"
+                      id="lowerWaistGirth"
+                      name="lowerWaistGirth"
+                      type="text"
+                      [(ngModel)]="loadedPantsMeasurement.lowerWaistGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      lowerWaistGirth.invalid &&
+                      (lowerWaistGirth.dirty ||
+                        lowerWaistGirth.touched ||
+                        submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="lowerWaistGirth.errors?.['required']">
+                      Lower Waist Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="hipGirth">Hip Girth</label>
+                  <div>
+                    <input
+                      #hipGirth="ngModel"
+                      id="hipGirth"
+                      name="hipGirth"
+                      type="text"
+                      [(ngModel)]="loadedPantsMeasurement.hipGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      hipGirth.invalid &&
+                      (hipGirth.dirty || hipGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="hipGirth.errors?.['required']">
+                      Hip Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="crotch">Crotch</label>
+                  <div>
+                    <input
+                      #crotch="ngModel"
+                      id="crotch"
+                      name="crotch"
+                      type="text"
+                      [(ngModel)]="loadedPantsMeasurement.crotch"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      crotch.invalid &&
+                      (crotch.dirty || crotch.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="crotch.errors?.['required']">
+                      Crotch measurement is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!---->
+              <div class="block_container">
+                <div class="p-field p-grid space-input">
+                  <label for="thighGirth">Thigh Girth</label>
+                  <div>
+                    <input
+                      #thighGirth="ngModel"
+                      id="thighGirth"
+                      name="thighGirth"
+                      type="text"
+                      [(ngModel)]="loadedPantsMeasurement.thighGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      thighGirth.invalid &&
+                      (thighGirth.dirty || thighGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="thighGirth.errors?.['required']">
+                      Thigh Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="kneeGirth">Knee Girth</label>
+                  <div>
+                    <input
+                      #kneeGirth="ngModel"
+                      id="kneeGirth"
+                      name="kneeGirth"
+                      type="text"
+                      [(ngModel)]="loadedPantsMeasurement.kneeGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      kneeGirth.invalid &&
+                      (kneeGirth.dirty || kneeGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="kneeGirth.errors?.['required']">
+                      Knee Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="calfGirth">Calf Girth</label>
+                  <div>
+                    <input
+                      #calfGirth="ngModel"
+                      id="calfGirth"
+                      name="calfGirth"
+                      type="text"
+                      [(ngModel)]="loadedPantsMeasurement.calfGirth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      calfGirth.invalid &&
+                      (calfGirth.dirty || calfGirth.touched || submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="calfGirth.errors?.['required']">
+                      Calf Girth is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-field p-grid space-input">
+                  <label for="pantsOpeningWidth"
+                    >Pants Opening Width (Ankle)</label
+                  >
+                  <div>
+                    <input
+                      #pantsOpeningWidth="ngModel"
+                      id="pantsOpeningWidth"
+                      name="pantsOpeningWidth"
+                      type="text"
+                      [(ngModel)]="loadedPantsMeasurement.pantsOpeningWidth"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      pantsOpeningWidth.invalid &&
+                      (pantsOpeningWidth.dirty ||
+                        pantsOpeningWidth.touched ||
+                        submitted)
+                    "
+                    class="errorText"
+                  >
+                    <div *ngIf="pantsOpeningWidth.errors?.['required']">
+                      Pants Opening Width (Ankle) is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!---->
+
+              <div class="p-grid p-jc-end">
+                <div class="save-button">
+                  <span class="right-space">
+                    <p-button label="Clear" type="reset"></p-button>
+                  </span>
+                  <span>
+                    <p-button
+                      label="Save"
+                      type="submit"
+                      (click)="
+                        updatePantsMeasurement(updatePantsMeasurementForm)
+                      "
+                    ></p-button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
+</div>

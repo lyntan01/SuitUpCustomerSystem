@@ -26,6 +26,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DataViewModule } from 'primeng/dataview';
+import { AccordionModule } from 'primeng/accordion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ import { DeliveryAddressComponent } from './cart/delivery-address/delivery-addre
 import { PaymentMethodComponent } from './cart/payment-method/payment-method.component';
 import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
 import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores.component';
+import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view-my-measurements.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,7 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     PaymentMethodComponent,
     OrderSummaryComponent,
     ViewAllStoresComponent,
+    ViewMyMeasurementsComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,6 +121,7 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     SliderModule,
     MultiSelectModule,
     DataViewModule,
+    AccordionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

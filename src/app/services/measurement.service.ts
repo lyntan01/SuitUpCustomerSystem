@@ -34,7 +34,7 @@ export class MeasurementService {
     return this.httpClient
       .get<JacketMeasurement>(
         this.baseUrl +
-          '/retrievePantstMeasurementByCustomer' +
+          '/retrieveJacketMeasurementByCustomer' +
           '?email=' +
           this.sessionService.getEmail() +
           '&password=' +
@@ -47,7 +47,7 @@ export class MeasurementService {
     return this.httpClient
       .get<PantsMeasurement>(
         this.baseUrl +
-          '/retrievePantstMeasurementByCustomer' +
+          '/retrievePantsMeasurementByCustomer' +
           '?email=' +
           this.sessionService.getEmail() +
           '&password=' +
@@ -58,7 +58,7 @@ export class MeasurementService {
 
   createJacketMeasurement(
     newJacketMeasurement: JacketMeasurement
-  ): Observable<number> {
+  ): Observable<JacketMeasurement> {
     let createJacketMeasurement: CreateJacketMeasurementReq =
       new CreateJacketMeasurementReq(
         this.sessionService.getEmail(),
@@ -66,7 +66,7 @@ export class MeasurementService {
         newJacketMeasurement
       );
     return this.httpClient
-      .put<number>(
+      .put<JacketMeasurement>(
         this.baseUrl + '/createJacketMeasurement',
         createJacketMeasurement,
         httpOptions
@@ -76,7 +76,7 @@ export class MeasurementService {
 
   createPantsMeasurement(
     newPantsMeasurement: PantsMeasurement
-  ): Observable<number> {
+  ): Observable<PantsMeasurement> {
     let createPantsMeasurement: CreatePantsMeasurementReq =
       new CreatePantsMeasurementReq(
         this.sessionService.getEmail(),
@@ -84,7 +84,7 @@ export class MeasurementService {
         newPantsMeasurement
       );
     return this.httpClient
-      .put<number>(
+      .put<PantsMeasurement>(
         this.baseUrl + '/createPantsMeasurement',
         createPantsMeasurement,
         httpOptions
@@ -101,11 +101,18 @@ export class MeasurementService {
         this.sessionService.getPassword(),
         updatedJacketMeasurementIn
       );
-    return this.httpClient.post<any>(
-      this.baseUrl,
-      updateJacketMeasurementReq,
-      httpOptions
-    );
+    return this.httpClient
+      .post<any>(
+        this.baseUrl +
+          '/updateJacketMeasurement' +
+          '?email=' +
+          this.sessionService.getEmail() +
+          '&password=' +
+          this.sessionService.getPassword(),
+        updateJacketMeasurementReq,
+        httpOptions
+      )
+      .pipe(catchError(this.handleError));
   }
 
   updatePantsMeasurement(
@@ -117,11 +124,18 @@ export class MeasurementService {
         this.sessionService.getPassword(),
         updatedPantsMeasurementIn
       );
-    return this.httpClient.post<any>(
-      this.baseUrl,
-      updatePantsMeasurementReq,
-      httpOptions
-    );
+    return this.httpClient
+      .post<any>(
+        this.baseUrl +
+          '/updatePantsMeasurement' +
+          '?email=' +
+          this.sessionService.getEmail() +
+          '&password=' +
+          this.sessionService.getPassword(),
+        updatePantsMeasurementReq,
+        httpOptions
+      )
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

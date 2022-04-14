@@ -1,1 +1,55 @@
-<p>view-all-stores works!</p>
+<div class="account-container p-grid">
+  <div class="p-md-9 p-col-10 account-card">
+    <h2>Our Stores</h2>
+    <hr style="opacity: 0.1" />
+
+    <div>
+      <p-table [value]="stores">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="storeId">No.</th>
+
+            <th pSortableColumn="storeName">Store Name</th>
+
+            <th pSortableColumn="storeDescription">Description</th>
+
+            <th pSortableColumn="storeContact">Contact Number</th>
+
+            <th pSortableColumn="storeWorkingHours">Working Hours</th>
+
+            <th pSortableColumn="storeAddress">Address</th>
+
+            <th pSortableColumn="storePostalCode">Postal Code</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-store>
+          <tr>
+            <td>
+              {{ store.storeId }}
+            </td>
+            <td>
+              {{ store.storeName }}
+            </td>
+            <td>
+              {{ store.storeDescription }}
+            </td>
+
+            <td>
+              {{ store.contactNumber }}
+            </td>
+
+            <td>{{ store.openingHour }} - {{ store.closingHour }}</td>
+            <td>
+              {{ store.address.addressLineOne }},
+              {{ store.address.addressLineTwo }}
+            </td>
+
+            <td>S{{ store.address.postalCode }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary"> </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
