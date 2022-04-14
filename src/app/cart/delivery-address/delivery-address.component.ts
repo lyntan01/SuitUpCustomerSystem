@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { SessionService } from 'src/app/services/session.service';
 import { AddressService } from 'src/app/services/address.service';
 import { Address } from '../../models/address';
+import { CollectionMethodEnum } from 'src/app/models/enum/collection-method-enum';
 
 @Component({
   selector: 'app-delivery-address',
@@ -17,6 +18,8 @@ export class DeliveryAddressComponent implements OnInit {
   selectedDeliveryAddress: Address | undefined;
   existingAddresses: Address[];
   submitted: boolean;
+  selectedCollectionMethod: SelectItem;
+  collectionMethods: SelectItem[];
 
   constructor(
     private router: Router,
@@ -28,6 +31,12 @@ export class DeliveryAddressComponent implements OnInit {
     // this.selectedDeliveryAddress = undefined;
     this.existingAddresses = new Array();
     this.submitted = false;
+    let tmp: Object[] = Object.values(CollectionMethodEnum);
+    this.collectionMethods = [
+      { label: 'Delivery', value: tmp[0].toString().toUpperCase() },
+      { label: 'Pickup', value: tmp[1].toString().toUpperCase() },
+    ];
+    this.selectedCollectionMethod = this.collectionMethods[0];
   }
 
   ngOnInit(): void {
@@ -72,8 +81,7 @@ export class DeliveryAddressComponent implements OnInit {
 
   nextPage(deliveryAddressForm: NgForm): void {
     this.submitted = true;
-
-    console.log('this.selectedDeliveryAddress: ' + this.selectedDeliveryAddress);
+    this.sessionService.setCollectionMethod(this.selectedCollectionMethod.value);
 
     if (this.selectedDeliveryAddress) {
       // will take selected address by default, if both selected and new address created

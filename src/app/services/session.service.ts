@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Address } from '../models/address';
 import { CreditCard } from '../models/credit-card';
 import { Customer } from '../models/customer';
+import { CollectionMethodEnum } from '../models/enum/collection-method-enum';
 import { OrderLineItem } from '../models/order-line-item';
 import { Promotion } from '../models/promotion';
 
@@ -93,6 +94,15 @@ export class SessionService {
 
   setDeliveryAddress(deliveryAddress: Address): void {
     sessionStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress));
+  }
+
+  getCollectionMethod(): string | undefined {
+    return sessionStorage.getItem('collectionMethod')?.toUpperCase();
+  }
+
+  // Put the string value of the enum, not enum itself
+  setCollectionMethod(collectionMethod: string) {
+    sessionStorage.setItem('collectionMethod', collectionMethod);
   }
 
   getPromotion(): Promotion | undefined {

@@ -10,7 +10,13 @@
         Choose your delivery address
       </ng-template>
       <ng-template pTemplate="content">
-        <div class="grid">
+        <p-selectButton
+          name="collectionMethod"
+          [options]="collectionMethods"
+          [(ngModel)]="selectedCollectionMethod"
+          optionLabel="label"
+        ></p-selectButton>
+        <div class="grid" *ngIf="selectedCollectionMethod.value === 'DELIVERY'">
           <div class="col-5 flex align-items-center justify-content-center">
             <div class="text-center">
               <h4>Select an existing address:</h4>
@@ -53,7 +59,7 @@
           <div class="col-5 flex align-items-center">
             <div class="p-fluid">
               <h4>Add a new address</h4>
-              <br/>
+              <br />
               <div class="field">
                 <label for="addressName">Address Name</label>
                 <input
@@ -181,6 +187,16 @@
               ></p-button> -->
             </div>
           </div>
+        </div>
+        <div
+          class="text-center pt-5"
+          *ngIf="selectedCollectionMethod.value === 'PICKUP'"
+        >
+          <h4>
+            We will send you an email and/or give you a call when your order is
+            ready for pickup.
+          </h4>
+          <h4>Click Next to proceed.</h4>
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
