@@ -120,8 +120,9 @@ p-menubarsub.p-element {
 .checkout-component .p-card {
   box-shadow: none !important;
   padding-top: 2em !important;
+}
 
-  /* ACCOUNT */
+/* ACCOUNT */
 .account-container {
   width: 90vw;
   margin: 1em auto;

@@ -53,6 +53,7 @@ export class AddressService {
       updateAddressReq,
       httpOptions
     );
+  }
 
   createNewAddress(newAddress: Address): Observable<number> {
     let createAddressReq: CreateAddressReq = new CreateAddressReq(

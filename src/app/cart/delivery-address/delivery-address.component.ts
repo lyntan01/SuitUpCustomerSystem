@@ -31,7 +31,7 @@ export class DeliveryAddressComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addressService.getCurrentCustomerAddresses().subscribe(
+    this.addressService.getAddresses().subscribe(
       (response) => {
         this.existingAddresses = response;
       },
