@@ -16,3 +16,8 @@ td div {
 :host >>> .p-inputnumber-input {
     width: 100%;
 }
+
+.original-price {
+    text-decoration: line-through;
+    color: #aaafb4;
+}

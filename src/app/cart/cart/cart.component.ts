@@ -24,6 +24,7 @@ export class CartComponent implements OnInit {
   promotion: Promotion | undefined;
   totalNumItems: number;
   total: number;
+  discountedTotal: number;
   orderLineItem: OrderLineItem; // TESTING
   product: StandardProduct; // TESTING
 
@@ -41,6 +42,7 @@ export class CartComponent implements OnInit {
     this.promotion = undefined;
     this.totalNumItems = 0.0;
     this.total = 0.0;
+    this.discountedTotal = 0.0;
     this.orderLineItem = new OrderLineItem(); // TESTING
     this.product = new StandardProduct(); // TESTING
   }
@@ -88,8 +90,14 @@ export class CartComponent implements OnInit {
     console.log('********** CartComponent.ts: getTotal()');
     let total: number = 0;
     for (let i = 0; i < this.cart.length; i++) {
+      console.log("i = " + i);
+
       let orderItem: OrderLineItem = this.cart[i];
+      console.log(orderItem.product?.name);
+
       total += this.getUnitPrice(orderItem.product);
+      console.log("i = " + i + ", total = " + total);
+
       // total += orderItem.product?.unitCost || 0;
       // if (orderItem.product instanceof StandardProduct) {
       //   let product: StandardProduct = <StandardProduct>orderItem.product;
@@ -105,17 +113,16 @@ export class CartComponent implements OnInit {
   // Helper method
   // returns -1 if product or unit price is null
   getUnitPrice(product: Product | undefined) : number {
-    if (product instanceof StandardProduct) {
-      let standardProduct: StandardProduct = <StandardProduct>product;
-      return standardProduct.unitPrice || -1;
-    } else if (product instanceof CustomizedProduct) {
-      let customizedProduct: CustomizedProduct = <CustomizedProduct>product;
-      return customizedProduct.totalPrice || -1;
+    if ((<StandardProduct>product).unitPrice ) {
+      console.log("STANDARD PRODUCT")
+      return (<StandardProduct>product).unitPrice || -1;
+    } else if ((<CustomizedProduct>product).totalPrice) {
+      return (<CustomizedProduct>product).totalPrice || -1;
     }
     return -1;
   }
 
-  getDiscountedTotal(total: number): number {
+  getDiscountedTotal() {
     console.log('********** CartComponent.ts: getDiscountedTotal()');
     if (this.promotion && this.promotion.promotionCode) {
       // return total - total * this.coupon.discountRate;
@@ -123,7 +130,9 @@ export class CartComponent implements OnInit {
         .getDiscountedAmount(this.promotion.promotionCode, this.total)
         .subscribe({
           next: (response) => {
-            return response;
+            console.log('response: ' + response);
+            this.discountedTotal = response;
+            // return response;
           },
           error: (error) => {
             console.log(
@@ -154,6 +163,8 @@ export class CartComponent implements OnInit {
           .subscribe(
             (response) => {
               this.promotion = response;
+              this.getDiscountedTotal();
+              
             },
             (error) => {
               this.messageService.add({
@@ -166,8 +177,8 @@ export class CartComponent implements OnInit {
               );
             }
           );
-        this.total = this.getDiscountedTotal(this.total);
       }
+      
     }
   }
 

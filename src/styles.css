@@ -107,3 +107,10 @@ p-menubarsub.p-element {
   background-color: #02075d !important;
   border-color: #02075d !important;
 }
+
+.test-button button {
+  background-color: white !important;
+  border-color: white !important;
+  height: 20px;
+  cursor: default;
+}

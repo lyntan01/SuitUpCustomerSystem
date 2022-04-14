@@ -5,7 +5,7 @@
     <p-button
       label="Initialize test cart"
       (onClick)="initialiseTestCart()"
-      class="default-button"
+      class="test-button"
     ></p-button>
     <p-table [value]="cart">
       <ng-template pTemplate="header">
@@ -101,7 +101,7 @@
               <span>Coupon Code: {{ promotion?.promotionCode }}</span>
               <br />
               <span
-                >Discount Rate: {{ promotion?.discountString }}</span
+                >Discount: {{ promotion?.discountString }}</span
               >
               <br />
               <span
@@ -114,12 +114,12 @@
           <td class="text-right">Total:</td>
           <td class="text-center">
             <div *ngIf="!promotion">
-              {{ getTotal() | currency }}
+              {{ total | currency }}
             </div>
             <div *ngIf="promotion">
-              <span class="original-price">{{ getTotal() | currency }}</span>
+              <span class="original-price">{{ total | currency }}</span>
               &nbsp;
-              <span>{{ getDiscountedTotal(getTotal()) | currency }}</span>
+              <span>{{ discountedTotal | currency }}</span>
             </div>
           </td>
           <td></td>
