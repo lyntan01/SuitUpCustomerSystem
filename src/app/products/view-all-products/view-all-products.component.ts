@@ -33,6 +33,7 @@ export class ViewAllProductsComponent implements OnInit {
     console.log('********** ViewAllProductsComponent.ts: NGONIT');
     this.activatedRoute.queryParams.subscribe((params) => {
       console.log(params);
+      
       let keyword: String | undefined = params['keyword'];
       let categoryIds: number[] | undefined = params['category'];
       let tagIds: number[] | undefined = params['tag'];
@@ -50,6 +51,7 @@ export class ViewAllProductsComponent implements OnInit {
   }
 
   fetchProducts(keyword?: String, categoryIds?: number[], tagIds?: number[]) {
+
     console.log('********** ViewAllProductsComponent.ts: FETCH');
     this.standardProductService.getStandardProducts().subscribe((response) => {
       this.standardProducts = response.filter((standardProduct) => {
@@ -130,6 +132,7 @@ export class ViewAllProductsComponent implements OnInit {
   //     }
   //   );
   // }
+
   onSortChange(event: any) {
     let value = event.value;
 

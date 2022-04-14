@@ -1,18 +1,9 @@
-export class UpdateProfileReq {
-  email: string | undefined;
-  password: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
+import { Customer } from './customer';
 
-  constructor(
-    email?: string,
-    password?: string,
-    firstName?: string,
-    lastName?: string
-  ) {
-    this.email = email;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
+export class UpdateProfileReq {
+  currentCustomer: Customer | undefined;
+
+  constructor(currentCustomer?: Customer) {
+    this.currentCustomer = currentCustomer;
   }
 }

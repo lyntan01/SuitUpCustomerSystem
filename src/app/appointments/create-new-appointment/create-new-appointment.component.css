@@ -1,0 +1,21 @@
+.suitup {
+  color: #02075d;
+}
+
+.black {
+  color: black;
+}
+
+.default {
+  background-color: #02075d !important;
+  border-color: #02075d !important;
+}
+
+p-dialog .ui-dialog {
+  overflow: scroll;
+  max-height: 70%;
+}
+
+.custom-height {
+  height: 150px;
+}

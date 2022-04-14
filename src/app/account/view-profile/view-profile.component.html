@@ -1,1 +1,124 @@
-<p>view-profile works!</p>
+<div class="account-container p-grid">
+  <app-account-menu class="p-col"></app-account-menu>
+  <div class="account-card">
+    <h2>My Profile</h2>
+    <p>Manage your profile</p>
+
+    <hr style="opacity: 0.1" />
+    <br />
+
+    <div>
+      <div *ngIf="updateProfileError == true" class="errorMsg">
+        {{ errorMessage }}
+      </div>
+      <form
+        #updateProfileForm="ngForm"
+        (ngSubmit)="updateProfile(updateProfileForm)"
+      >
+        <div class="p-fluid">
+          <div class="p-field p-grid">
+            <label for="email">Email</label>
+            <div class="space-input">
+              <input
+                #email="ngModel"
+                id="email"
+                name="email"
+                type="text"
+                [(ngModel)]="currentCustomer.email"
+                required
+                pInputText
+                disabled
+              />
+            </div>
+          </div>
+
+          <div class="p-field p-grid space-input">
+            <label for="firstName">First Name</label>
+            <div>
+              <input
+                #firstName="ngModel"
+                id="firstName"
+                type="text"
+                name="firstName"
+                [(ngModel)]="currentCustomer.firstName"
+                required
+                pInputText
+              />
+            </div>
+            <div
+              *ngIf="
+                firstName.invalid &&
+                (firstName.dirty || firstName.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="firstName.errors?.['required']">
+                First Name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="p-field p-grid space-input">
+            <label for="lastName"> Last Name</label>
+            <div>
+              <input
+                #lastName="ngModel"
+                id="lastName"
+                name="lastName"
+                type="text"
+                [(ngModel)]="currentCustomer.lastName"
+                required
+                pInputText
+              />
+            </div>
+            <div
+              *ngIf="
+                lastName.invalid &&
+                (lastName.dirty || lastName.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="lastName.errors?.['required']">
+                Last Name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="p-field p-grid space-input">
+            <label for="contactNumber">Contact Number</label>
+            <div>
+              <input
+                #contactNumber="ngModel"
+                id="contactNumber"
+                name="contactNumber"
+                type="text"
+                [(ngModel)]="currentCustomer.contactNumber"
+                required
+                pInputText
+              />
+            </div>
+            <div
+              *ngIf="
+                contactNumber.invalid &&
+                (contactNumber.dirty || contactNumber.touched || submitted)
+              "
+              class="errorText"
+            >
+              <div *ngIf="contactNumber.errors?.['required']">
+                Contact Number is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="p-grid p-jc-end">
+            <div class="save-button">
+              <span>
+                <p-button label="Save" type="submit"></p-button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
