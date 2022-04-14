@@ -1,5 +1,9 @@
-.filter-bar {
+.filter-bar 
+.category-menu 
+.tag-menu {
     margin-right: 0.5em;
+    float:left;
+    width:200px;
 }
 
 label {
