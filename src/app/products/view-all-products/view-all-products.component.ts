@@ -49,7 +49,7 @@ export class ViewAllProductsComponent implements OnInit {
   }
 
   fetchProducts(keyword?: String, categoryIds?: number[], tagIds?: number[]) {
-    console.log('********** ViewAllProductsComponent.ts: FETCH');
+    // console.log('********** ViewAllProductsComponent.ts: FETCH');
     this.standardProductService.getStandardProducts().subscribe((response) => {
       this.standardProducts = response.filter((standardProduct) => {
         if (
@@ -66,8 +66,6 @@ export class ViewAllProductsComponent implements OnInit {
         }
       });
 
-      console.log('********** ViewAllProductsComponent.ts: AFTER RESPONSE');
-
       this.standardProducts = this.standardProducts.filter(
         (standardProduct) => {
           let categoryShow: boolean | undefined = true;
@@ -82,11 +80,16 @@ export class ViewAllProductsComponent implements OnInit {
             for (let categoryId of categoryIds) {
               console.log('Catid = ' + categoryId);
               categoryShow = standardProduct.category?.categoryId == categoryId;
-              if (categoryShow) break;
-              else return false;
+              if (categoryShow) {
+                console.log(
+                  '********** ViewAllProductsComponent.ts: SECOND FILTER ' +
+                    standardProduct.productId
+                );
+                break;
+              }
             }
           } else if (categoryIds == undefined) {
-            return true;
+            categoryShow = true;
           }
 
           if (tagIds) {
@@ -94,13 +97,14 @@ export class ViewAllProductsComponent implements OnInit {
               if (standardProduct.tags) {
                 for (let tag of standardProduct.tags) {
                   tagShow = tag.tagId == tagId;
-                  if (tagShow) return true;
-                  else return false;
                 }
               }
             }
-          } else if (tagIds == undefined) return true;
+          } else if (tagIds == undefined) tagShow = true;
 
+          if (categoryShow && tagShow) {
+            return true;
+          }
           return false;
         }
       );
