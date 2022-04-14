@@ -10,6 +10,8 @@ import { catchError } from 'rxjs/operators';
 import { CreditCard } from '../models/credit-card';
 import { SessionService } from './session.service';
 import { UpdateCreditCardReq } from '../models/update-credit-card-req';
+import { CreateCreditCardReq } from '../models/create-credit-card-req';
+import { Customer } from '../models/customer';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -26,9 +28,16 @@ export class CreditCardService {
     private sessionService: SessionService
   ) {}
 
-  getCreditCards(): Observable<CreditCard[]> {
+  getCreditCards(customer: Customer): Observable<CreditCard[]> {
     return this.httpClient
-      .get<CreditCard[]>(this.baseUrl + '/retrieveAllCreditCards')
+      .get<CreditCard[]>(
+        this.baseUrl +
+          '/retrieveCreditCards' +
+          '?email=' +
+          customer.email +
+          '&password=' +
+          this.sessionService.getPassword()
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -46,9 +55,19 @@ export class CreditCardService {
       .pipe(catchError(this.handleError));
   }
 
-  createNewCreditCard(newCreditCard: CreditCard): Observable<CreditCard> {
+  createNewCreditCard(
+    newCreditCard: CreditCard
+    // expiryDate?: number
+  ): Observable<number> {
+    let createCreditCardReq: CreateCreditCardReq = new CreateCreditCardReq(
+      this.sessionService.getCurrentCustomer().email,
+      this.sessionService.getPassword(),
+      newCreditCard
+      // expiryDate
+    );
+
     return this.httpClient
-      .put<CreditCard>(this.baseUrl, newCreditCard, httpOptions)
+      .put<number>(this.baseUrl, createCreditCardReq, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

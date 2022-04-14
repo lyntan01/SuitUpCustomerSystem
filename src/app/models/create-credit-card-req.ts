@@ -4,17 +4,10 @@ export class CreateCreditCardReq {
   email: string | undefined;
   password: string | undefined;
   newCreditCard: CreditCard | undefined;
-  expireDate: Date | undefined;
 
-  constructor(
-    email?: string,
-    password?: string,
-    newCreditCard?: CreditCard,
-    expireDate?: Date
-  ) {
+  constructor(email?: string, password?: string, newCreditCard?: CreditCard) {
     this.email = email;
     this.password = password;
     this.newCreditCard = newCreditCard;
-    this.expireDate = expireDate;
   }
 }

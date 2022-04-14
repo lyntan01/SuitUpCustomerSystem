@@ -26,7 +26,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DataViewModule } from 'primeng/dataview';
-import { DropdownModule } from 'primeng/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -119,7 +118,6 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     SliderModule,
     MultiSelectModule,
     DataViewModule,
-    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
