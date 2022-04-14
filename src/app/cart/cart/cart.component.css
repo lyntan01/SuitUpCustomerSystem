@@ -21,3 +21,7 @@ td div {
     text-decoration: line-through;
     color: #aaafb4;
 }
+
+.promotion-details {
+    margin-left: 10rem !important;
+}

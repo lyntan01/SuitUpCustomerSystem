@@ -72,45 +72,44 @@
       <ng-template pTemplate="footer">
         <tr *ngIf="totalNumItems > 0">
           <td colspan="4">
-          <div>
-            <form
-              #applyPromotionCodeForm="ngForm"
-              (ngSubmit)="applyPromotionCode(applyPromotionCodeForm)"
-            >
-              APPLY COUPON CODE: &nbsp;
-              <input
-                type="text"
-                id="couponCode"
-                name="couponCode"
-                placeholder="Enter coupon code"
-                [(ngModel)]="promotionCode"
-                pInputText
-              />
-              <span class="smallSpace">s</span>
-              <p-button
-                id="couponButton"
-                type="submit"
-                label="Apply"
-                class="default-button"
-              ></p-button>
-            </form>
-            <div style="height: 1em">
-              <span class="smallSpace">s</span>
-            </div>
-            <div id="coupon-card" *ngIf="promotion">
-              <span>Coupon Code: {{ promotion?.promotionCode }}</span>
-              <br />
-              <span
-                >Discount: {{ promotion?.discountString }}</span
+            <div>
+              <form
+                #applyPromotionCodeForm="ngForm"
+                (ngSubmit)="applyPromotionCode(applyPromotionCodeForm)"
               >
-              <br />
-              <span
-                >Minimum Spend:
-                {{ promotion?.minimumSpending | currency }}</span
-              >
+                Apply Promotion: &nbsp;
+                <input
+                  type="text"
+                  id="couponCode"
+                  name="couponCode"
+                  placeholder="Enter promotion code"
+                  [(ngModel)]="promotionCode"
+                  pInputText
+                />
+                <span class="smallSpace">s</span>
+                <p-button
+                  id="couponButton"
+                  type="submit"
+                  label="Apply"
+                  class="default-button"
+                ></p-button>
+              </form>
+              <div style="height: 1em">
+                <span class="smallSpace">s</span>
+              </div>
+              <div class="promotion-details text-blue-900" *ngIf="promotion">
+                <span>Discount: {{ promotion?.discountString }}</span>
+                <br />
+                <span *ngIf="promotion.minimumSpending != 0"
+                  >Minimum Spend:
+                  {{ promotion?.minimumSpending | currency }}</span
+                >
+                <span *ngIf="promotion.minimumSpending == 0"
+                  >No Minimum Spend</span
+                >
+              </div>
             </div>
-          </div>
-        </td>
+          </td>
           <td class="text-right">Total:</td>
           <td class="text-center">
             <div *ngIf="!promotion">
