@@ -29,6 +29,8 @@ import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DataViewModule } from 'primeng/dataview';
 import { AccordionModule } from 'primeng/accordion';
+import { ListboxModule } from 'primeng/listbox';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -130,6 +132,8 @@ import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view
     MultiSelectModule,
     DataViewModule,
     AccordionModule,
+    ListboxModule,
+    SelectButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],
