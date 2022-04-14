@@ -82,14 +82,24 @@ export class HeaderComponent implements OnInit {
             routerLink: '/profile',
           },
           {
-            label: 'My Orders',
-            icon: 'pi pi-copy',
-            routerLink: '/viewAllOrders',
+            label: 'My Measurements',
+            icon: 'pi pi-pencil',
+            routerLink: '/viewMyMeasurements',
           },
           {
             label: 'My Appointments',
             icon: 'pi pi-calendar',
             routerLink: '/viewAllAppointments',
+          },
+          {
+            label: 'My Support Tickets',
+            icon: 'pi pi-ticket',
+            routerLink: '/viewAllSupportTickets',
+          },
+          {
+            label: 'My Orders',
+            icon: 'pi pi-copy',
+            routerLink: '/viewAllOrders',
           },
           {
             label: 'Logout',

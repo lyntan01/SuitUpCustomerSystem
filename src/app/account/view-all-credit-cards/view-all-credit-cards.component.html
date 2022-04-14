@@ -4,21 +4,17 @@
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-text"
 ></p-confirmDialog>
-<div class="account-container p-grid">
-  <app-account-menu class="p-col"></app-account-menu>
+<div class="account-container">
+  <app-account-menu></app-account-menu>
 
-  <div class="p-md-9 p-col-10 account-card">
+  <div class="account-card">
     <h2>My Credit Cards</h2>
 
     <p>Manage your credit cards</p>
 
     <hr style="opacity: 0.1" />
 
-    <div class="cc-container">
-      <div *ngIf="deleteCreditCardError == true" class="errorMsg">
-        {{ errorMessage }}
-      </div>
-
+    <div>
       <p-toolbar>
         <ng-template pTemplate="right">
           <p-button
@@ -109,7 +105,7 @@
                       required
                       pInputText
                       maxlength="3"
-                      maxlength="3"
+                      minlength="3"
                     />
                   </div>
                   <div
@@ -199,7 +195,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
-          <div class="p-d-flex p-ai-center p-jc-between">
+          <div>
             In total there are
             {{ creditCards ? creditCards.length : 0 }} credit cards.
           </div>

@@ -45,7 +45,11 @@ export class ViewAllAddressesComponent implements OnInit {
         this.sessionService.getCurrentCustomer().addresses = this.addresses;
       },
       error: (error: String) => {
-        console.log('********** Retrieve all addresses' + error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error has occurred while retrieving addresses: ' + error,
+        });
       },
     });
   }
@@ -81,16 +85,18 @@ export class ViewAllAddressesComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail:
-              'Address successfully created! ' + '(ID: ' + newAddressId + ')',
+            detail: 'Address successfully saved!',
           });
+
+          createAddressForm.form.markAsUntouched();
+          createAddressForm.form.markAsPristine();
+          createAddressForm.form.updateValueAndValidity();
         },
         (error) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail:
-              'An error has occurred while creating credit card: ' + error,
+            detail: 'An error has occurred while saving address: ' + error,
           });
         }
       );
@@ -122,7 +128,9 @@ export class ViewAllAddressesComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: error,
+              detail:
+                'An error has occured while attempting to delete address: ' +
+                error,
             });
           },
         });
