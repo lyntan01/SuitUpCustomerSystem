@@ -139,3 +139,7 @@ p-menubarsub.p-element {
   margin-top: 20px;
 
 }
+
+.account-menu {
+  min-width: 120px;
+}

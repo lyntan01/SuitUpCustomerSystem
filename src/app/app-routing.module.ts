@@ -7,6 +7,7 @@ import { ViewAllAddressesComponent } from './account/view-all-addresses/view-all
 import { ViewAllAppointmentsComponent } from './account/view-all-appointments/view-all-appointments.component';
 import { ViewAllCreditCardsComponent } from './account/view-all-credit-cards/view-all-credit-cards.component';
 import { ViewAllOrdersComponent } from './account/view-all-orders/view-all-orders.component';
+import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view-my-measurements.component';
 import { ViewOrderItemDetailsComponent } from './account/view-order-item-details/view-order-item-details.component';
 import { ViewProfileComponent } from './account/view-profile/view-profile.component';
 import { AccessRightErrorComponent } from './admin/access-right-error/access-right-error.component';
@@ -58,6 +59,7 @@ const routes: Routes = [
       { path: 'orderSummary', component: OrderSummaryComponent },
     ],
   },
+  { path: 'viewMyMeasurements', component: ViewMyMeasurementsComponent },
 ];
 
 @NgModule({

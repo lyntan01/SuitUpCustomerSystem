@@ -1,0 +1,23 @@
+.space-input {
+  margin-bottom: 1.5em;
+}
+
+.save-button {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0;
+}
+
+.block_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.smaller-width {
+  width: 200px;
+}
+
+.right-space {
+  margin-right: 15px;
+}
