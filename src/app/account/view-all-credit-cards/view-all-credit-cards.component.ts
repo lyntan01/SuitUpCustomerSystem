@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { CreditCardService } from 'src/app/services/credit-card.service';
 import { Customer } from 'src/app/models/customer';
 import { CreditCard } from 'src/app/models/credit-card';
 import { CustomerService } from 'src/app/services/customer.service';
-import { asLiteral } from '@angular/compiler/src/render3/view/util';
 import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-view-all-credit-cards',
   templateUrl: './view-all-credit-cards.component.html',
   styleUrls: ['./view-all-credit-cards.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class ViewAllCreditCardsComponent implements OnInit {
+  msgs: Message[];
   deleteCreditCardError: boolean;
   createCreditCardError: boolean;
   errorMessage: string | undefined;
@@ -32,7 +33,9 @@ export class ViewAllCreditCardsComponent implements OnInit {
     public sessionService: SessionService,
     private router: Router,
     private creditCardService: CreditCardService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.deleteCreditCardError = false;
     this.createCreditCardError = false;
@@ -41,6 +44,7 @@ export class ViewAllCreditCardsComponent implements OnInit {
     this.displayBasic = false;
     this.newCreditCard = new CreditCard();
     this.submitted = false;
+    this.msgs = new Array();
   }
 
   ngOnInit(): void {
@@ -87,10 +91,6 @@ export class ViewAllCreditCardsComponent implements OnInit {
     );
   }
 
-  void() {
-    console.log('test');
-  }
-
   showBasicDialog() {
     this.displayBasic = true;
   }
@@ -123,16 +123,81 @@ export class ViewAllCreditCardsComponent implements OnInit {
           this.createCreditCardError = false;
           this.newCreditCard = new CreditCard();
           this.ngOnInit();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail:
+              'Credit Card with ID: ' +
+              newCreditCardId +
+              ' successfully created.',
+          });
         },
         (error) => {
-          this.createCreditCardError = true;
-          this.submitted = false;
-          this.errorMessage =
-            'An error has occurred while creating apppointment: ' + error;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'An error has occurred while creating credit card: ' + error,
+          });
+          // this.createCreditCardError = true;
+          // this.submitted = false;
+          // this.errorMessage =
+          //   'An error has occurred while creating apppointment: ' + error;
 
-          console.log(error);
+          // console.log(error);
         }
       );
     }
+  }
+
+  deleteCreditCard(creditCard: CreditCard) {
+    console.log(creditCard);
+    this.confirmationService.confirm({
+      message:
+        'Are you sure that you want to delete this Credit Card : ' +
+        creditCard.cardNumber +
+        '?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.creditCardService
+          .deleteCreditCard(creditCard.creditCardId)
+          .subscribe({
+            next: (response) => {
+              this.ngOnInit();
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Confirmed',
+                detail: 'Credit card deleted!',
+              });
+            },
+            error: (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: error,
+              });
+            },
+          });
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected.',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cancelled',
+              detail: 'You have cancelled.',
+            });
+            break;
+        }
+      },
+    });
   }
 }
