@@ -41,6 +41,19 @@ export class AddressService {
       .pipe(catchError(this.handleError));
   }
 
+  updateAddress(address?: Address): Observable<any> {
+    let updateAddressReq: UpdateAddressReq = new UpdateAddressReq(
+      this.sessionService.getCurrentCustomer()?.email,
+      this.sessionService.getCurrentCustomer()?.password, 
+      address
+    );
+
+    return this.httpClient.post<any>(
+      this.baseUrl,
+      updateAddressReq,
+      httpOptions
+    );
+
   createNewAddress(newAddress: Address): Observable<number> {
     let createAddressReq: CreateAddressReq = new CreateAddressReq(
       this.sessionService.getCurrentCustomer().email,
