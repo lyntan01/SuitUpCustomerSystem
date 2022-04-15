@@ -75,7 +75,7 @@ export class ViewAllCreditCardsComponent implements OnInit {
   }
 
   formattedDate(date: Date): String {
-    // console.log(date);
+    console.log(date);
     return (
       date.toString().substring(5, 7) + ' / ' + date.toString().substring(2, 4)
     );

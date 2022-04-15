@@ -1,4 +1,4 @@
 export enum CollectionMethodEnum {
-    DELIVERY = 'Delivery',
-    PICKUP = 'Pickup',
+    DELIVERY = 'DELIVERY',
+    PICKUP = 'PICKUP',
 }

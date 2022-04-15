@@ -71,16 +71,17 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
-  applyPromotionCode(newOrder: Order): Observable<any> {
+  applyPromotionCode(newOrder: Order): Observable<number> {
+    let promotion = this.sessionService.getPromotion();
     let applyPromotionCodeReq: ApplyPromotionCodeReq =
       new ApplyPromotionCodeReq(
         this.sessionService.getEmail(),
         this.sessionService.getPassword(),
         newOrder,
-        this.sessionService.getPromotion()?.promotionCode
+        promotion ? promotion.promotionCode : newOrder.promotion?.promotionCode
       );
 
-    return this.httpClient.post<any>(
+    return this.httpClient.post<number>(
       this.baseUrl,
       applyPromotionCodeReq,
       httpOptions

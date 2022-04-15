@@ -1,1 +1,179 @@
-<p>order-summary works!</p>
+<p-toast position="top-right"></p-toast>
+<div>
+  <p-card>
+    <ng-template pTemplate="title"> Order Summary </ng-template>
+    <ng-template pTemplate="subtitle"> Review order details </ng-template>
+    <ng-template pTemplate="content">
+      <div class="p-fluid">
+        <h3>Products</h3>
+        <div class="p-field">
+          <p-table [value]="cart">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 5%; text-align: center">S/N</th>
+                <th>Image</th>
+                <th style="width: 40%">Product Name</th>
+                <th style="width: 15%; text-align: center">Unit Price</th>
+                <th style="width: 10%; text-align: center">Quantity</th>
+                <th style="width: 10%; text-align: center">Subtotal</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-orderItem let-rowIndex="rowIndex">
+              <tr>
+                <td>{{ rowIndex + 1 }}</td>
+                <td>
+                  <div class="p-d-flex p-ai-center">
+                    <img
+                      src="http://localhost:8080/SuitUp-war/resources/images/productImages/{{
+                        orderItem.product?.image
+                      }}"
+                      alt="{{ orderItem.product?.name }}"
+                      height="130"
+                      class="p-mr-4 shadow-4"
+                    />
+                  </div>
+                </td>
+                <td>
+                  {{ orderItem.product.name }}
+                </td>
+                <td class="text-center">
+                  {{ orderItem.product.unitPrice | currency }}
+                </td>
+                <td class="text-center">
+                  {{ orderItem.quantity }}
+                </td>
+                <td class="text-center">
+                  {{ orderItem.subTotal | currency }}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <tr *ngIf="cart.length > 0">
+                <td colspan="4">
+                  <div>
+                    <div class="font-normal text-blue-900" *ngIf="promotion">
+                      <span class="font-bold">Promotion Code: </span
+                      ><span>{{ promotion?.promotionCode }}</span>
+                      <br />
+                      <span class="font-bold">Discount: </span
+                      ><span>{{ promotion?.discountString }}</span>
+                      <br />
+                      <span *ngIf="promotion.minimumSpending != 0">
+                        <span class="font-bold">Minimum Spend: </span>
+                        {{ promotion?.minimumSpending | currency }}</span
+                      >
+                      <span
+                        *ngIf="promotion.minimumSpending == 0"
+                        class="font-bold"
+                        >No Minimum Spend</span
+                      >
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">Total:</td>
+                <td class="text-center">
+                  <div *ngIf="!promotion">
+                    {{ total | currency }}
+                  </div>
+                  <div *ngIf="promotion">
+                    <span class="original-price">{{ total | currency }}</span>
+                    &nbsp;
+                    <span>{{ discountedTotal | currency }}</span>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="flex align-items-center justify-content-between">
+                <div class="mr-2">
+                  You have {{ cart ? cart.length : 0 }} products.
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <p-divider></p-divider>
+
+        <h3 class="mt-6">Shipping Method</h3>
+        <div class="p-field">
+          <div class="grid w-6">
+            <div class="col-6 font-bold">Collection Method</div>
+            <div class="col-6">{{ collectionMethod }}</div>
+
+            <div class="col-6 font-bold" *ngIf="collectionMethod == 'DELIVERY'">
+              Delivery Option
+            </div>
+            <div class="col-6" *ngIf="collectionMethod == 'DELIVERY'">
+              {{ expressOrder ? "Express" : "Normal" }}
+            </div>
+
+            <div class="col-6 font-bold" *ngIf="collectionMethod == 'DELIVERY'">
+              Delivery Fee
+            </div>
+            <div class="col-6" *ngIf="collectionMethod == 'DELIVERY'">
+              {{ expressOrder ? "$10.00" : "Free" }}
+            </div>
+
+            <div class="col-6 font-bold" *ngIf="collectionMethod == 'DELIVERY'">
+              Delivery Address
+            </div>
+            <div class="col-6" *ngIf="collectionMethod == 'DELIVERY'">
+              {{ deliveryAddress.addressLineOne }}
+              {{ deliveryAddress.addressLineTwo }}, S{{
+                deliveryAddress.postalCode
+              }}
+            </div>
+
+            <div class="col-6 font-bold" *ngIf="collectionMethod == 'PICKUP'">
+              Store Address
+            </div>
+            <div class="col-6" *ngIf="collectionMethod == 'PICKUP'">
+              {{ storeAddress.addressLineOne }}
+              {{ storeAddress.addressLineTwo }}, S{{ storeAddress.postalCode }}
+            </div>
+          </div>
+        </div>
+
+        <p-divider></p-divider>
+
+        <h3 class="mt-6">Credit Card Payment</h3>
+        <div class="p-field">
+          <div class="grid w-6">
+            <div class="col-6 font-bold">Card Number</div>
+            <div class="col-6">{{ creditCard.cardNumber }}</div>
+
+            <div class="col-6 font-bold">Expiry Date</div>
+            <div class="col-6">{{ formattedDate(creditCard.expiryDate) }}</div>
+
+            <!-- CVV not shown for security purposes -->
+
+            <div class="col-6 font-bold">Name on Card</div>
+            <div class="col-6">{{ creditCard.holderName }}</div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="grid justify-content-end">
+        <div class="account-save-button grid">
+          <!-- <p-button
+                    class="p-col"
+                    type="button"
+                    label="Back"
+                    (onClick)="prevPage()"
+                    icon="pi pi-angle-left"
+                >
+                </p-button> -->
+          <p-button
+            type="button"
+            label="Checkout"
+            (onClick)="checkout()"
+            icon="pi pi-angle-right"
+            iconPos="right"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

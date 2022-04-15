@@ -79,6 +79,7 @@ export class SessionService {
   }
 
   setCreditCard(creditCard: CreditCard): void {
+    // console.log('SessionService: setCreditCard: expiry date = ' + creditCard.expiryDate);
     sessionStorage.setItem('creditCard', JSON.stringify(creditCard));
   }
 
@@ -105,6 +106,14 @@ export class SessionService {
     sessionStorage.setItem('collectionMethod', collectionMethod);
   }
 
+  getExpressOrder(): boolean | undefined {
+    return sessionStorage.getItem('expressOrder')?.toLowerCase() == 'true';
+  }
+
+  setExpressOrder(expressOrder: boolean) {
+    sessionStorage.setItem('expressOrder', String(expressOrder));
+  }
+
   getPromotion(): Promotion | undefined {
     const promotion = sessionStorage.getItem('promotion');
     if (typeof promotion === 'string') {
@@ -119,11 +128,13 @@ export class SessionService {
   }
 
   setCheckoutOrderId(checkoutOrderId: number | undefined) {
+    console.log("SessionService: setCheckoutOrderId : orderId = " + checkoutOrderId);
     sessionStorage.setItem('checkoutOrderId', JSON.stringify(checkoutOrderId));
   }
 
   getCheckoutOrderId(): number | undefined {
     const checkoutOrderId = sessionStorage.getItem('checkoutOrderId');
+    console.log("SessionService: getCheckoutOrderId : orderId = " + checkoutOrderId);
     if (typeof checkoutOrderId === 'string') {
       return JSON.parse(checkoutOrderId);
     } else {

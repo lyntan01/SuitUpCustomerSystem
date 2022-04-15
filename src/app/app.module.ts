@@ -32,6 +32,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ListboxModule } from 'primeng/listbox';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -137,7 +138,8 @@ import { ViewAllSupportTicketsComponent } from './account/view-all-support-ticke
     AccordionModule,
     FieldsetModule,
     ListboxModule,
-    SelectButtonModule
+    SelectButtonModule,
+    RadioButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

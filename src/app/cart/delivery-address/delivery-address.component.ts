@@ -20,6 +20,7 @@ export class DeliveryAddressComponent implements OnInit {
   submitted: boolean;
   selectedCollectionMethod: SelectItem;
   collectionMethods: SelectItem[];
+  expressOrder: boolean;
 
   constructor(
     private router: Router,
@@ -37,6 +38,7 @@ export class DeliveryAddressComponent implements OnInit {
       { label: 'Pickup', value: tmp[1].toString().toUpperCase() },
     ];
     this.selectedCollectionMethod = this.collectionMethods[0];
+    this.expressOrder = false;
   }
 
   ngOnInit(): void {
@@ -82,6 +84,7 @@ export class DeliveryAddressComponent implements OnInit {
   nextPage(deliveryAddressForm: NgForm): void {
     this.submitted = true;
     this.sessionService.setCollectionMethod(this.selectedCollectionMethod.value);
+    this.sessionService.setExpressOrder(this.expressOrder);
 
     if (this.selectedDeliveryAddress) {
       // will take selected address by default, if both selected and new address created
@@ -90,6 +93,7 @@ export class DeliveryAddressComponent implements OnInit {
       this.router.navigate(['checkout/paymentMethod']);
     } else if (deliveryAddressForm.valid) {
       this.sessionService.setDeliveryAddress(this.newDeliveryAddress);
+      console.log('addressId = ' + this.sessionService.getDeliveryAddress()?.addressId);
       console.log(this.sessionService.getDeliveryAddress()?.name);
       this.router.navigate(['checkout/paymentMethod']);
     } else {
