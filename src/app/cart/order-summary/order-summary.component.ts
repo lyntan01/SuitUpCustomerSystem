@@ -261,26 +261,36 @@ export class OrderSummaryComponent implements OnInit {
               (orderId) => {
                 order.orderId = orderId;
 
-                this.orderService.applyPromotionCode(order).subscribe(
-                  (orderId) => {
-                    this.sessionService.setCheckoutOrderId(orderId);
-                    this.sessionService.clearCheckout();
-                    console.log(orderId);
-                    this.router.navigate([
-                      '/checkoutConfirmation',
-                      { orderId: orderId },
-                    ]);
-                  },
-                  (error) => {
-                    this.messageService.add({
-                      severity: 'error',
-                      summary: 'Error',
-                      detail:
-                        'An error has occurred while applying the promotion: ' +
-                        error,
-                    });
-                  }
-                );
+                if (this.promotion) {
+                  this.orderService.applyPromotionCode(order).subscribe(
+                    (orderId) => {
+                      this.sessionService.setCheckoutOrderId(orderId);
+                      this.sessionService.clearCheckout();
+                      console.log(orderId);
+                      this.router.navigate([
+                        '/checkoutConfirmation',
+                        { orderId: orderId },
+                      ]);
+                    },
+                    (error) => {
+                      this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail:
+                          'An error has occurred while applying the promotion: ' +
+                          error,
+                      });
+                    }
+                  );
+                } else {
+                  this.sessionService.setCheckoutOrderId(orderId);
+                  this.sessionService.clearCheckout();
+                  console.log(orderId);
+                  this.router.navigate([
+                    '/checkoutConfirmation',
+                    { orderId: orderId },
+                  ]);
+                }
               },
               (error) => {
                 this.messageService.add({

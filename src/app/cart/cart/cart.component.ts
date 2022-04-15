@@ -48,7 +48,6 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     let tmpCart = this.sessionService.getCart();
 
     if (tmpCart) {
@@ -262,7 +261,9 @@ export class CartComponent implements OnInit {
   checkoutCart(): void {
     if (this.sessionService.getIsLogin()) {
       this.sessionService.setCart(this.cart);
-      this.sessionService.setPromotion(this.promotion);
+      if (this.promotion) {
+        this.sessionService.setPromotion(this.promotion);
+      }
       this.router.navigate(['/checkout']);
     } else {
       this.messageService.add({
