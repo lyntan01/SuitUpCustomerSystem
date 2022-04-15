@@ -173,21 +173,21 @@
                   pRipple
                   icon="pi pi-eye"
                   class="p-button-rounded p-button-info p-button-text"
-                  (click)="showSupportTicketDialog()"
+                  (click)="showSupportTicketDialog(supportTicket)"
                 ></button>
                 <p-dialog
-                  header="{{ supportTicket.name }}"
+                  header="{{ selectedSupportTicketForViewing.name }}"
                   [(visible)]="displaySupportTicket"
                   [style]="{ width: '50vw' }"
                   [modal]="true"
                 >
                   <p-fieldset legend="Your enquiry:">
-                    {{ supportTicket.description }}
+                    {{ selectedSupportTicketForViewing.description }}
                   </p-fieldset>
                   <br />
 
                   <p-fieldset legend="Staff's reply:">
-                    {{ supportTicket.staffReply }}
+                    {{ selectedSupportTicketForViewing.staffReply }}
                   </p-fieldset>
 
                   <!-- <table>

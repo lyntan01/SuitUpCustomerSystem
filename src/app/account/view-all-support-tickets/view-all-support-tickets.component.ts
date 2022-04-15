@@ -19,6 +19,7 @@ export class ViewAllSupportTicketsComponent implements OnInit {
   newSupportTicket: SupportTicket;
   submitted: boolean;
   displaySupportTicket: boolean;
+  selectedSupportTicketForViewing: SupportTicket;
 
   constructor(
     public sessionService: SessionService,
@@ -32,6 +33,7 @@ export class ViewAllSupportTicketsComponent implements OnInit {
     this.newSupportTicket = new SupportTicket();
     this.submitted = false;
     this.displaySupportTicket = false;
+    this.selectedSupportTicketForViewing = new SupportTicket();
   }
 
   ngOnInit(): void {
@@ -64,7 +66,8 @@ export class ViewAllSupportTicketsComponent implements OnInit {
     this.displayBasic = true;
   }
 
-  showSupportTicketDialog() {
+  showSupportTicketDialog(supportTicket: SupportTicket) {
+    this.selectedSupportTicketForViewing = supportTicket;
     this.displaySupportTicket = true;
   }
 
