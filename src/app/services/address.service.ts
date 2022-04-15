@@ -44,7 +44,7 @@ export class AddressService {
   updateAddress(address?: Address): Observable<any> {
     let updateAddressReq: UpdateAddressReq = new UpdateAddressReq(
       this.sessionService.getCurrentCustomer()?.email,
-      this.sessionService.getCurrentCustomer()?.password, 
+      this.sessionService.getPassword(),
       address
     );
 
