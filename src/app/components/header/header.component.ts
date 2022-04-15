@@ -14,9 +14,11 @@ export class HeaderComponent implements OnInit {
   login: boolean;
   userButton: string = '';
 
-  constructor(public sessionService: SessionService, 
+  constructor(
+    public sessionService: SessionService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute
+  ) {
     this.items = [];
     this.loginItems = [];
     this.login = false;
@@ -24,7 +26,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.sessionService.getIsLogin()) {
-      this.userButton = this.sessionService.getCurrentCustomer()?.fullName ?? '';
+      this.userButton =
+        this.sessionService.getCurrentCustomer()?.fullName ?? '';
     } else {
       this.userButton = '';
     }
@@ -51,8 +54,8 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Stores',
         routerLink: '/viewAllStores',
-      }
-  ];
+      },
+    ];
 
     this.loginItems = [
       {
@@ -79,14 +82,24 @@ export class HeaderComponent implements OnInit {
             routerLink: '/profile',
           },
           {
-            label: 'My Orders',
-            icon: 'pi pi-copy',
-            routerLink: '/viewAllOrders',
+            label: 'My Measurements',
+            icon: 'pi pi-pencil',
+            routerLink: '/viewMyMeasurements',
           },
           {
             label: 'My Appointments',
             icon: 'pi pi-calendar',
             routerLink: '/viewAllAppointments',
+          },
+          {
+            label: 'My Support Tickets',
+            icon: 'pi pi-ticket',
+            routerLink: '/viewAllSupportTickets',
+          },
+          {
+            label: 'My Orders',
+            icon: 'pi pi-copy',
+            routerLink: '/viewAllOrders',
           },
           {
             label: 'Logout',

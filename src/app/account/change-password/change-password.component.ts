@@ -4,11 +4,14 @@ import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { SessionService } from 'src/app/services/session.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class ChangePasswordComponent implements OnInit {
   currentCustomer: Customer;
@@ -17,17 +20,16 @@ export class ChangePasswordComponent implements OnInit {
   newPassword: string | undefined;
   confirmPassword: string | undefined;
   submitted: boolean;
-  changePasswordError: boolean;
-  errorMessage: string | undefined;
 
   constructor(
     public sessionService: SessionService,
     private router: Router,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.currentCustomer = this.sessionService.getCurrentCustomer();
     this.currentPassword = this.sessionService.getPassword();
-    this.changePasswordError = false;
     this.submitted = false;
   }
 
@@ -44,18 +46,16 @@ export class ChangePasswordComponent implements OnInit {
   changePassword(changePasswordForm: NgForm) {
     this.submitted = true;
 
-    // console.log(this.oldPassword);
-    // console.log(this.currentPassword);
-    // console.log(this.newPassword);
-    // console.log(this.confirmPassword);
-
     if (changePasswordForm.invalid) {
-      // console.log('fail');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'All fields have to be filled!',
+      });
     } else if (
       this.oldPassword === this.currentPassword &&
       this.newPassword === this.confirmPassword
     ) {
-      // console.log('test');
       this.customerService
         .changePassword(this.oldPassword!, this.newPassword!)
         .subscribe(
@@ -63,7 +63,6 @@ export class ChangePasswordComponent implements OnInit {
             this.sessionService.setPassword(this.confirmPassword);
             this.currentPassword = this.sessionService.getPassword();
 
-            this.changePasswordError = false;
             this.submitted = false;
 
             this.oldPassword = undefined;
@@ -73,12 +72,20 @@ export class ChangePasswordComponent implements OnInit {
             changePasswordForm.form.markAsPristine();
             changePasswordForm.form.markAsUntouched();
             changePasswordForm.form.updateValueAndValidity();
+
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Password successfully updated!',
+            });
           },
           (error) => {
-            this.changePasswordError = true;
-            this.errorMessage =
-              'An error has occurred while changing the password: ' + error;
-            console.log(error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'Error occurred while attempting to change password: ' + error,
+            });
           }
         );
     } else {

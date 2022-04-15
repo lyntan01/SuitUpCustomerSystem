@@ -1,0 +1,232 @@
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+
+<div class="account-container">
+  <app-account-menu></app-account-menu>
+
+  <div class="account-card">
+    <h2>My Support Tickets</h2>
+
+    <p>Manage your support tickets</p>
+
+    <hr style="opacity: 0.1" />
+
+    <div>
+      <p-toolbar>
+        <ng-template pTemplate="right">
+          <p-button
+            (click)="showBasicDialog()"
+            icon="pi pi-plus"
+            label="Create a Support Ticket"
+          ></p-button>
+        </ng-template>
+      </p-toolbar>
+
+      <br />
+
+      <div>
+        <p-dialog
+          header="Create a Support Ticket"
+          [(visible)]="displayBasic"
+          [modal]="true"
+          [style]="{ width: '50vw' }"
+        >
+          <p-panel header="">
+            <div>
+              <form #createSupportTicketForm="ngForm">
+                <div class="p-fluid">
+                  <div class="space-input">
+                    <label for="subject">Subject</label>
+                    <div>
+                      <input
+                        #subject="ngModel"
+                        id="subject"
+                        type="text"
+                        name="subject"
+                        [(ngModel)]="newSupportTicket.name"
+                        required
+                        pInputText
+                        maxlength="32"
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        subject.invalid &&
+                        (subject.dirty || subject.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="subject.errors?.['required']">
+                        Subject is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="space-input">
+                    <label for="description">Description</label>
+                    <div>
+                      <!-- <input
+                        #description="ngModel"
+                        id="description"
+                        type="text"
+                        name="description"
+                        [(ngModel)]="newSupportTicket.description"
+                        required
+                        pInputTextArea
+                        maxlength="256"
+                      /> -->
+
+                      <textarea
+                        #description="ngModel"
+                        id="description"
+                        type="text"
+                        name="description"
+                        [(ngModel)]="newSupportTicket.description"
+                        required
+                        rows="5"
+                        cols="86"
+                        pInputTextarea
+                        maxlength="256"
+                      ></textarea>
+                    </div>
+                    <div
+                      *ngIf="
+                        description.invalid &&
+                        (description.dirty || description.touched || submitted)
+                      "
+                      class="errorText"
+                    >
+                      <div *ngIf="description.errors?.['required']">
+                        Description is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </p-panel>
+          <ng-template pTemplate="footer">
+            <p-button
+              icon="pi pi-check"
+              (click)="createNewSupportTicket(createSupportTicketForm)"
+              label="Submit Support Ticket"
+              styleClass="p-button-text"
+            ></p-button>
+          </ng-template>
+        </p-dialog>
+      </div>
+
+      <p-table [value]="supportTickets">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">
+              Subject<p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="description">
+              Description<p-sortIcon field="description"></p-sortIcon>
+            </th>
+            <th pSortableColumn="date">
+              Date<p-sortIcon field="date"></p-sortIcon>
+            </th>
+            <th pSortableColumn="resolved">
+              Resolved<p-sortIcon field="resolved"></p-sortIcon>
+            </th>
+            <th style="width: 5rem"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-supportTicket>
+          <tr>
+            <td>
+              {{ supportTicket.name }}
+            </td>
+
+            <td>{{ supportTicket.description }}</td>
+            <td>{{ supportTicket.dateTime }}</td>
+            <td>
+              <p *ngIf="supportTicket.isResolved">
+                <span class="pill-resolved"> Yes</span>
+              </p>
+              <p *ngIf="!supportTicket.isResolved">
+                <span class="pill-unresolved"> No</span>
+              </p>
+            </td>
+            <td>
+              <p *ngIf="!supportTicket.isResolved">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-times"
+                  class="p-button-rounded p-button-danger p-button-text"
+                  (click)="deleteSupportTicket(supportTicket)"
+                ></button>
+              </p>
+
+              <p *ngIf="supportTicket.isResolved">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-eye"
+                  class="p-button-rounded p-button-info p-button-text"
+                  (click)="showSupportTicketDialog(supportTicket)"
+                ></button>
+                <p-dialog
+                  header="{{ selectedSupportTicketForViewing.name }}"
+                  [(visible)]="displaySupportTicket"
+                  [style]="{ width: '50vw' }"
+                  [modal]="true"
+                >
+                  <p-fieldset legend="Your enquiry:">
+                    {{ selectedSupportTicketForViewing.description }}
+                  </p-fieldset>
+                  <br />
+
+                  <p-fieldset legend="Staff's reply:">
+                    {{ selectedSupportTicketForViewing.staffReply }}
+                  </p-fieldset>
+
+                  <!-- <table>
+                    <tr>
+                      <td class="color-cell">Subject</td>
+                      <td>{{ supportTicket.name }}</td>
+                    </tr>
+
+                    <tr>
+                      <td>Description</td>
+                      <td>{{ supportTicket.description }}</td>
+                    </tr>
+
+                    <tr>
+                      <td>Staff Reply</td>
+                      <td>{{ supportTicket.staffReply }}</td>
+                    </tr>
+                  </table> -->
+
+                  <ng-template pTemplate="footer">
+                    <p-button
+                      icon="pi pi-check"
+                      (click)="displaySupportTicket = false"
+                      label="Ok"
+                      styleClass="p-button-text"
+                    ></p-button>
+                  </ng-template>
+                </p-dialog>
+              </p>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div>
+            In total there are
+            {{ supportTickets ? supportTickets.length : 0 }} support tickets.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

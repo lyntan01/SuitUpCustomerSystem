@@ -1,0 +1,27 @@
+.cart-container {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+td div {
+    vertical-align: middle;
+}
+
+.smallSpace {
+    font-size: 0.5em;
+    color: transparent;
+}
+
+:host >>> .p-inputnumber-input {
+    width: 100%;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #aaafb4;
+}
+
+.promotion-details {
+    margin-left: 10rem !important;
+}

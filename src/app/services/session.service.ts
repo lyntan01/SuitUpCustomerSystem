@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Address } from '../models/address';
 import { CreditCard } from '../models/credit-card';
 import { Customer } from '../models/customer';
+import { CollectionMethodEnum } from '../models/enum/collection-method-enum';
 import { OrderLineItem } from '../models/order-line-item';
 import { Promotion } from '../models/promotion';
 
@@ -78,6 +79,7 @@ export class SessionService {
   }
 
   setCreditCard(creditCard: CreditCard): void {
+    // console.log('SessionService: setCreditCard: expiry date = ' + creditCard.expiryDate);
     sessionStorage.setItem('creditCard', JSON.stringify(creditCard));
   }
 
@@ -95,6 +97,23 @@ export class SessionService {
     sessionStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress));
   }
 
+  getCollectionMethod(): string | undefined {
+    return sessionStorage.getItem('collectionMethod')?.toUpperCase();
+  }
+
+  // Put the string value of the enum, not enum itself
+  setCollectionMethod(collectionMethod: string) {
+    sessionStorage.setItem('collectionMethod', collectionMethod);
+  }
+
+  getExpressOrder(): boolean | undefined {
+    return sessionStorage.getItem('expressOrder')?.toLowerCase() == 'true';
+  }
+
+  setExpressOrder(expressOrder: boolean) {
+    sessionStorage.setItem('expressOrder', String(expressOrder));
+  }
+
   getPromotion(): Promotion | undefined {
     const promotion = sessionStorage.getItem('promotion');
     if (typeof promotion === 'string') {
@@ -109,11 +128,13 @@ export class SessionService {
   }
 
   setCheckoutOrderId(checkoutOrderId: number | undefined) {
+    console.log("SessionService: setCheckoutOrderId : orderId = " + checkoutOrderId);
     sessionStorage.setItem('checkoutOrderId', JSON.stringify(checkoutOrderId));
   }
 
   getCheckoutOrderId(): number | undefined {
     const checkoutOrderId = sessionStorage.getItem('checkoutOrderId');
+    console.log("SessionService: getCheckoutOrderId : orderId = " + checkoutOrderId);
     if (typeof checkoutOrderId === 'string') {
       return JSON.parse(checkoutOrderId);
     } else {

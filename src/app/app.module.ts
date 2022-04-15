@@ -13,19 +13,26 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { StepsModule } from 'primeng/steps';
+import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DataViewModule } from 'primeng/dataview';
+import { AccordionModule } from 'primeng/accordion';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ListboxModule } from 'primeng/listbox';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -57,6 +64,8 @@ import { DeliveryAddressComponent } from './cart/delivery-address/delivery-addre
 import { PaymentMethodComponent } from './cart/payment-method/payment-method.component';
 import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
 import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores.component';
+import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view-my-measurements.component';
+import { ViewAllSupportTicketsComponent } from './account/view-all-support-tickets/view-all-support-tickets.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +97,8 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     PaymentMethodComponent,
     OrderSummaryComponent,
     ViewAllStoresComponent,
+    ViewMyMeasurementsComponent,
+    ViewAllSupportTicketsComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +116,12 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     MessagesModule,
     MessageModule,
     PasswordModule,
+    ToastModule,
+    ConfirmDialogModule,
+    InputNumberModule,
+    StepsModule,
+    DividerModule,
+    DropdownModule,
     ToolbarModule,
     DialogModule,
     PanelModule,
@@ -118,7 +135,11 @@ import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores
     SliderModule,
     MultiSelectModule,
     DataViewModule,
-    DropdownModule,
+    AccordionModule,
+    FieldsetModule,
+    ListboxModule,
+    SelectButtonModule,
+    RadioButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

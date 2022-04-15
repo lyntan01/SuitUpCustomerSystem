@@ -99,7 +99,7 @@ export class CustomerService {
     } else {
       errorMessage =
         'A HTTP error has occurred: ' +
-        `HTTP ${error.status}: ${error.statusText}`;
+        `HTTP ${error.status}: ${error.statusText}: ${error.error}`;
     }
 
     console.error(`HTTP ${error.status}: ${error.error}`);

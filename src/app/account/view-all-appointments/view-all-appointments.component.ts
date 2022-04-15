@@ -41,8 +41,9 @@ export class ViewAllAppointmentsComponent implements OnInit {
     });
   }
 
-  formattedDate(date: Date): String {
-    console.log(date);
+  formattedDate(date: Date): string {
+    console.log(date.toLocaleString('en-US', { timeZone: 'ISO' }));
+    // return date;
     return (
       date.toString().substring(5, 7) + ' / ' + date.toString().substring(2, 4)
     );

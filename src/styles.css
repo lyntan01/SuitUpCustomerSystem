@@ -108,6 +108,34 @@ p-menubarsub.p-element {
   border-color: #02075d !important;
 }
 
+/* .test-button button {
+  background-color: white !important;
+  border-color: white !important;
+  height: 20px;
+  cursor: default;
+} */
+
+/* CHECKOUT */
+
+.checkout-component .p-card {
+  box-shadow: none !important;
+  padding-top: 2em !important;
+}
+
+.add-credit-card-button button {
+  background-color: white;
+  border-color: white;
+  color: midnightblue;
+}
+
+.add-credit-card-button button:hover {
+  background-color: var(--surface-200) !important;
+  border-color: white !important;
+  color: midnightblue !important;
+  /* text-decoration: underline; */
+}
+
+/* ACCOUNT */
 .account-container {
   width: 90vw;
   margin: 1em auto;
@@ -122,4 +150,14 @@ p-menubarsub.p-element {
   width: 100%;
   margin-left: 40px;
   margin-top: 20px;
+}
+
+.account-menu {
+  min-width: 120px;
+}
+
+.errorText {
+  text-align: center;
+  margin-bottom: 0.5em;
+  color: #d1022f;
 }

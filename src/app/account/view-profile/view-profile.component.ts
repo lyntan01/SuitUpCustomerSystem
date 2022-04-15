@@ -4,25 +4,27 @@ import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { SessionService } from 'src/app/services/session.service';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-view-profile',
   templateUrl: './view-profile.component.html',
   styleUrls: ['./view-profile.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class ViewProfileComponent implements OnInit {
   currentCustomer: Customer;
-  updateProfileError: boolean;
-  errorMessage: string | undefined;
   submitted: boolean;
 
   constructor(
     public sessionService: SessionService,
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.currentCustomer = this.sessionService.getCurrentCustomer();
-    this.updateProfileError = false;
     this.submitted = false;
   }
 
@@ -30,8 +32,6 @@ export class ViewProfileComponent implements OnInit {
 
   updateProfile(updateProfileForm: NgForm) {
     this.submitted = true;
-    // let tempCustomer: Customer = Object.assign({}, this.currentCustomer);
-    // tempCustomer.password = this.sessionService.getPassword();
 
     if (updateProfileForm.valid) {
       this.submitted = true;
@@ -42,14 +42,26 @@ export class ViewProfileComponent implements OnInit {
         console.log(tempCustomer);
         this.customerService.updateProfile(tempCustomer).subscribe(
           () => {
+            console.log(this.currentCustomer);
+            let lastName = this.currentCustomer.lastName;
+            let firstName = this.currentCustomer.firstName;
+            this.currentCustomer.fullName = firstName + ' ' + lastName;
             this.sessionService.setCurrentCustomer(this.currentCustomer);
-            this.updateProfileError = false;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Profile successfully updated!',
+            });
+            window.location.reload();
           },
           (error) => {
-            this.updateProfileError = true;
-            this.errorMessage =
-              'An error has occurred while updating the profile: ' + error;
-            console.log(error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'An error has occurred while attempting to update profile: ' +
+                error,
+            });
           }
         );
       }

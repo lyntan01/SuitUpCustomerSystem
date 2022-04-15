@@ -1,1 +1,19 @@
-<p>checkout-confirmation works!</p>
+<p-toast></p-toast>
+<p-card
+  [style]="{
+    width: '80vw',
+    margin: '2em auto'
+  }"
+>
+  <div class="text-center pb-4">
+    <h2>Your Checkout is successful</h2>
+    <p>Order Serial Number: {{ checkoutOrder?.serialNumber }}</p>
+    <br/>
+    <p-button
+      type="button"
+      label="Continue Shopping"
+      routerLink="/viewAllProducts"
+      class="default-button"
+    ></p-button>
+  </div>
+</p-card>
