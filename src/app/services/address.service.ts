@@ -41,10 +41,24 @@ export class AddressService {
       .pipe(catchError(this.handleError));
   }
 
+  getAddressById(addressId: number): Observable<Address> {
+    return this.httpClient
+      .get<Address>(
+        this.baseUrl +
+          '/retrieveAddress/' +
+          addressId +
+          '?email=' +
+          this.sessionService.getEmail() +
+          '&password=' +
+          this.sessionService.getPassword()
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   updateAddress(address?: Address): Observable<any> {
     let updateAddressReq: UpdateAddressReq = new UpdateAddressReq(
       this.sessionService.getCurrentCustomer()?.email,
-      this.sessionService.getCurrentCustomer()?.password, 
+      this.sessionService.getCurrentCustomer()?.password,
       address
     );
 

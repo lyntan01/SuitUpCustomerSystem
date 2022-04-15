@@ -17,6 +17,29 @@
           optionLabel="label"
         ></p-selectButton>
         <div class="grid" *ngIf="selectedCollectionMethod.value === 'DELIVERY'">
+          <div class="col-12 mt-3">
+            <h4>Shipping Method</h4>
+            <div class="flex">
+              <div class="field-radiobutton mr-5">
+                <p-radioButton
+                  name="expressOrder"
+                  [value]="true"
+                  [(ngModel)]="expressOrder"
+                  inputId="express"
+                ></p-radioButton>
+                <label for="express">Express Delivery (+$10)</label>
+              </div>
+              <div class="field-radiobutton">
+                <p-radioButton
+                  name="expressOrder"
+                  [value]="false"
+                  [(ngModel)]="expressOrder"
+                  inputId="normal"
+                ></p-radioButton>
+                <label for="normal">Normal Delivery (FREE)</label>
+              </div>
+            </div>
+          </div>
           <div class="col-5 flex align-items-center justify-content-center">
             <div class="text-center">
               <h4>Select an existing address:</h4>

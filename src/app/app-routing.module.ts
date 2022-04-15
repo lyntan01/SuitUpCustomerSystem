@@ -15,6 +15,7 @@ import { LoginComponent } from './admin/login/login.component';
 import { SignUpComponent } from './admin/sign-up/sign-up.component';
 import { CreateNewAppointmentComponent } from './appointments/create-new-appointment/create-new-appointment.component';
 import { CartComponent } from './cart/cart/cart.component';
+import { CheckoutConfirmationComponent } from './cart/checkout-confirmation/checkout-confirmation.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { DeliveryAddressComponent } from './cart/delivery-address/delivery-address.component';
 import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
@@ -60,6 +61,7 @@ const routes: Routes = [
     ],
   },
   { path: 'viewMyMeasurements', component: ViewMyMeasurementsComponent },
+  { path: 'checkoutConfirmation', component: CheckoutConfirmationComponent },
 ];
 
 @NgModule({

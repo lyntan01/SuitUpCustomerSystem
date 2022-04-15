@@ -66,18 +66,22 @@ export class OrderService {
         : undefined
     );
 
+    console.log(JSON.stringify(createOrderReq));
+
     return this.httpClient
       .put<number>(this.baseUrl, createOrderReq, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   applyPromotionCode(newOrder: Order): Observable<any> {
+
+    let promotion = this.sessionService.getPromotion();
     let applyPromotionCodeReq: ApplyPromotionCodeReq =
       new ApplyPromotionCodeReq(
         this.sessionService.getEmail(),
         this.sessionService.getPassword(),
         newOrder,
-        this.sessionService.getPromotion()?.promotionCode
+        promotion ? promotion.promotionCode : newOrder.promotion?.promotionCode
       );
 
     return this.httpClient.post<any>(

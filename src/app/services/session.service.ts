@@ -79,6 +79,7 @@ export class SessionService {
   }
 
   setCreditCard(creditCard: CreditCard): void {
+    // console.log('SessionService: setCreditCard: expiry date = ' + creditCard.expiryDate);
     sessionStorage.setItem('creditCard', JSON.stringify(creditCard));
   }
 
@@ -103,6 +104,14 @@ export class SessionService {
   // Put the string value of the enum, not enum itself
   setCollectionMethod(collectionMethod: string) {
     sessionStorage.setItem('collectionMethod', collectionMethod);
+  }
+
+  getExpressOrder(): boolean | undefined {
+    return sessionStorage.getItem('expressOrder')?.toLowerCase() == 'true';
+  }
+
+  setExpressOrder(expressOrder: boolean) {
+    sessionStorage.setItem('expressOrder', String(expressOrder));
   }
 
   getPromotion(): Promotion | undefined {

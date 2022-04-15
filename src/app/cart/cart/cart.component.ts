@@ -48,7 +48,13 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('********** CartComponent.ts: ngOnInit()');
+
+    let tmpCart = this.sessionService.getCart();
+
+    if (tmpCart) {
+      this.cart = tmpCart;
+    }
+
     this.standardProductService.getStandardProductById(1).subscribe({
       next: (response) => {
         console.log('response.image: ' + response.image);
@@ -92,7 +98,7 @@ export class CartComponent implements OnInit {
       let orderItem: OrderLineItem = this.cart[i];
       console.log(orderItem.product?.name);
 
-      total += this.getUnitPrice(orderItem.product);
+      total += this.getUnitPrice(orderItem.product) * (orderItem.quantity || 1);
       console.log('i = ' + i + ', total = ' + total);
 
       // total += orderItem.product?.unitCost || 0;
@@ -256,6 +262,7 @@ export class CartComponent implements OnInit {
   checkoutCart(): void {
     if (this.sessionService.getIsLogin()) {
       this.sessionService.setCart(this.cart);
+      this.sessionService.setPromotion(this.promotion);
       this.router.navigate(['/checkout']);
     } else {
       this.messageService.add({
