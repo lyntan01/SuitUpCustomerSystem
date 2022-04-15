@@ -1,1 +1,169 @@
-<p>payment-method works!</p>
+<p-toast position="top-right"></p-toast>
+<div>
+  <form #paymentMethodForm="ngForm" (ngSubmit)="nextPage(paymentMethodForm)">
+    <p-card>
+      <ng-template pTemplate="title"> Payment Method </ng-template>
+      <ng-template pTemplate="subtitle"> Choose credit card </ng-template>
+      <ng-template pTemplate="content">
+        <div style="width: 40%; margin: 0 auto">
+          <p-listbox
+            name="creditCard"
+            [options]="creditCards"
+            [(ngModel)]="selectedCreditCard"
+            optionLabel="cardNumber"
+          >
+            <ng-template pTemplate="header">
+              <h4>Saved Credit Cards</h4>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <div class="grid justify-content-center">
+                <p-button
+                  (click)="showBasicDialog()"
+                  icon="pi pi-plus"
+                  label="Add New Credit Card"
+                  class="add-credit-card-button mb-3 mt-1"
+                ></p-button>
+              </div>
+            </ng-template>
+          </p-listbox>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-end">
+          <!-- <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button> -->
+          <p-button
+            type="submit"
+            label="Next"
+            icon="pi pi-angle-right"
+            iconPos="right"
+          ></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+  </form>
+</div>
+
+<div>
+  <p-dialog
+    header="Add a Credit Card"
+    [(visible)]="displayBasic"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+  >
+    <div class="mt-5">
+      <form #createCreditCardForm="ngForm">
+        <div class="p-fluid">
+          <div class="field">
+            <label for="cardNumber">Credit Card Number</label>
+            <div>
+              <p-inputMask
+                #cardNumber="ngModel"
+                id="cardNumber"
+                name="cardNumber"
+                type="tel"
+                mask="9999-9999-9999-9999"
+                [(ngModel)]="newCreditCard.cardNumber"
+                placeholder="XXXX-XXXX-XXXX-XXXX"
+              ></p-inputMask>
+            </div>
+            <div
+              *ngIf="
+                cardNumber.invalid &&
+                (cardNumber.dirty || cardNumber.touched || submitted)
+              "
+              class="p-error"
+            >
+              <div *ngIf="cardNumber.errors?.['required']">
+                Card Number is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="expiryDate"> Expiry Date </label>
+            <div>
+              <p-calendar
+                #expiryDate="ngModel"
+                id="expiryDate"
+                name="expiryDate"
+                view="month"
+                dateFormat="mm/y"
+                [yearRange]="yearRange"
+                [minDate]="minDate"
+                placeholder="MM/YY"
+                [required]="true"
+                [yearNavigator]="true"
+                [(ngModel)]="newCreditCard.expiryDate"
+              ></p-calendar>
+            </div>
+            <div
+              *ngIf="
+                expiryDate.invalid &&
+                (expiryDate.dirty || expiryDate.touched || submitted)
+              "
+              class="p-error"
+            >
+              <div *ngIf="expiryDate.errors?.['required']">
+                Expiry date is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cvv">CVV</label>
+            <div>
+              <input
+                #cvv="ngModel"
+                id="cvv"
+                type="password"
+                name="cvv"
+                [(ngModel)]="newCreditCard.cvv"
+                required
+                pInputText
+                maxlength="3"
+                maxlength="3"
+              />
+            </div>
+            <div
+              *ngIf="cvv.invalid && (cvv.dirty || cvv.touched || submitted)"
+              class="p-error"
+            >
+              <div *ngIf="cvv.errors?.['required']">CVV is required.</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="name"> Card Holder Name</label>
+            <div>
+              <input
+                #name="ngModel"
+                id="name"
+                name="name"
+                type="text"
+                [(ngModel)]="newCreditCard.holderName"
+                required
+                pInputText
+              />
+            </div>
+            <div
+              *ngIf="name.invalid && (name.dirty || name.touched || submitted)"
+              class="p-error"
+            >
+              <div *ngIf="name.errors?.['required']">
+                Card Holder Name is required.
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-check"
+        (click)="createNewCreditCard(createCreditCardForm)"
+        label="Save Credit Card"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</div>

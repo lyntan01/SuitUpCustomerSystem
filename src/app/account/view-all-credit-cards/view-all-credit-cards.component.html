@@ -34,122 +34,117 @@
           [modal]="true"
           [style]="{ width: '50vw' }"
         >
-          <p-panel header="">
-            <div>
-              <form #createCreditCardForm="ngForm">
-                <div class="p-fluid">
-                  <div class="space-input">
-                    <label for="cardNumber">Credit Card Number</label>
-                    <div>
-                      <p-inputMask
-                        #cardNumber="ngModel"
-                        id="cardNumber"
-                        name="cardNumber"
-                        type="tel"
-                        mask="9999-9999-9999-9999"
-                        [(ngModel)]="newCreditCard.cardNumber"
-                        placeholder="XXXX-XXXX-XXXX-XXXX"
-                      ></p-inputMask>
-                    </div>
-                    <div
-                      *ngIf="
-                        cardNumber.invalid &&
-                        (cardNumber.dirty || cardNumber.touched || submitted)
-                      "
-                      class="errorText"
-                    >
-                      <div *ngIf="cardNumber.errors?.['required']">
-                        Card Number is required.
-                      </div>
-                    </div>
+          <div class="mt-5">
+            <form #createCreditCardForm="ngForm">
+              <div class="p-fluid">
+                <div class="field">
+                  <label for="cardNumber">Credit Card Number</label>
+                  <div>
+                    <p-inputMask
+                      #cardNumber="ngModel"
+                      id="cardNumber"
+                      name="cardNumber"
+                      type="tel"
+                      mask="9999-9999-9999-9999"
+                      [(ngModel)]="newCreditCard.cardNumber"
+                      placeholder="XXXX-XXXX-XXXX-XXXX"
+                    ></p-inputMask>
                   </div>
-
-                  <div class="space-input">
-                    <label for="expiryDate"> Expiry Date </label>
-                    <div>
-                      <p-calendar
-                        #expiryDate="ngModel"
-                        id="expiryDate"
-                        name="expiryDate"
-                        view="month"
-                        dateFormat="mm/y"
-                        [yearRange]="yearRange"
-                        [minDate]="minDate"
-                        placeholder="MM/YY"
-                        [required]="true"
-                        [yearNavigator]="true"
-                        [(ngModel)]="newCreditCard.expiryDate"
-                      ></p-calendar>
-                    </div>
-                    <div
-                      *ngIf="
-                        expiryDate.invalid &&
-                        (expiryDate.dirty || expiryDate.touched || submitted)
-                      "
-                      class="errorText"
-                    >
-                      <div *ngIf="expiryDate.errors?.['required']">
-                        Expiry date is required.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="space-input">
-                    <label for="cvv">CVV</label>
-                    <div>
-                      <input
-                        #cvv="ngModel"
-                        id="cvv"
-                        type="password"
-                        name="cvv"
-                        [(ngModel)]="newCreditCard.cvv"
-                        required
-                        pInputText
-                        maxlength="3"
-                      />
-                    </div>
-                    <div
-                      *ngIf="
-                        cvv.invalid && (cvv.dirty || cvv.touched || submitted)
-                      "
-                      class="errorText"
-                    >
-                      <div *ngIf="cvv.errors?.['required']">
-                        CVV is required.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="space-input">
-                    <label for="name"> Card Holder Name</label>
-                    <div>
-                      <input
-                        #name="ngModel"
-                        id="name"
-                        name="name"
-                        type="text"
-                        [(ngModel)]="newCreditCard.holderName"
-                        required
-                        pInputText
-                        maxlength="64"
-                      />
-                    </div>
-                    <div
-                      *ngIf="
-                        name.invalid &&
-                        (name.dirty || name.touched || submitted)
-                      "
-                      class="errorText"
-                    >
-                      <div *ngIf="name.errors?.['required']">
-                        Card Holder Name is required.
-                      </div>
+                  <div
+                    *ngIf="
+                      cardNumber.invalid &&
+                      (cardNumber.dirty || cardNumber.touched || submitted)
+                    "
+                    class="p-error"
+                  >
+                    <div *ngIf="cardNumber.errors?.['required']">
+                      Card Number is required.
                     </div>
                   </div>
                 </div>
-              </form>
-            </div>
-          </p-panel>
+
+                <div class="field">
+                  <label for="expiryDate"> Expiry Date </label>
+                  <div>
+                    <p-calendar
+                      #expiryDate="ngModel"
+                      id="expiryDate"
+                      name="expiryDate"
+                      view="month"
+                      dateFormat="mm/y"
+                      [yearRange]="yearRange"
+                      [minDate]="minDate"
+                      placeholder="MM/YY"
+                      [required]="true"
+                      [yearNavigator]="true"
+                      [(ngModel)]="newCreditCard.expiryDate"
+                    ></p-calendar>
+                  </div>
+                  <div
+                    *ngIf="
+                      expiryDate.invalid &&
+                      (expiryDate.dirty || expiryDate.touched || submitted)
+                    "
+                    class="p-error"
+                  >
+                    <div *ngIf="expiryDate.errors?.['required']">
+                      Expiry date is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="cvv">CVV</label>
+                  <div>
+                    <input
+                      #cvv="ngModel"
+                      id="cvv"
+                      type="password"
+                      name="cvv"
+                      [(ngModel)]="newCreditCard.cvv"
+                      required
+                      pInputText
+                      maxlength="3"
+                      minlength="3"
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      cvv.invalid && (cvv.dirty || cvv.touched || submitted)
+                    "
+                    class="p-error"
+                  >
+                    <div *ngIf="cvv.errors?.['required']">CVV is required.</div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="name"> Card Holder Name</label>
+                  <div>
+                    <input
+                      #name="ngModel"
+                      id="name"
+                      name="name"
+                      type="text"
+                      [(ngModel)]="newCreditCard.holderName"
+                      required
+                      pInputText
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      name.invalid && (name.dirty || name.touched || submitted)
+                    "
+                    class="p-error"
+                  >
+                    <div *ngIf="name.errors?.['required']">
+                      Card Holder Name is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
           <ng-template pTemplate="footer">
             <p-button
               icon="pi pi-check"

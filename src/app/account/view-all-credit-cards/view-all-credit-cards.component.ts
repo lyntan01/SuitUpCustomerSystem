@@ -91,8 +91,8 @@ export class ViewAllCreditCardsComponent implements OnInit {
   }
 
   createNewCreditCard(createCreditCardForm: NgForm) {
-    this.displayBasic = false;
-    this.submitted = true;
+    // this.displayBasic = false;
+    // this.submitted = true;
     let temp = this.newCreditCard.cardNumber;
     let split = temp?.split('-');
     let ccWithoutDash = '';
@@ -109,7 +109,8 @@ export class ViewAllCreditCardsComponent implements OnInit {
       this.creditCardService.createNewCreditCard(tempCreditCard).subscribe(
         (response) => {
           let newCreditCardId: number = response;
-
+          this.displayBasic = false;
+          this.submitted = true;
           this.newCreditCard = new CreditCard();
           this.ngOnInit();
           this.messageService.add({
@@ -130,6 +131,12 @@ export class ViewAllCreditCardsComponent implements OnInit {
           });
         }
       );
+    } else {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warn',
+        detail: 'Please fill in credit card information',
+      });
     }
   }
 

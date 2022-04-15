@@ -30,6 +30,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DataViewModule } from 'primeng/dataview';
 import { AccordionModule } from 'primeng/accordion';
 import { FieldsetModule } from 'primeng/fieldset';
+import { ListboxModule } from 'primeng/listbox';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -134,6 +136,8 @@ import { ViewAllSupportTicketsComponent } from './account/view-all-support-ticke
     DataViewModule,
     AccordionModule,
     FieldsetModule,
+    ListboxModule,
+    SelectButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],
