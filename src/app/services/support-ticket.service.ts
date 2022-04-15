@@ -6,12 +6,9 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
 import { SessionService } from './session.service';
-import { UpdateAddressReq } from '../models/update-address-req';
-import { CreateAddressReq } from '../models/create-address-req';
-import { Customer } from '../models/customer';
-import { Address } from '../models/address';
+import { CreateSupportTicketReq } from '../models/create-support-ticket-req';
+import { SupportTicket } from '../models/support-ticket';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -20,19 +17,31 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class AddressService {
-  baseUrl: string = '/api/Address';
+export class SupportTicketService {
+  baseUrl: string = '/api/SupportTicket';
 
   constructor(
     private httpClient: HttpClient,
     private sessionService: SessionService
   ) {}
 
-  getAddresses(): Observable<Address[]> {
+  createSupportTicket(supportTicket: SupportTicket): Observable<number> {
+    let createSupportTicketReq: CreateSupportTicketReq =
+      new CreateSupportTicketReq(
+        this.sessionService.getEmail(),
+        this.sessionService.getPassword(),
+        supportTicket
+      );
     return this.httpClient
-      .get<Address[]>(
+      .put<number>(this.baseUrl, createSupportTicketReq, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getSupportTicketsByCustomer(): Observable<SupportTicket[]> {
+    return this.httpClient
+      .get<SupportTicket[]>(
         this.baseUrl +
-          '/retrieveAllAddressesByCustomer' +
+          '/retrieveAllSupportTicketsByCustomer' +
           '?email=' +
           this.sessionService.getEmail() +
           '&password=' +
@@ -41,52 +50,12 @@ export class AddressService {
       .pipe(catchError(this.handleError));
   }
 
-  getAddressById(addressId: number): Observable<Address> {
-    return this.httpClient
-      .get<Address>(
-        this.baseUrl +
-          '/retrieveAddress/' +
-          addressId +
-          '?email=' +
-          this.sessionService.getEmail() +
-          '&password=' +
-          this.sessionService.getPassword()
-      )
-      .pipe(catchError(this.handleError));
-  }
-
-  updateAddress(address?: Address): Observable<any> {
-    let updateAddressReq: UpdateAddressReq = new UpdateAddressReq(
-      this.sessionService.getCurrentCustomer()?.email,
-      this.sessionService.getPassword(),
-      address
-    );
-
-    return this.httpClient.post<any>(
-      this.baseUrl,
-      updateAddressReq,
-      httpOptions
-    );
-  }
-
-  createNewAddress(newAddress: Address): Observable<number> {
-    let createAddressReq: CreateAddressReq = new CreateAddressReq(
-      this.sessionService.getCurrentCustomer().email,
-      this.sessionService.getPassword(),
-      newAddress
-    );
-
-    return this.httpClient
-      .put<number>(this.baseUrl, createAddressReq, httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-  deleteAddress(addressId?: number): Observable<any> {
+  deleteSupportTicket(supportTicketId?: number): Observable<any> {
     return this.httpClient
       .delete<any>(
         this.baseUrl +
           '/' +
-          addressId +
+          supportTicketId +
           '?email=' +
           this.sessionService.getEmail() +
           '&password=' +

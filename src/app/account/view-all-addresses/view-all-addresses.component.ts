@@ -20,6 +20,8 @@ export class ViewAllAddressesComponent implements OnInit {
   displayBasic: boolean;
   newAddress: Address;
   submitted: boolean;
+  displayUpdateAddress: boolean;
+  selectedAddressForUpdate: Address;
 
   constructor(
     public sessionService: SessionService,
@@ -33,6 +35,8 @@ export class ViewAllAddressesComponent implements OnInit {
     this.displayBasic = false;
     this.newAddress = new Address();
     this.submitted = false;
+    this.displayUpdateAddress = false;
+    this.selectedAddressForUpdate = new Address();
   }
 
   ngOnInit(): void {
@@ -62,6 +66,11 @@ export class ViewAllAddressesComponent implements OnInit {
 
   showBasicDialog() {
     this.displayBasic = true;
+  }
+
+  showUpdateAddress(address: Address) {
+    this.displayUpdateAddress = true;
+    this.selectedAddressForUpdate = address;
   }
 
   clear() {
@@ -97,6 +106,38 @@ export class ViewAllAddressesComponent implements OnInit {
             severity: 'error',
             summary: 'Error',
             detail: 'An error has occurred while saving address: ' + error,
+          });
+        }
+      );
+    }
+  }
+
+  updateAddress(updateAddressForm: NgForm, address: Address) {
+    this.displayUpdateAddress = false;
+    this.submitted = true;
+
+    let tempAddress: Address = Object.assign({}, address);
+
+    if (updateAddressForm.valid) {
+      this.addressService.updateAddress(tempAddress).subscribe(
+        (response) => {
+          this.ngOnInit();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Address successfully updated!',
+          });
+
+          updateAddressForm.form.markAsUntouched();
+          updateAddressForm.form.markAsPristine();
+          updateAddressForm.form.updateValueAndValidity();
+        },
+
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'An error has occurred while updating address: ' + error,
           });
         }
       );

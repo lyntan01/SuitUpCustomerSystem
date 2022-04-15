@@ -209,12 +209,178 @@
             <td>
               {{ address.postalCode }}
             </td>
-            <td>
+            <td class="display-flex">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-info inline-button p-button-text mr-3"
+                (click)="showUpdateAddress(address)"
+              ></button>
+
+              <p-dialog
+                header="Edit Address"
+                [(visible)]="displayUpdateAddress"
+                [modal]="true"
+                [style]="{ width: '50vw' }"
+              >
+                <p-panel header="">
+                  <div>
+                    <form #updateAddressForm="ngForm">
+                      <div class="p-fluid">
+                        <div class="space-input">
+                          <label for="name">Name</label>
+                          <div>
+                            <input
+                              #name="ngModel"
+                              id="name"
+                              name="name"
+                              type="text"
+                              [(ngModel)]="selectedAddressForUpdate.name"
+                              required
+                              pInputText
+                              maxlength="64"
+                            />
+                          </div>
+                          <div
+                            *ngIf="
+                              name.invalid &&
+                              (name.dirty || name.touched || submitted)
+                            "
+                            class="errorText"
+                          >
+                            <div *ngIf="name.errors?.['required']">
+                              Name is required.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="space-input">
+                          <label for="phoneNumber"> Phone Number </label>
+                          <div>
+                            <input
+                              #phoneNumber="ngModel"
+                              id="phoneNumber"
+                              type="text"
+                              name="phoneNumber"
+                              [(ngModel)]="selectedAddressForUpdate.phoneNumber"
+                              required
+                              pInputText
+                              maxlength="12"
+                            />
+                          </div>
+                          <div
+                            *ngIf="
+                              phoneNumber.invalid &&
+                              (phoneNumber.dirty ||
+                                phoneNumber.touched ||
+                                submitted)
+                            "
+                            class="errorText"
+                          >
+                            <div *ngIf="phoneNumber.errors?.['required']">
+                              Phone Number is required.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="space-input">
+                          <label for="addressLineOne">Address Line One</label>
+                          <div>
+                            <input
+                              #addressLineOne="ngModel"
+                              id="addressLineOne"
+                              type="text"
+                              name="addressLineOne"
+                              [(ngModel)]="
+                                selectedAddressForUpdate.addressLineOne
+                              "
+                              required
+                              pInputText
+                              maxlength="128"
+                            />
+                          </div>
+                          <div
+                            *ngIf="
+                              addressLineOne.invalid &&
+                              (addressLineOne.dirty ||
+                                addressLineOne.touched ||
+                                submitted)
+                            "
+                            class="errorText"
+                          >
+                            <div *ngIf="addressLineOne.errors?.['required']">
+                              Address Line One is required.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="space-input">
+                          <label for="addressLineTwo">Address Line Two</label>
+                          <div>
+                            <input
+                              #addressLineTwo="ngModel"
+                              id="addressLineTwo"
+                              type="text"
+                              name="addressLineTwo"
+                              [(ngModel)]="
+                                selectedAddressForUpdate.addressLineTwo
+                              "
+                              pInputText
+                            />
+                          </div>
+                        </div>
+
+                        <div class="space-input">
+                          <label for="postalCode">Postal Code</label>
+                          <div>
+                            <input
+                              #postalCode="ngModel"
+                              id="postalCode"
+                              type="text"
+                              name="postalCode"
+                              [(ngModel)]="selectedAddressForUpdate.postalCode"
+                              required
+                              pInputText
+                              minlength="6"
+                              maxlength="10"
+                            />
+                          </div>
+                          <div
+                            *ngIf="
+                              postalCode.invalid &&
+                              (postalCode.dirty ||
+                                postalCode.touched ||
+                                submitted)
+                            "
+                            class="errorText"
+                          >
+                            <div *ngIf="postalCode.errors?.['required']">
+                              Postal Code is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </p-panel>
+                <ng-template pTemplate="footer">
+                  <p-button
+                    icon="pi pi-check"
+                    label="Update Address"
+                    styleClass="p-button-text"
+                    (click)="
+                      updateAddress(updateAddressForm, selectedAddressForUpdate)
+                    "
+                  ></p-button>
+                </ng-template>
+              </p-dialog>
+
               <button
                 pButton
                 pRipple
                 icon="pi pi-trash"
-                class="p-button-danger"
+                class="p-button-rounded p-button-danger p-button-text inline-button"
                 (click)="deleteAddress(address)"
               ></button>
             </td>
