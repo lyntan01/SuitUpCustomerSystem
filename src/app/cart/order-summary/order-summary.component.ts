@@ -17,6 +17,7 @@ import { PromotionService } from 'src/app/services/promotion.service';
 import { Order } from 'src/app/models/order';
 import { OrderStatusEnum } from 'src/app/models/enum/order-status-enum';
 import { CreditCardService } from 'src/app/services/credit-card.service';
+import { Transaction } from 'src/app/models/transaction';
 
 @Component({
   selector: 'app-order-summary',
@@ -207,7 +208,10 @@ export class OrderSummaryComponent implements OnInit {
     order.promotion = this.promotion;
 
     // Verify delivery address
-    if (this.deliveryAddress) {
+    if (
+      this.deliveryAddress &&
+      this.collectionMethod == CollectionMethodEnum.DELIVERY
+    ) {
       // New address created
       if (!this.deliveryAddress.addressId) {
         this.addressService.createNewAddress(this.deliveryAddress).subscribe(
@@ -256,6 +260,27 @@ export class OrderSummaryComponent implements OnInit {
             this.orderService.createOrder(order).subscribe(
               (orderId) => {
                 order.orderId = orderId;
+
+                this.orderService.applyPromotionCode(order).subscribe(
+                  (orderId) => {
+                    this.sessionService.setCheckoutOrderId(orderId);
+                    this.sessionService.clearCheckout();
+                    console.log(orderId);
+                    this.router.navigate([
+                      '/checkoutConfirmation',
+                      { orderId: orderId },
+                    ]);
+                  },
+                  (error) => {
+                    this.messageService.add({
+                      severity: 'error',
+                      summary: 'Error',
+                      detail:
+                        'An error has occurred while applying the promotion: ' +
+                        error,
+                    });
+                  }
+                );
               },
               (error) => {
                 this.messageService.add({
@@ -265,29 +290,6 @@ export class OrderSummaryComponent implements OnInit {
                     'An error has occurred while creating the new order: ' +
                     error,
                 });
-                console.log(error);
-              }
-            );
-
-            this.orderService.applyPromotionCode(order).subscribe(
-              (orderId) => {
-                this.sessionService.setCheckoutOrderId(orderId);
-                this.sessionService.clearCheckout();
-
-                this.router.navigate([
-                  '/checkoutConfirmation',
-                  { orderId: orderId },
-                ]);
-              },
-              (error) => {
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Error',
-                  detail:
-                    'An error has occurred while applying the promotion: ' +
-                    error,
-                });
-                console.log(error);
               }
             );
           },

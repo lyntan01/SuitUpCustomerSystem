@@ -128,11 +128,13 @@ export class SessionService {
   }
 
   setCheckoutOrderId(checkoutOrderId: number | undefined) {
+    console.log("SessionService: setCheckoutOrderId : orderId = " + checkoutOrderId);
     sessionStorage.setItem('checkoutOrderId', JSON.stringify(checkoutOrderId));
   }
 
   getCheckoutOrderId(): number | undefined {
     const checkoutOrderId = sessionStorage.getItem('checkoutOrderId');
+    console.log("SessionService: getCheckoutOrderId : orderId = " + checkoutOrderId);
     if (typeof checkoutOrderId === 'string') {
       return JSON.parse(checkoutOrderId);
     } else {
