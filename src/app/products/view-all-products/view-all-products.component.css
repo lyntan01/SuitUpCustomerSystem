@@ -1,7 +1,12 @@
-.products-container {
-    margin: 1em auto;
+/* .products-container {
+    margin: 5em auto; 
+    margin-left:200px;
     width: 90vw;
 }
+filter-bar{
+    float:left;
+    width:200px;
+} 
 
 .product-grid-item {
     margin: 0.5em;
@@ -45,4 +50,4 @@ a:link:active,
 a:visited:active {
     color: white;
     text-decoration: none;
-}
+} */

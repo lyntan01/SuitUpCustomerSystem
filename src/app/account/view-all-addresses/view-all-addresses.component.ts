@@ -12,8 +12,8 @@ import { AddressService } from 'src/app/services/address.service';
   selector: 'app-view-all-addresses',
   templateUrl: './view-all-addresses.component.html',
   styleUrls: ['./view-all-addresses.component.css'],
-  providers: [ConfirmationService, MessageService],
 })
+
 export class ViewAllAddressesComponent implements OnInit {
   addresses: Address[];
   currentCustomer: Customer;

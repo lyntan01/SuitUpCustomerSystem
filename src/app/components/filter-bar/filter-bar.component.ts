@@ -30,7 +30,7 @@ export class FilterBarComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCategories();
     this.fetchTags();
-    this.setPriceRange();
+    // this.setPriceRange();
   }
 
   fetchCategories() {
@@ -95,25 +95,25 @@ export class FilterBarComponent implements OnInit {
     });
   }
 
-  onPriceChange(event: any) {
-    console.log(event.values);
-    console.log(this.selectedPriceRange);
-    this.router.navigate(['/viewAllProducts'], {
-      queryParams: {
-        priceMin: event.values[0],
-        priceMax: event.values[1],
-      },
-      queryParamsHandling: 'merge',
-    });
-  }
+  // onPriceChange(event: any) {
+  //   console.log(event.values);
+  //   console.log(this.selectedPriceRange);
+  //   this.router.navigate(['/viewAllProducts'], {
+  //     queryParams: {
+  //       priceMin: event.values[0],
+  //       priceMax: event.values[1],
+  //     },
+  //     queryParamsHandling: 'merge',
+  //   });
+  // }
 
-  setPriceRange() {
-    let min = this.activatedRoute.snapshot.queryParamMap.get('priceMin');
-    let max = this.activatedRoute.snapshot.queryParamMap.get('priceMax');
+  // setPriceRange() {
+  //   let min = this.activatedRoute.snapshot.queryParamMap.get('priceMin');
+  //   let max = this.activatedRoute.snapshot.queryParamMap.get('priceMax');
 
-    if (min && max) {
-      this.selectedPriceRange = [0, 1500];
-      this.selectedPriceRange = [+min, +max];
-    }
-  }
+  //   if (min && max) {
+  //     this.selectedPriceRange = [0, 1500];
+  //     this.selectedPriceRange = [+min, +max];
+  //   }
+  // }
 }

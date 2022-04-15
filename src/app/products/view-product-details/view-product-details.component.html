@@ -1,1 +1,41 @@
-<p>view-product-details works!</p>
+<div class="product-card">
+  <div class="product-container p-grid">
+    <div class="p-col-12 p-mb-4">
+      <div class="p-grid">
+        <div class="p-col-4 img-box">
+          <img
+            src="http://localhost:8080/SuitUp-war/uploadedFiles/productImages/{{
+              standardProductToView.image
+            }}"
+            [alt]="standardProductToView.name"
+            class="product-img"
+          />
+        </div>
+        <div class="p-col-7">
+          <h1>
+            {{ standardProductToView.name }}
+          </h1>
+          <h5>Category: + {{ standardProductToView.category?.name }}</h5>
+
+          <div>
+            <h5 *ngFor="let tag of standardProductToView.tags">
+              {{ tag.name }}
+            </h5>
+          </div>
+
+          <p>{{ standardProductToView.description }}</p>
+
+          <h3 class="p-mb-2">
+            {{ standardProductToView.unitPrice }}
+          </h3>
+
+          <form #addToCartForm="ngForm" (ngSubmit)="addToCart(addToCartForm)">
+            <div class="p-mb-2">
+              <p-button type="submit" label="Add To Cart"></p-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
