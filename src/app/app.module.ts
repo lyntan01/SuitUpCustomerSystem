@@ -29,6 +29,7 @@ import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DataViewModule } from 'primeng/dataview';
 import { AccordionModule } from 'primeng/accordion';
+import { FieldsetModule } from 'primeng/fieldset';
 import { ListboxModule } from 'primeng/listbox';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
@@ -63,6 +64,7 @@ import { PaymentMethodComponent } from './cart/payment-method/payment-method.com
 import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
 import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores.component';
 import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view-my-measurements.component';
+import { ViewAllSupportTicketsComponent } from './account/view-all-support-tickets/view-all-support-tickets.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,7 @@ import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view
     OrderSummaryComponent,
     ViewAllStoresComponent,
     ViewMyMeasurementsComponent,
+    ViewAllSupportTicketsComponent,
   ],
   imports: [
     BrowserModule,
@@ -132,6 +135,7 @@ import { ViewMyMeasurementsComponent } from './account/view-my-measurements/view
     MultiSelectModule,
     DataViewModule,
     AccordionModule,
+    FieldsetModule,
     ListboxModule,
     SelectButtonModule
   ],

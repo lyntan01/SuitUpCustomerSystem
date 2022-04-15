@@ -1,0 +1,19 @@
+.space-input {
+  margin-bottom: 1.5em;
+}
+
+.pill-resolved {
+  background-color: green;
+  color: white;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 14px;
+}
+
+.pill-unresolved {
+  background-color: red;
+  color: white;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 14px;
+}

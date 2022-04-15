@@ -24,6 +24,7 @@ import { IndexComponent } from './index/index.component';
 import { ViewAllProductsComponent } from './products/view-all-products/view-all-products.component';
 import { ViewProductDetailsComponent } from './products/view-product-details/view-product-details.component';
 import { ViewAllStoresComponent } from './stores/view-all-stores/view-all-stores.component';
+import { ViewAllSupportTicketsComponent } from './account/view-all-support-tickets/view-all-support-tickets.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -60,6 +61,7 @@ const routes: Routes = [
     ],
   },
   { path: 'viewMyMeasurements', component: ViewMyMeasurementsComponent },
+  { path: 'viewAllSupportTickets', component: ViewAllSupportTicketsComponent },
 ];
 
 @NgModule({
