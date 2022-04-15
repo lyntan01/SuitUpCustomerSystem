@@ -1,22 +1,12 @@
-.main {
-    height:100%;
+.suitup {
+color: #02075d;
 }
 
-.image {
-    height: 50%;
-    width: auto;
+.black {
+color: black;
 }
 
-.buttons-div {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-    justify-content: center;
-}
-
-.p-button-outlined {
-    color: #02075D;
-    border-radius: 0;
-    font-size: 24px;
-    padding: 20px;
+.default {
+background-color: #02075d !important;
+border-color: #02075d !important;
 }

@@ -33,6 +33,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { ListboxModule } from 'primeng/listbox';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { TabViewModule } from 'primeng/tabview';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -141,7 +142,8 @@ import { CustomizedMainComponent } from './suits/customized-main/customized-main
     FieldsetModule,
     ListboxModule,
     SelectButtonModule,
-    RadioButtonModule
+    RadioButtonModule,
+    TabViewModule
   ],
   providers: [],
   bootstrap: [AppComponent],

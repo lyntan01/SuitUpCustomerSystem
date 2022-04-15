@@ -1,21 +1,66 @@
-<div class="main">
-  <h2>Customized Your Suit Now.</h2>
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
 
-  <img class="image" src="{{ headerImg1 }}" />
-  <img class="image" src="{{ headerImg2 }}" />
+<div class="grid grid-nogutter surface-section text-800">
+  <div class="col-12 md:col-6 overflow-hidden">
+    <img
+      [src]="headerImg"
+      alt="Image"
+      class="block md:h-full"
+      style="clip-path: polygon(0 0, 80% 0%, 100% 100%, 0% 100%)"
+    />
+  </div>
+  <div class="col-12 md:col-6 text-center md:text-left flex align-items-center">
+    <section>
+      <span class="block text-6xl font-bold mb-1 black"
+        >Create your customized suit</span
+      >
+      <div class="text-6xl suitup font-bold mb-3">right now.</div>
+      <p class="mt-0 mb-4 text-700 line-height-3">
+        We cater to both men and women.
+      </p>
 
-  <div class="buttons-div">
-    <button
-      pButton
-      type="button"
-      class="p-button-outlined"
-      label="Customized Jacket"
-    ></button>
-    <button
-      pButton
-      type="button"
-      class="p-button-outlined"
-      label="Customized Pants"
-    ></button>
+      <button
+        pButton
+        pRipple
+        label="Customize My Jacket"
+        type="button"
+        (click)="activateJacket()"
+        class="mr-3 p-button-raised default"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Customize My Pants"
+        type="button"
+        (click)="activatePants()"
+        class="mr-3 p-button-raised default"
+      ></button>
+    </section>
   </div>
 </div>
+
+<ng-template [ngIf]="selectJacket">
+  <p-tabView [(activeIndex)]="index">
+    <p-tabPanel header="Jacket Style"> Content 3 </p-tabPanel>
+    <p-tabPanel header="Pocket Style"> Content 2 </p-tabPanel>
+    <p-tabPanel header="Inner Fabric"> Content 1 </p-tabPanel>
+    <p-tabPanel header="Outer Fabric"> Content 2 </p-tabPanel>
+    <p-tabPanel header="Measurements"> Content 2 </p-tabPanel>
+  </p-tabView>
+</ng-template>
+
+<ng-template [ngIf]="selectPants">
+  <p-tabView [(activeIndex)]="index">
+    <p-tabPanel header="Jacket Style"> Content 3 </p-tabPanel>
+    <p-tabPanel header="Pocket Style"> Content 2 </p-tabPanel>
+    <p-tabPanel header="Inner Fabric"> Content 1 </p-tabPanel>
+    <p-tabPanel header="Outer Fabric"> Content 2 </p-tabPanel>
+    <p-tabPanel header="Measurements"> Content 2 </p-tabPanel>
+  </p-tabView>
+</ng-template>
+
