@@ -42,8 +42,9 @@ const routes: Routes = [
   { path: 'createNewAppointment', component: CreateNewAppointmentComponent },
   { path: 'viewAllProducts', component: ViewAllProductsComponent },
   { path: 'viewProductDetails', component: ViewProductDetailsComponent },
+  { path: 'viewProductDetails', component: ViewProductDetailsComponent },
   {
-    path: 'viewProductDetails/:productId',
+    path: 'viewProductDetails/:standardProductId',
     component: ViewProductDetailsComponent,
   },
   {

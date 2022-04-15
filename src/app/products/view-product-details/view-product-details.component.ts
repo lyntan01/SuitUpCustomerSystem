@@ -41,12 +41,15 @@ export class ViewProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.standardProductId =
       this.activatedRoute.snapshot.paramMap.get('standardProductId');
+    console.log(this.standardProductId);
 
     if (this.standardProductId != null) {
       this.standardProductService
         .getStandardProductById(parseInt(this.standardProductId))
         .subscribe((response) => {
           this.standardProductToView = response;
+          console.log(this.standardProductToView);
+          console.log(this.standardProductToView.image);
 
           if (
             this.standardProductToView.quantityInStock &&
@@ -66,8 +69,10 @@ export class ViewProductDetailsComponent implements OnInit {
   }
 
   addToCart(addToCartForm: NgForm) {
+    console.log('ADD TO CART FUNCTION');
     if (addToCartForm.valid) {
       let cart: OrderLineItem[] | undefined = this.sessionService.getCart();
+      console.log('CART:' + cart);
 
       let newStandardProductOrderItem = true;
 
@@ -87,10 +92,13 @@ export class ViewProductDetailsComponent implements OnInit {
         }
       });
 
+      console.log('newStandardProductOrderItem:' + newStandardProductOrderItem);
+
       if (newStandardProductOrderItem) {
         let orderItemNumber;
         if (cart) {
           orderItemNumber = cart.length + 1;
+          console.log('orderItemNumber:' + orderItemNumber);
         } else {
           orderItemNumber = 1;
         }
@@ -100,6 +108,7 @@ export class ViewProductDetailsComponent implements OnInit {
           1,
           this.standardProductToView.unitPrice
         );
+        console.log('orderItem:' + orderItem);
 
         orderItem.product = this.standardProductToView;
 
