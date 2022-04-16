@@ -1,17 +1,20 @@
-.filter-bar 
-.category-menu 
-.tag-menu {
+.filter-bar {
+    /* float:left; */
     margin-right: 0.5em;
-    float:left;
-    width:200px;
 }
+/* .category-menu {
+    float:left;
+    width:10em;
+    margin: 0.5em;
+} */
+
 
 label {
     font-size: 14px;
 }
 
 .p-field-checkbox {
-    margin-bottom: 0.5em;
+    margin: 0.5em;
 }
 
 h3,

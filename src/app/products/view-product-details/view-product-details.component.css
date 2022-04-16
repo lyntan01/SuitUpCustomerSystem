@@ -1,18 +1,26 @@
 .product-container {
     margin: 3em auto;
     width: 70vw;
+    /* background-color:rgb(255, 255, 255)  */
 }
 
 .product-img {
     height: 100%;
     width: 100%;
+    color:white;
 }
 
+
 .img-box {
-    height: 25vw;
+    height: 30vw;
     width: 25vw;
-    margin-right: 3em;
+    /* margin-right: 3em; */
+    float:left;
+    border:2px;
+    border-color:black ;
+    padding:2em;
 }
+
 
 .inline {
     display: inline-block;
@@ -22,10 +30,7 @@
 .label {
     width: 3em;
 }
-
-.description-container {
-    padding: 0.5em 1.5em;
-}
+ 
 
 
 th,
