@@ -57,6 +57,20 @@ export class AppointmentService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteAppointment(appointmentId?: number): Observable<any> {
+    return this.httpClient
+      .delete<any>(
+        this.baseUrl +
+          '/' +
+          appointmentId +
+          '?email=' +
+          this.sessionService.getEmail() +
+          '&password=' +
+          this.sessionService.getPassword()
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = '';
 

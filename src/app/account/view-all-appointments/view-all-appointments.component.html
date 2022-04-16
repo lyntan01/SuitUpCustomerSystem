@@ -1,3 +1,10 @@
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+
 <div class="account-container p-grid">
   <app-account-menu class="p-col"></app-account-menu>
 
@@ -23,6 +30,7 @@
             <th pSortableColumn="store">
               Store<p-sortIcon field="store"></p-sortIcon>
             </th>
+            <th style="width: 3rem"></th>
           </tr>
         </ng-template>
 
@@ -35,6 +43,15 @@
               {{ appointment.appointmentTypeEnum }}
             </td>
             <td>{{ storeName }}</td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger p-button-text"
+                (click)="deleteAppointment(appointment)"
+              ></button>
+            </td>
 
             <!-- <td>{{ creditCard.holderName }}</td> -->
           </tr>
