@@ -58,24 +58,24 @@ export class CustomizedMainComponent implements OnInit {
     this.newCustomizedPants = new CustomizedPants();
   }
 
-  mockJacketStyles = [
-    {
-      customizationId: 1,
-      name: 'Test JacketStyles',
-      description: 'Description',
-      additionalPrice: 30,
-      isDisabled: false,
-      image: 'assets/images/customized-main-2.jpeg',
-    },
-    {
-      customizationId: 2,
-      name: 'Test JacketStyles 2',
-      description: 'Description',
-      additionalPrice: 40,
-      isDisabled: false,
-      image: 'assets/images/customized-main-2.jpeg',
-    },
-  ];
+  // mockJacketStyles = [
+  //   {
+  //     customizationId: 1,
+  //     name: 'Test JacketStyles',
+  //     description: 'Description',
+  //     additionalPrice: 30,
+  //     isDisabled: false,
+  //     image: 'assets/images/customized-main-2.jpeg',
+  //   },
+  //   {
+  //     customizationId: 2,
+  //     name: 'Test JacketStyles 2',
+  //     description: 'Description',
+  //     additionalPrice: 40,
+  //     isDisabled: false,
+  //     image: 'assets/images/customized-main-2.jpeg',
+  //   },
+  // ];
 
   ngOnInit(): void {
     let currentCart = this.sessionService.getCart();
