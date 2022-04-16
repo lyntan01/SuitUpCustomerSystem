@@ -5,11 +5,14 @@ import { Customer } from 'src/app/models/customer';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { SessionService } from 'src/app/services/session.service';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-view-all-appointments',
   templateUrl: './view-all-appointments.component.html',
   styleUrls: ['./view-all-appointments.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class ViewAllAppointmentsComponent implements OnInit {
   appointments: Appointment[];
@@ -20,7 +23,9 @@ export class ViewAllAppointmentsComponent implements OnInit {
     public sessionService: SessionService,
     private router: Router,
     private appointmentService: AppointmentService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.customer = this.sessionService.getCurrentCustomer();
     this.appointments = new Array();
@@ -53,5 +58,58 @@ export class ViewAllAppointmentsComponent implements OnInit {
     if (!this.sessionService.getIsLogin()) {
       this.router.navigate(['/accessRightError']);
     }
+  }
+
+  deleteAppointment(appointment: Appointment) {
+    console.log(appointment);
+    this.confirmationService.confirm({
+      message:
+        'Are you sure that you want to delete this Appointment : "' +
+        appointment.appointmentTypeEnum +
+        '" ?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.appointmentService
+          .deleteAppointment(appointment.appointmentId)
+          .subscribe({
+            next: (response) => {
+              this.ngOnInit();
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Confirmed',
+                detail: 'Appointment deleted!',
+              });
+            },
+            error: (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail:
+                  'An error has occured while attempting to delete appointment: ' +
+                  error,
+              });
+            },
+          });
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected.',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cancelled',
+              detail: 'You have cancelled.',
+            });
+            break;
+        }
+      },
+    });
   }
 }
