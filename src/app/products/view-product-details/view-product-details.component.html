@@ -4,9 +4,10 @@
       <div class="p-grid">
         <div class="p-col-4 img-box">
           <img
-            src="http://localhost:8080/SuitUp-war/uploadedFiles/productImages/{{
+            [src]="
+              'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
               standardProductToView.image
-            }}"
+            "
             [alt]="standardProductToView.name"
             class="product-img"
           />
@@ -15,19 +16,21 @@
           <h1>
             {{ standardProductToView.name }}
           </h1>
-          <h5>Category: + {{ standardProductToView.category?.name }}</h5>
+          <h5>Category: {{ standardProductToView.category?.name }}</h5>
 
           <div>
-            <h5 *ngFor="let tag of standardProductToView.tags">
-              {{ tag.name }}
-            </h5>
+            <td>Tags:</td>
+            <tr *ngFor="let tag of standardProductToView.tags">
+              {{
+                tag.name
+              }}
+            </tr>
+            <!-- erm need change this to one line ... -->
           </div>
 
           <p>{{ standardProductToView.description }}</p>
 
-          <h3 class="p-mb-2">
-            {{ standardProductToView.unitPrice }}
-          </h3>
+          <h3 class="p-mb-2">$ {{ standardProductToView.unitPrice }}</h3>
 
           <form #addToCartForm="ngForm" (ngSubmit)="addToCart(addToCartForm)">
             <div class="p-mb-2">

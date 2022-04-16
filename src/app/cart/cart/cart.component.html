@@ -25,9 +25,10 @@
           <td>
             <div class="p-d-flex p-ai-center">
               <img
-                src="http://localhost:8080/SuitUp-war/resources/images/productImages/{{
-                  orderItem.product?.image
-                }}"
+                [src]="
+                  'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                  orderItem.product.image
+                "
                 alt="{{ orderItem.product?.name }}"
                 height="130"
                 class="p-mr-4 shadow-4"
