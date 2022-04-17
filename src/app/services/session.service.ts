@@ -54,6 +54,14 @@ export class SessionService {
     sessionStorage['password'] = password;
   }
 
+  getCustomizedNumber(): number {
+    return sessionStorage['customizedNumber'] == undefined ? 1 : sessionStorage['customizedNumber'] as number;
+  }
+
+  setCustomizedNumber(index: number): void {
+    sessionStorage.setItem('customizedNumber', index.toString());
+  }
+
   getCart(): OrderLineItem[] | undefined {
     const cart = sessionStorage.getItem('cart');
 

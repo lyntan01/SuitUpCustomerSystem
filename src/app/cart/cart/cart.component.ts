@@ -196,14 +196,14 @@ export class CartComponent implements OnInit {
         this.cart &&
         prevSubtotal &&
         quantity == 0 &&
-        orderItem.product?.productId
+        orderItem.product?.name
       ) {
-        this.removeFromCart(prevSubtotal, orderItem.product?.productId);
+        this.removeFromCart(prevSubtotal, orderItem.product?.name as string);
       } else {
         if (prevSubtotal && quantity && unitPrice) {
           let newSubtotal = quantity * unitPrice;
           let cartItemIndex = this.cart.findIndex((oi) => {
-            return oi.product?.productId === orderItem.product?.productId;
+            return oi.product?.name === orderItem.product?.name;
           });
           this.cart[cartItemIndex].subTotal = newSubtotal;
           this.cart[cartItemIndex].quantity = quantity;
@@ -224,10 +224,10 @@ export class CartComponent implements OnInit {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          if (orderItem.subTotal && orderItem.product?.productId) {
+          if (orderItem.subTotal && orderItem.product?.name) {
             this.removeFromCart(
               orderItem.subTotal,
-              orderItem.product?.productId
+              orderItem.product?.name
             );
           }
         },
@@ -235,10 +235,10 @@ export class CartComponent implements OnInit {
     }
   }
 
-  private removeFromCart(subtotal: number, productId: number): void {
+  private removeFromCart(subtotal: number, name: string): void {
     let cartItemIndex = this.cart.findIndex((oi) => {
       console.log(oi);
-      return oi.product?.productId === productId;
+      return oi.product?.name === name;
     });
     this.messageService.add({
       severity: 'info',

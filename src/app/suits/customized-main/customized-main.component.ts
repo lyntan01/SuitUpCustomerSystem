@@ -1,8 +1,7 @@
 import { CustomizedJacket } from './../../models/customized-jacket';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';    
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 import { SessionService } from 'src/app/services/session.service';
 import { CustomizationService } from 'src/app/services/customization.service';
@@ -50,7 +49,6 @@ export class CustomizedMainComponent implements OnInit {
     public sessionService: SessionService,
     private router: Router,
     private customizationService: CustomizationService,
-    private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) {
     this.cart = [];
@@ -126,7 +124,6 @@ export class CustomizedMainComponent implements OnInit {
     this.selectPants = false;
     this.newCustomizedJacket.basePrice = 200
     this.totalAmount = 200;
-    this.newCustomizedJacket.name = "Customized Jacket";
   }
 
   activatePants() {
@@ -136,7 +133,6 @@ export class CustomizedMainComponent implements OnInit {
     this.selectJacket = false;
     this.newCustomizedPants.basePrice = 100;
     this.totalAmount = 100;
-    this.newCustomizedPants.name = "Customized Pants";
   }
 
   selectCustomization(
@@ -182,11 +178,13 @@ export class CustomizedMainComponent implements OnInit {
 
   tabulateTotalPrice() {
     if (this.selectJacket) {
+      this.totalAmount = this.newCustomizedJacket?.basePrice as number;
       this.totalAmount += (this.newCustomizedJacket.jacketStyle === undefined) ? 0 : this.newCustomizedJacket.jacketStyle?.additionalPrice as number;
       this.totalAmount += (this.newCustomizedJacket.pocketStyle === undefined) ? 0 : this.newCustomizedJacket.pocketStyle?.additionalPrice as number;
       this.totalAmount += (this.newCustomizedJacket.innerFabric === undefined) ? 0 : this.newCustomizedJacket.innerFabric?.additionalPrice as number;
       this.totalAmount += (this.newCustomizedJacket.outerFabric === undefined) ? 0 : this.newCustomizedJacket.outerFabric?.additionalPrice as number;
     } else if (this.selectPants) {
+      this.totalAmount = this.newCustomizedPants?.basePrice as number;
       this.totalAmount += (this.newCustomizedPants.fabric === undefined) ? 0 : this.newCustomizedPants.fabric?.additionalPrice as number;
       this.totalAmount += (this.newCustomizedPants.pantsCutting === undefined) ? 0 : this.newCustomizedPants.pantsCutting?.additionalPrice as number;
 
@@ -205,6 +203,22 @@ export class CustomizedMainComponent implements OnInit {
     }
 
     let newOrderItem = new OrderLineItem();
+
+    if (item === 'jacket') {
+      this.newCustomizedJacket.totalPrice = this.totalAmount;
+      this.newCustomizedJacket.gender = this.gender;
+      this.newCustomizedJacket.image = 'defaultJacket.png';
+      this.newCustomizedJacket.name = 'Customized Jacket ' + this.sessionService.getCustomizedNumber();
+    } else {
+      this.newCustomizedPants.totalPrice = this.totalAmount;
+      this.newCustomizedPants.gender = this.gender;
+      this.newCustomizedPants.image = 'defaultPants.png';
+      this.newCustomizedPants.name = 'Customized Pants ' + this.sessionService.getCustomizedNumber();
+    }
+
+    let idx = this.sessionService.getCustomizedNumber() as number;
+    idx++;
+    this.sessionService.setCustomizedNumber(idx);
 
     newOrderItem.product =
       item == 'jacket' ? this.newCustomizedJacket : this.newCustomizedPants;
