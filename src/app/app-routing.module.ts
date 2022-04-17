@@ -65,6 +65,10 @@ const routes: Routes = [
   { path: 'viewMyMeasurements', component: ViewMyMeasurementsComponent },
   { path: 'checkoutConfirmation', component: CheckoutConfirmationComponent },
   { path: 'viewAllSupportTickets', component: ViewAllSupportTicketsComponent },
+  {
+    path: 'viewOrderDetails/:orderId',
+    component: ViewOrderItemDetailsComponent,
+  },
 ];
 
 @NgModule({
