@@ -1,6 +1,6 @@
 import { Product } from "./product";
 
-export abstract class CustomizedProduct extends Product {
+export class CustomizedProduct extends Product {
     basePrice: number | undefined;
     totalPrice: number | undefined;
     gender: string | undefined;

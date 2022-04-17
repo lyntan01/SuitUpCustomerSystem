@@ -277,10 +277,14 @@ export class CartComponent implements OnInit {
 
   setMeasurements() {
     for (let item of this.cart) {
-      if (item.product instanceof CustomizedJacket) {
-        item.product.jacketMeasurement = this.sessionService.getCurrentCustomer().jacketMeasurement;
-      } else if (item.product instanceof CustomizedPants) {
-        item.product.pantsMeasurement = this.sessionService.getCurrentCustomer().pantsMeasurement;
+      if ((<CustomizedJacket>item.product).innerFabric) {
+        (<CustomizedJacket>item.product).jacketMeasurement = this.sessionService.getCurrentCustomer().jacketMeasurement;
+        (<CustomizedJacket>item.product).totalPrice = Number((<CustomizedJacket>item.product).totalPrice?.toFixed(2));
+        (<CustomizedJacket>item.product).basePrice = Number((<CustomizedJacket>item.product).basePrice?.toFixed(2));
+      } else if ((<CustomizedPants>item.product).pantsCutting) {
+        (<CustomizedPants>item.product).pantsMeasurement = this.sessionService.getCurrentCustomer().pantsMeasurement;
+        (<CustomizedPants>item.product).totalPrice = Number((<CustomizedPants>item.product).totalPrice?.toFixed(2));
+        (<CustomizedPants>item.product).basePrice = Number((<CustomizedPants>item.product).basePrice?.toFixed(2));
       }
     }
   }

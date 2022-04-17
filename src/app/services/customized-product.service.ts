@@ -76,6 +76,8 @@ export class CustomizedProductService {
         outerFabricId,
         jacketMeasurementId
       );
+
+      console.log(JSON.stringify(createCustomizedJacketReq));
     return this.httpClient
       .put<number>(
         this.baseUrl + '/createCustomizedJacket',
@@ -91,6 +93,7 @@ export class CustomizedProductService {
     pantsMeasurementId: number,
     pantsCuttingId: number
   ): Observable<number> {
+    console.log(newCustomizedPants);
     let createCustomizedPantsReq: CreateCustomizedPantsReq =
       new CreateCustomizedPantsReq(
         this.sessionService.getEmail(),
@@ -100,6 +103,8 @@ export class CustomizedProductService {
         pantsCuttingId,
         pantsMeasurementId
       );
+
+      console.log(JSON.stringify(createCustomizedPantsReq));
     return this.httpClient
       .put<number>(
         this.baseUrl + '/createCustomizedPants',

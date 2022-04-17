@@ -21,6 +21,7 @@ import { OrderStatusEnum } from 'src/app/models/enum/order-status-enum';
 import { CreditCardService } from 'src/app/services/credit-card.service';
 import { Transaction } from 'src/app/models/transaction';
 import { CustomizedProductService } from 'src/app/services/customized-product.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-order-summary',
@@ -174,14 +175,7 @@ export class OrderSummaryComponent implements OnInit {
     this.router.navigate(['checkout/paymentMethod']);
   }
 
-  checkout(): void {
-    this.submitted = true;
-
-    let totalOrderItem = 0;
-    let totalQuantity = 0;
-    let order = new Order();
-
-    // go through the cart n find customized item
+  persist() {
     for (let item of this.cart) {
       if ((<CustomizedJacket>item.product).innerFabric) {
         let newJacket = <CustomizedJacket>item.product;
@@ -197,7 +191,7 @@ export class OrderSummaryComponent implements OnInit {
           )
           .subscribe((productId) => {
             if (item.product) {
-              item.product.productId = productId
+              item.product.productId = productId;
             }
           },
           (error) => {
@@ -211,6 +205,7 @@ export class OrderSummaryComponent implements OnInit {
           });
       } else if ((<CustomizedPants>item.product).pantsCutting) {
         let newPants = <CustomizedPants>item.product;
+        console.log(newPants);
         this.customizedProductService
           .createCustomizedPants(
             newPants,
@@ -221,7 +216,7 @@ export class OrderSummaryComponent implements OnInit {
           )
           .subscribe((productId) => {
             if (item.product) {
-              item.product.productId = productId
+              item.product.productId = productId;
             }
           },
           (error) => {
@@ -235,7 +230,22 @@ export class OrderSummaryComponent implements OnInit {
           });
       }
     }
+  }
 
+  async checkout(): Promise<void> {
+    this.submitted = true;
+
+    let totalOrderItem = 0;
+    let totalQuantity = 0;
+    let order = new Order();
+
+    this.persist()
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    for (let items of this.cart) {
+      console.log(items.product?.productId);
+    }
+  
     this.cart.forEach((orderItem) => {
       if (
         orderItem &&

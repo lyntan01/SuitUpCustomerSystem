@@ -3,7 +3,7 @@ import { CustomizedPants } from './customized-pants';
 export class CreateCustomizedPantsReq {
   email: string | undefined;
   password: string | undefined;
-  customizedPants: CustomizedPants | undefined;
+  newCustomizedPants: CustomizedPants | undefined;
   fabricId: number | undefined;
   pantsCuttingId: number | undefined;
   pantsMeasurementId: number | undefined;
@@ -11,14 +11,14 @@ export class CreateCustomizedPantsReq {
   constructor(
     email?: string,
     password?: string,
-    customizedPants?: CustomizedPants,
+    newCustomizedPants?: CustomizedPants,
     fabricId?: number,
     pantsCuttingId?: number,
     pantsMeasurementId?: number
   ) {
     this.email = email;
     this.password = password;
-    this.customizedPants = customizedPants;
+    this.newCustomizedPants = newCustomizedPants;
     this.fabricId = fabricId;
     this.pantsCuttingId = pantsCuttingId;
     this.pantsMeasurementId = pantsMeasurementId;
