@@ -69,29 +69,16 @@
                   <div class="space-input">
                     <label for="description">Description</label>
                     <div>
-                      <!-- <input
+                      <input
                         #description="ngModel"
                         id="description"
                         type="text"
                         name="description"
                         [(ngModel)]="newSupportTicket.description"
                         required
-                        pInputTextArea
+                        pInputText
                         maxlength="256"
-                      /> -->
-
-                      <textarea
-                        #description="ngModel"
-                        id="description"
-                        type="text"
-                        name="description"
-                        [(ngModel)]="newSupportTicket.description"
-                        required
-                        rows="5"
-                        cols="86"
-                        pInputTextarea
-                        maxlength="256"
-                      ></textarea>
+                      />
                     </div>
                     <div
                       *ngIf="
