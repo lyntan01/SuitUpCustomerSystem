@@ -1,3 +1,5 @@
+import { CustomizedPants } from 'src/app/models/customized-pants';
+import { CustomizedJacket } from './../../models/customized-jacket';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -260,6 +262,38 @@ export class CartComponent implements OnInit {
 
   checkoutCart(): void {
     if (this.sessionService.getIsLogin()) {
+      
+      let hasCustomizedJacket = false;
+      let hasCustomizedPants = false;
+
+      for (let item of this.cart) {
+        if (item.product instanceof CustomizedJacket) {
+          hasCustomizedJacket = true;
+        } else if (item.product instanceof CustomizedPants) {
+          hasCustomizedPants = true;
+        }
+      }
+
+      if (hasCustomizedJacket && this.sessionService.getCurrentCustomer().jacketMeasurement === undefined) {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Hi!',
+          detail: 'It seems like you have a Customized Jacket in your cart, please make sure you have a jacket measurements recorded in your profile before checking out',
+        });
+        return;
+      }
+
+      if (hasCustomizedPants && this.sessionService.getCurrentCustomer().pantsMeasurement === undefined) {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Hi!',
+          detail: 'It seems like you have a Customized Pants in your cart, please make sure you have a pants measurements recorded in your profile before checking out',
+        });
+        return;
+      }
+      
+      this.setMeasurements();
+      
       this.sessionService.setCart(this.cart);
       if (this.promotion) {
         this.sessionService.setPromotion(this.promotion);
@@ -271,6 +305,16 @@ export class CartComponent implements OnInit {
         summary: 'Hi!',
         detail: 'Please login before checking out',
       });
+    }
+  }
+
+  setMeasurements() {
+    for (let item of this.cart) {
+      if (item.product instanceof CustomizedJacket) {
+        item.product.jacketMeasurement = this.sessionService.getCurrentCustomer().jacketMeasurement;
+      } else if (item.product instanceof CustomizedPants) {
+        item.product.pantsMeasurement = this.sessionService.getCurrentCustomer().pantsMeasurement;
+      }
     }
   }
 }

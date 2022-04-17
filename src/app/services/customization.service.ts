@@ -21,7 +21,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class Customization {
+export class CustomizationService {
   baseUrl: string = '/api/Customization';
 
   constructor(
