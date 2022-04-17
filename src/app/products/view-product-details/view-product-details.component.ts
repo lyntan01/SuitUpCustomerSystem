@@ -136,7 +136,7 @@ export class ViewProductDetailsComponent implements OnInit {
       this.messageService.add({
         severity: 'success',
         summary:
-          'standardProduct ' +
+          // 'standardProduct ' +
           this.standardProductToView.name +
           ' added to cart',
       });

@@ -27,17 +27,13 @@ export class CartComponent implements OnInit {
   totalNumItems: number;
   total: number;
   discountedTotal: number;
-  orderLineItem: OrderLineItem; // TESTING
-  product: StandardProduct; // TESTING
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     public sessionService: SessionService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private promotionService: PromotionService,
-    private standardProductService: StandardProductService // TESTING
   ) {
     this.cart = new Array();
     this.promotionCode = '';
@@ -45,17 +41,22 @@ export class CartComponent implements OnInit {
     this.totalNumItems = 0.0;
     this.total = 0.0;
     this.discountedTotal = 0.0;
-    this.orderLineItem = new OrderLineItem(); // TESTING
-    this.product = new StandardProduct(); // TESTING
   }
 
   ngOnInit(): void {
     let tmpCart = this.sessionService.getCart();
+    let tmpPromotion = this.sessionService.getPromotion();
 
     if (tmpCart) {
       this.cart = tmpCart;
       this.totalNumItems = tmpCart.length;
       this.total = this.getTotal();
+    }
+
+    if (tmpPromotion && tmpPromotion.promotionCode) {
+      this.promotion = tmpPromotion;
+      this.promotionCode = tmpPromotion.promotionCode;
+      this.discountedTotal = this.getDiscountedTotal();
     }
   }
 
@@ -89,16 +90,13 @@ export class CartComponent implements OnInit {
   }
 
   getDiscountedTotal() {
-    console.log('********** CartComponent.ts: getDiscountedTotal()');
     if (this.promotion && this.promotion.promotionCode) {
-      // return total - total * this.coupon.discountRate;
       this.promotionService
         .getDiscountedAmount(this.promotion.promotionCode, this.total)
         .subscribe({
           next: (response) => {
             console.log('response: ' + response);
             this.discountedTotal = response;
-            // return response;
           },
           error: (error) => {
             console.log(
@@ -133,6 +131,7 @@ export class CartComponent implements OnInit {
             (response) => {
               this.promotion = response;
               this.getDiscountedTotal();
+              this.sessionService.setPromotion(this.promotion);
             },
             (error) => {
               this.messageService.add({
@@ -262,9 +261,6 @@ export class CartComponent implements OnInit {
       this.setMeasurements();
       
       this.sessionService.setCart(this.cart);
-      if (this.promotion) {
-        this.sessionService.setPromotion(this.promotion);
-      }
       this.router.navigate(['/checkout']);
     } else {
       this.messageService.add({
