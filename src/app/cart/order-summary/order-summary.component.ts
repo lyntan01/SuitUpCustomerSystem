@@ -189,20 +189,22 @@ export class OrderSummaryComponent implements OnInit {
             this.sessionService.getCurrentCustomer().jacketMeasurement
               ?.jacketMeasurementId as number
           )
-          .subscribe((productId) => {
-            if (item.product) {
-              item.product.productId = productId;
+          .subscribe(
+            (productId) => {
+              if (item.product) {
+                item.product.productId = productId;
+              }
+            },
+            (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail:
+                  'An error has occurred while creating the new customized jacket: ' +
+                  error,
+              });
             }
-          },
-          (error) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail:
-                'An error has occurred while creating the new customized jacket: ' +
-                error,
-            });
-          });
+          );
       } else if ((<CustomizedPants>item.product).pantsCutting) {
         let newPants = <CustomizedPants>item.product;
         console.log(newPants);
@@ -211,23 +213,25 @@ export class OrderSummaryComponent implements OnInit {
             newPants,
             newPants.fabric?.customizationId as number,
             this.sessionService.getCurrentCustomer().pantsMeasurement
-            ?.pantsMeasurementId as number,
-            newPants.pantsCutting?.customizationId as number,
+              ?.pantsMeasurementId as number,
+            newPants.pantsCutting?.customizationId as number
           )
-          .subscribe((productId) => {
-            if (item.product) {
-              item.product.productId = productId;
+          .subscribe(
+            (productId) => {
+              if (item.product) {
+                item.product.productId = productId;
+              }
+            },
+            (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail:
+                  'An error has occurred while creating the new customized pants: ' +
+                  error,
+              });
             }
-          },
-          (error) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail:
-                'An error has occurred while creating the new customized pants: ' +
-                error,
-            });
-          });
+          );
       }
     }
   }
@@ -239,13 +243,13 @@ export class OrderSummaryComponent implements OnInit {
     let totalQuantity = 0;
     let order = new Order();
 
-    this.persist()
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    this.persist();
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     for (let items of this.cart) {
       console.log(items.product?.productId);
     }
-  
+
     this.cart.forEach((orderItem) => {
       if (
         orderItem &&
@@ -285,6 +289,7 @@ export class OrderSummaryComponent implements OnInit {
       if (!this.deliveryAddress.addressId) {
         this.addressService.createNewAddress(this.deliveryAddress).subscribe(
           (response) => {
+            console.log(response);
             this.deliveryAddress.addressId = response;
           },
           (error) => {
@@ -300,8 +305,10 @@ export class OrderSummaryComponent implements OnInit {
         );
       }
 
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
       this.addressService
-        .getAddressById(this.deliveryAddress.addressId || 0)
+        .getAddressById(this.deliveryAddress.addressId as number)
         .subscribe(
           (response) => {
             order.deliveryAddress = response;
@@ -318,6 +325,8 @@ export class OrderSummaryComponent implements OnInit {
           }
         );
     }
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
 
     // Verify credit card
     if (this.creditCard && this.creditCard.creditCardId) {
