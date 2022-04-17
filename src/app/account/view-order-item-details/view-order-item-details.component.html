@@ -36,7 +36,10 @@
                   {{ orderItem.product.name }}
                 </td>
                 <td class="text-center">
-                  {{ orderItem.product.unitPrice | currency }}
+                  {{
+                    orderItem.product.unitPrice ?? orderItem.product.totalPrice
+                      | currency
+                  }}
                 </td>
                 <td class="text-center">
                   {{ orderItem.quantity }}
