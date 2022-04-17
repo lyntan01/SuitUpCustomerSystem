@@ -88,6 +88,23 @@ export class OrderService {
     );
   }
 
+  createTransaction(newOrder: Order): Observable<number> {
+
+    let applyPromotionCodeReq: ApplyPromotionCodeReq =
+      new ApplyPromotionCodeReq(
+        this.sessionService.getEmail(),
+        this.sessionService.getPassword(),
+        newOrder,
+        ''
+      );
+
+    return this.httpClient.post<number>(
+      this.baseUrl,
+      applyPromotionCodeReq,
+      httpOptions
+    );
+  }
+
   cancelOrder(orderId: number): Observable<any> {
     return this.httpClient
       .delete<any>(

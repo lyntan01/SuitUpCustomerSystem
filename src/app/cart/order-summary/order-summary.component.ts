@@ -265,12 +265,7 @@ export class OrderSummaryComponent implements OnInit {
 
     order.totalLineItem = totalOrderItem;
     order.totalQuantity = totalQuantity;
-
-    if (this.promotion && this.promotion.promotionCode) {
-      order.totalAmount = this.discountedTotal;
-    } else {
-      order.totalAmount = this.total;
-    }
+    order.totalAmount = this.total;
 
     order.orderDateTime = new Date();
     order.expressOrder = this.expressOrder;
@@ -340,6 +335,7 @@ export class OrderSummaryComponent implements OnInit {
                 order.orderId = orderId;
 
                 if (this.promotion) {
+                  console.log("GOT PROMO!! ORDER TOTAL = " + order.totalAmount);
                   this.orderService.applyPromotionCode(order).subscribe(
                     (orderId) => {
                       this.sessionService.setCheckoutOrderId(orderId);
@@ -356,18 +352,32 @@ export class OrderSummaryComponent implements OnInit {
                         summary: 'Error',
                         detail:
                           'An error has occurred while applying the promotion: ' +
-                          error,
+                          error.error,
                       });
+                      console.log(error);
                     }
                   );
                 } else {
-                  this.sessionService.setCheckoutOrderId(orderId);
-                  this.sessionService.clearCheckout();
-                  console.log(orderId);
-                  this.router.navigate([
-                    '/checkoutConfirmation',
-                    { orderId: orderId },
-                  ]);
+                  this.orderService.createTransaction(order).subscribe(
+                    (orderId) => {
+                      this.sessionService.setCheckoutOrderId(orderId);
+                      this.sessionService.clearCheckout();
+                      console.log(orderId);
+                      this.router.navigate([
+                        '/checkoutConfirmation',
+                        { orderId: orderId },
+                      ]);
+                    },
+                    (error) => {
+                      this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail:
+                          'An error has occurred while creating the transaction: ' +
+                          error.error,
+                      });
+                    }
+                  );
                 }
               },
               (error) => {

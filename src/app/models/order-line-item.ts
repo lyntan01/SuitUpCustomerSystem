@@ -10,11 +10,9 @@ export class OrderLineItem {
         orderLineItemId?: number,
         quantity?: number,
         subTotal?: number,
-        product?: Product // FOR TESTING
     ) {
         this.orderLineItemId = orderLineItemId;
         this.quantity = quantity;
         this.subTotal = subTotal;
-        this.product = product; // FOR TESTING
     }
 }
