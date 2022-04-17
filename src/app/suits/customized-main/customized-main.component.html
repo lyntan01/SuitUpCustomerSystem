@@ -11,7 +11,7 @@
       [src]="headerImg"
       alt="Image"
       class="block md:h-full"
-      style="clip-path: polygon(0 0, 80% 0%, 100% 100%, 0% 100%)"
+      style="clip-path: polygon(0 0, 41% 0, 70% 100%, 0% 100%)"
     />
   </div>
   <div class="col-12 md:col-6 text-center md:text-left flex align-items-center">
@@ -57,15 +57,15 @@
           >
             <ng-template pTemplate="header">
               <img
-                  [src]="
-                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
-                    jacketStyle.image
-                  "
-                  [alt]="jacketStyle.name"
-                  class="customization"
-                  width="auto"
-                  height="300px"
-                />
+                [src]="
+                  'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                  jacketStyle.image
+                "
+                [alt]="jacketStyle.name"
+                class="customization"
+                width="auto"
+                height="300px"
+              />
             </ng-template>
             <p>
               Additional Price: {{ jacketStyle.additionalPrice | currency }}
@@ -94,22 +94,22 @@
       <div class="cards">
         <ng-container *ngFor="let pocketStyle of pocketStyles">
           <p-card
-          header="{{ pocketStyle.name }}"
-          subheader="{{ pocketStyle.description }}"
+            header="{{ pocketStyle.name }}"
+            subheader="{{ pocketStyle.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
               <img
-                  [src]="
-                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
-                    pocketStyle.image
-                  "
-                  [alt]="pocketStyle.name"
-                  class="customization"
-                  width="auto"
-                  height="300px"
-                />
+                [src]="
+                  'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                  pocketStyle.image
+                "
+                [alt]="pocketStyle.name"
+                class="customization"
+                width="auto"
+                height="300px"
+              />
             </ng-template>
             <p>
               Additional Price: {{ pocketStyle.additionalPrice | currency }}
@@ -138,22 +138,22 @@
       <div class="cards">
         <ng-container *ngFor="let fabric of fabrics">
           <p-card
-          header="{{ fabric.name }}"
-          subheader="{{ fabric.description }}"
+            header="{{ fabric.name }}"
+            subheader="{{ fabric.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
               <img
-                  [src]="
-                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
-                    fabric.image
-                  "
-                  [alt]="fabric.name"
-                  class="customization"
-                  width="auto"
-                  height="300px"
-                />
+                [src]="
+                  'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                  fabric.image
+                "
+                [alt]="fabric.name"
+                class="customization"
+                width="auto"
+                height="300px"
+              />
             </ng-template>
             <p>Additional Price: {{ fabric.additionalPrice | currency }}</p>
             <p>Colour: {{ fabric.colour?.name }}</p>
@@ -181,22 +181,22 @@
       <div class="cards">
         <ng-container *ngFor="let fabric of fabrics">
           <p-card
-          header="{{ fabric.name }}"
-          subheader="{{ fabric.description }}"
+            header="{{ fabric.name }}"
+            subheader="{{ fabric.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
               <img
-                  [src]="
-                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
-                    fabric.image
-                  "
-                  [alt]="fabric.name"
-                  class="customization"
-                  width="auto"
-                  height="300px"
-                />
+                [src]="
+                  'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                  fabric.image
+                "
+                [alt]="fabric.name"
+                class="customization"
+                width="auto"
+                height="300px"
+              />
             </ng-template>
             <p>Additional Price: {{ fabric.additionalPrice | currency }}</p>
             <p>Colour: {{ fabric.colour?.name }}</p>
@@ -261,22 +261,22 @@
       <div class="cards">
         <ng-container *ngFor="let fabric of fabrics">
           <p-card
-          header="{{ fabric.name }}"
-          subheader="{{ fabric.description }}"
+            header="{{ fabric.name }}"
+            subheader="{{ fabric.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
               <img
-                  [src]="
-                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
-                    fabric.image
-                  "
-                  [alt]="fabric.name"
-                  class="customization"
-                  width="auto"
-                  height="300px"
-                />
+                [src]="
+                  'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                  fabric.image
+                "
+                [alt]="fabric.name"
+                class="customization"
+                width="auto"
+                height="300px"
+              />
             </ng-template>
             <p>Additional Price: {{ fabric.additionalPrice | currency }}</p>
             <p>Colour: {{ fabric.colour?.name }}</p>
@@ -304,22 +304,22 @@
       <div class="cards">
         <ng-container *ngFor="let cut of pantsCutting">
           <p-card
-          header="{{ cut.name }}"
-          subheader="{{ cut.description }}"
+            header="{{ cut.name }}"
+            subheader="{{ cut.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
               <img
-                  [src]="
-                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
-                    cut.image
-                  "
-                  [alt]="cut.name"
-                  class="customization"
-                  width="auto"
-                  height="300px"
-                />
+                [src]="
+                  'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                  cut.image
+                "
+                [alt]="cut.name"
+                class="customization"
+                width="auto"
+                height="300px"
+              />
             </ng-template>
             <p>Additional Price: {{ cut.additionalPrice | currency }}</p>
             <ng-template pTemplate="footer">
