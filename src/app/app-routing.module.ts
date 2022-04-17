@@ -20,6 +20,7 @@ import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { DeliveryAddressComponent } from './cart/delivery-address/delivery-address.component';
 import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
 import { PaymentMethodComponent } from './cart/payment-method/payment-method.component';
+import { CustomizedMainComponent } from './suits/customized-main/customized-main.component';
 
 import { IndexComponent } from './index/index.component';
 import { ViewAllProductsComponent } from './products/view-all-products/view-all-products.component';
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'viewAllProducts', component: ViewAllProductsComponent },
   { path: 'viewProductDetails', component: ViewProductDetailsComponent },
   { path: 'viewProductDetails', component: ViewProductDetailsComponent },
+  { path: 'createNewCustomizedSuit', component: CustomizedMainComponent },
   {
     path: 'viewProductDetails/:standardProductId',
     component: ViewProductDetailsComponent,

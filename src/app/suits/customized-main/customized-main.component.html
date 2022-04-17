@@ -1,0 +1,292 @@
+<p-toast></p-toast>
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+
+<div class="grid grid-nogutter surface-section text-800">
+  <div class="col-12 md:col-6 overflow-hidden">
+    <img
+      [src]="headerImg"
+      alt="Image"
+      class="block md:h-full"
+      style="clip-path: polygon(0 0, 80% 0%, 100% 100%, 0% 100%)"
+    />
+  </div>
+  <div class="col-12 md:col-6 text-center md:text-left flex align-items-center">
+    <section>
+      <span class="block text-6xl font-bold mb-1 black"
+        >Create your customized suit</span
+      >
+      <div class="text-6xl suitup font-bold mb-3">right now.</div>
+      <p class="mt-0 mb-4 text-700 line-height-3">
+        We cater to both men and women.
+      </p>
+
+      <button
+        pButton
+        pRipple
+        label="Customize My Jacket"
+        type="button"
+        (click)="activateJacket()"
+        class="mr-3 p-button-raised default"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Customize My Pants"
+        type="button"
+        (click)="activatePants()"
+        class="mr-3 p-button-raised default"
+      ></button>
+    </section>
+  </div>
+</div>
+
+<ng-template [ngIf]="selectJacket">
+  <p-tabView>
+    <p-tabPanel header="Jacket Style">
+      <div class="cards">
+        <ng-container *ngFor="let jacketStyle of jacketStyles">
+          <p-card
+            header="Advanced Card"
+            subheader="Card Subheader"
+            [style]="{ width: '20%' }"
+            styleClass="p-card-shadow"
+          >
+            <ng-template pTemplate="header">
+              <img alt="Card" [src]="jacketStyle.image" />
+            </ng-template>
+            <p>Name: {{ jacketStyle.name }}</p>
+            <p>Description: {{ jacketStyle.description }}</p>
+            <p>Additional Price: {{ jacketStyle.additionalPrice }}</p>
+            <ng-template pTemplate="footer">
+              <input
+                type="checkbox"
+                name="checkJacketStyle"
+                value="{{ jacketStyle }}"
+                (change)="
+                  selectCustomization(
+                    jacketStyle,
+                    'jacketStyle',
+                    newCustomizedJacket.jacketStyle === jacketStyle
+                  )
+                "
+                [checked]="newCustomizedJacket.jacketStyle == jacketStyle"
+              />
+            </ng-template>
+          </p-card>
+        </ng-container>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Pocket Style">
+      <div class="cards">
+        <ng-container *ngFor="let pocketStyle of pocketStyles">
+          <p-card
+            header="Advanced Card"
+            subheader="Card Subheader"
+            [style]="{ width: '20%' }"
+            styleClass="p-card-shadow"
+          >
+            <ng-template pTemplate="header">
+              <img alt="Card" [src]="pocketStyle.image" />
+            </ng-template>
+            <p>Name: {{ pocketStyle.name }}</p>
+            <p>Description: {{ pocketStyle.description }}</p>
+            <p>Additional Price: {{ pocketStyle.additionalPrice }}</p>
+            <ng-template pTemplate="footer">
+              <input
+                type="checkbox"
+                name="checkPocketStyle"
+                value="{{ pocketStyle }}"
+                (change)="
+                  selectCustomization(
+                    pocketStyle,
+                    'pocketStyle',
+                    newCustomizedJacket.pocketStyle === pocketStyle
+                  )
+                "
+                [checked]="newCustomizedJacket.pocketStyle == pocketStyle"
+              />
+            </ng-template>
+          </p-card>
+        </ng-container>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Inner Fabric">
+      <div class="cards">
+        <ng-container *ngFor="let fabric of fabrics">
+          <p-card
+            header="Advanced Card"
+            subheader="Card Subheader"
+            [style]="{ width: '20%' }"
+            styleClass="p-card-shadow"
+          >
+            <ng-template pTemplate="header">
+              <img alt="Card" [src]="fabric.image" />
+            </ng-template>
+            <p>Name: {{ fabric.name }}</p>
+            <p>Description: {{ fabric.description }}</p>
+            <p>Additional Price: {{ fabric.additionalPrice }}</p>
+            <p>Colour: {{ fabric.colour?.name }}</p>
+            <ng-template pTemplate="footer">
+              <input
+                type="checkbox"
+                name="checkInnerFabric"
+                value="{{ fabric }}"
+                (change)="
+                  selectCustomization(
+                    fabric,
+                    'innerFabric',
+                    newCustomizedJacket.innerFabric === fabric
+                  )
+                "
+                [checked]="newCustomizedJacket.innerFabric == fabric"
+              />
+            </ng-template>
+          </p-card>
+        </ng-container>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Outer Fabric">
+      <div class="cards">
+        <ng-container *ngFor="let fabric of fabrics">
+          <p-card
+            header="Advanced Card"
+            subheader="Card Subheader"
+            [style]="{ width: '20%' }"
+            styleClass="p-card-shadow"
+          >
+            <ng-template pTemplate="header">
+              <img alt="Card" [src]="fabric.image" />
+            </ng-template>
+            <p>Name: {{ fabric.name }}</p>
+            <p>Description: {{ fabric.description }}</p>
+            <p>Additional Price: {{ fabric.additionalPrice }}</p>
+            <p>Colour: {{ fabric.colour?.name }}</p>
+            <ng-template pTemplate="footer">
+              <input
+                type="checkbox"
+                name="checkOuterFabric"
+                value="{{ fabric }}"
+                (change)="
+                  selectCustomization(
+                    fabric,
+                    'outerFabric',
+                    newCustomizedJacket.outerFabric === fabric
+                  )
+                "
+                [checked]="newCustomizedJacket.outerFabric == fabric"
+              />
+            </ng-template>
+          </p-card>
+        </ng-container>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+  <div class="container">
+    <p>
+      <b>Total Amount: ${{ totalAmount }} </b>
+    </p>
+    <button
+      pButton
+      pRipple
+      label="Add to Cart"
+      type="button"
+      (click)="addToCart('jacket')"
+      class="mr-3 p-button-raised default"
+      [disabled]="
+        !hasInnerFabric || !hasOuterFabric || !hasJacketStyle || !hasPocketStyle
+      "
+    ></button>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="selectPants">
+  <p-tabView>
+    <p-tabPanel header="Fabric">
+      <div class="cards">
+        <ng-container *ngFor="let fabric of fabrics">
+          <p-card
+            header="Advanced Card"
+            subheader="Card Subheader"
+            [style]="{ width: '20%' }"
+            styleClass="p-card-shadow"
+          >
+            <ng-template pTemplate="header">
+              <img alt="Card" [src]="fabric.image" />
+            </ng-template>
+            <p>Name: {{ fabric.name }}</p>
+            <p>Description: {{ fabric.description }}</p>
+            <p>Additional Price: {{ fabric.additionalPrice }}</p>
+            <p>Colour: {{ fabric.colour?.name }}</p>
+            <ng-template pTemplate="footer">
+              <input
+                type="checkbox"
+                name="checkFabric"
+                value="{{ fabric }}"
+                (change)="
+                  selectCustomization(
+                    fabric,
+                    'fabric',
+                    newCustomizedPants.fabric === fabric
+                  )
+                "
+                [checked]="newCustomizedPants.fabric == fabric"
+              />
+            </ng-template>
+          </p-card>
+        </ng-container>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Pants Cutting"> 
+      <div class="cards">
+        <ng-container *ngFor="let cut of pantsCutting">
+          <p-card
+            header="Advanced Card"
+            subheader="Card Subheader"
+            [style]="{ width: '20%' }"
+            styleClass="p-card-shadow"
+          >
+            <ng-template pTemplate="header">
+              <img alt="Card" [src]="cut.image" />
+            </ng-template>
+            <p>Name: {{ cut.name }}</p>
+            <p>Description: {{ cut.description }}</p>
+            <p>Additional Price: {{ cut.additionalPrice }}</p>
+            <ng-template pTemplate="footer">
+              <input
+                type="checkbox"
+                name="checkPantsCutting"
+                value="{{ cut }}"
+                (change)="
+                  selectCustomization(
+                    cut,
+                    'pantsCutting',
+                    newCustomizedPants.pantsCutting === cut
+                  )
+                "
+                [checked]="newCustomizedPants.pantsCutting == cut"
+              />
+            </ng-template>
+          </p-card>
+        </ng-container>
+      </div>  
+    </p-tabPanel>
+  </p-tabView>
+  <div class="container">
+    <p>
+      <b>Total Amount: ${{ totalAmount }} </b>
+    </p>
+    <button
+      pButton
+      pRipple
+      label="Add to Cart"
+      type="button"
+      (click)="addToCart('pants')"
+      class="mr-3 p-button-raised default"
+      [disabled]="!hasFabric || !hasPantsCutting"
+    ></button>
+  </div>
+</ng-template>
