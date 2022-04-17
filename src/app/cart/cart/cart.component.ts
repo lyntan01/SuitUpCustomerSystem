@@ -54,41 +54,12 @@ export class CartComponent implements OnInit {
 
     if (tmpCart) {
       this.cart = tmpCart;
+      this.totalNumItems = tmpCart.length;
+      this.total = this.getTotal();
     }
-
-    this.standardProductService.getStandardProductById(1).subscribe({
-      next: (response) => {
-        console.log('response.image: ' + response.image);
-        this.product = response;
-        console.log('product.image: ' + this.product.image);
-      },
-      error: (error) => {
-        console.log('********** CartComponent.ts: ' + error);
-      },
-    });
-    console.log('product.image: ' + this.product.image);
   }
 
-  // Hardcode order line items in card for testing
-  initialiseTestCart() {
-    console.log('********** CartComponent.ts: initialiseTestCart()');
-
-    this.orderLineItem = new OrderLineItem(
-      1,
-      1,
-      this.product.unitPrice,
-      this.product
-    );
-    console.log(
-      'orderLineItem.product?.image: ' + this.orderLineItem.product?.image
-    );
-    this.cart.push(this.orderLineItem);
-
-    this.sessionService.setCart(this.cart);
-    this.totalNumItems = this.cart.length;
-
-    this.total = this.getTotal();
-  }
+  
 
   getTotal(): number {
     console.log('********** CartComponent.ts: getTotal()');
@@ -101,15 +72,6 @@ export class CartComponent implements OnInit {
 
       total += this.getUnitPrice(orderItem.product) * (orderItem.quantity || 1);
       console.log('i = ' + i + ', total = ' + total);
-
-      // total += orderItem.product?.unitCost || 0;
-      // if (orderItem.product instanceof StandardProduct) {
-      //   let product: StandardProduct = <StandardProduct>orderItem.product;
-      //   total += product.unitPrice || 0;
-      // } else if (orderItem.product instanceof CustomizedProduct) {
-      //   let product: CustomizedProduct = <CustomizedProduct>orderItem.product;
-      //   total += product.totalPrice || 0;
-      // }
     }
     return total;
   }
@@ -261,18 +223,23 @@ export class CartComponent implements OnInit {
   }
 
   checkoutCart(): void {
+    console.log(this.cart);
     if (this.sessionService.getIsLogin()) {
       
       let hasCustomizedJacket = false;
       let hasCustomizedPants = false;
 
       for (let item of this.cart) {
-        if (item.product instanceof CustomizedJacket) {
+        console.log(item);
+        if ((<CustomizedJacket>item.product).innerFabric) {
           hasCustomizedJacket = true;
-        } else if (item.product instanceof CustomizedPants) {
+        } else if ((<CustomizedPants>item.product).pantsCutting) {
           hasCustomizedPants = true;
         }
       }
+
+      console.log(hasCustomizedJacket);
+      console.log(hasCustomizedPants);
 
       if (hasCustomizedJacket && this.sessionService.getCurrentCustomer().jacketMeasurement === undefined) {
         this.messageService.add({

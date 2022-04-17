@@ -2,11 +2,6 @@
 <p-confirmDialog [style]="{ width: '40em' }"></p-confirmDialog>
 <div class="cart-container">
   <p-card header="My Cart">
-    <p-button
-      label="Initialize test cart"
-      (onClick)="initialiseTestCart()"
-      class="test-button"
-    ></p-button>
     <p-table [value]="cart">
       <ng-template pTemplate="header">
         <tr>
@@ -37,7 +32,7 @@
           </td>
           <td>{{ orderItem.product.name }}</td>
           <td class="text-center">
-            {{ orderItem.product.unitPrice | currency }}
+            {{ orderItem.product.unitPrice ?? orderItem.product.totalPrice | currency }}
           </td>
           <td class="text-center">
             <p-inputNumber

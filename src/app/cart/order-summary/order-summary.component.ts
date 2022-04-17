@@ -1,3 +1,5 @@
+import { CustomizedPants } from 'src/app/models/customized-pants';
+import { CustomizedJacket } from './../../models/customized-jacket';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -18,6 +20,7 @@ import { Order } from 'src/app/models/order';
 import { OrderStatusEnum } from 'src/app/models/enum/order-status-enum';
 import { CreditCardService } from 'src/app/services/credit-card.service';
 import { Transaction } from 'src/app/models/transaction';
+import { CustomizedProductService } from 'src/app/services/customized-product.service';
 
 @Component({
   selector: 'app-order-summary',
@@ -45,7 +48,8 @@ export class OrderSummaryComponent implements OnInit {
     private orderService: OrderService,
     private addressService: AddressService,
     private creditCardService: CreditCardService,
-    private promotionService: PromotionService
+    private promotionService: PromotionService,
+    private customizedProductService: CustomizedProductService
   ) {
     this.cart = [];
     this.total = 0;
@@ -177,12 +181,67 @@ export class OrderSummaryComponent implements OnInit {
     let totalQuantity = 0;
     let order = new Order();
 
+    // go through the cart n find customized item
+    for (let item of this.cart) {
+      if ((<CustomizedJacket>item.product).innerFabric) {
+        let newJacket = <CustomizedJacket>item.product;
+        this.customizedProductService
+          .createCustomizedJacket(
+            newJacket,
+            newJacket.pocketStyle?.customizationId as number,
+            newJacket.jacketStyle?.customizationId as number,
+            newJacket.innerFabric?.customizationId as number,
+            newJacket.outerFabric?.customizationId as number,
+            this.sessionService.getCurrentCustomer().jacketMeasurement
+              ?.jacketMeasurementId as number
+          )
+          .subscribe((productId) => {
+            if (item.product) {
+              item.product.productId = productId
+            }
+          },
+          (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'An error has occurred while creating the new customized jacket: ' +
+                error,
+            });
+          });
+      } else if ((<CustomizedPants>item.product).pantsCutting) {
+        let newPants = <CustomizedPants>item.product;
+        this.customizedProductService
+          .createCustomizedPants(
+            newPants,
+            newPants.fabric?.customizationId as number,
+            this.sessionService.getCurrentCustomer().pantsMeasurement
+            ?.pantsMeasurementId as number,
+            newPants.pantsCutting?.customizationId as number,
+          )
+          .subscribe((productId) => {
+            if (item.product) {
+              item.product.productId = productId
+            }
+          },
+          (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'An error has occurred while creating the new customized pants: ' +
+                error,
+            });
+          });
+      }
+    }
+
     this.cart.forEach((orderItem) => {
       if (
         orderItem &&
         orderItem.quantity &&
         orderItem.subTotal &&
-        orderItem.product?.productId
+        orderItem.product?.name
       ) {
         totalOrderItem++;
         totalQuantity += orderItem.quantity;

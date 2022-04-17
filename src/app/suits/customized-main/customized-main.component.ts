@@ -209,11 +209,13 @@ export class CustomizedMainComponent implements OnInit {
       this.newCustomizedJacket.gender = this.gender;
       this.newCustomizedJacket.image = 'defaultJacket.png';
       this.newCustomizedJacket.name = 'Customized Jacket ' + this.sessionService.getCustomizedNumber();
+      this.newCustomizedJacket.description = "This is a customized jacket by " + this.sessionService.getCurrentCustomer().fullName;
     } else {
       this.newCustomizedPants.totalPrice = this.totalAmount;
       this.newCustomizedPants.gender = this.gender;
       this.newCustomizedPants.image = 'defaultPants.png';
       this.newCustomizedPants.name = 'Customized Pants ' + this.sessionService.getCustomizedNumber();
+      this.newCustomizedJacket.description = "This is a customized pants by " + this.sessionService.getCurrentCustomer().fullName;
     }
 
     let idx = this.sessionService.getCustomizedNumber() as number;
@@ -221,7 +223,7 @@ export class CustomizedMainComponent implements OnInit {
     this.sessionService.setCustomizedNumber(idx);
 
     newOrderItem.product =
-      item == 'jacket' ? this.newCustomizedJacket : this.newCustomizedPants;
+      item == 'jacket' ? this.newCustomizedJacket as CustomizedJacket : this.newCustomizedPants as CustomizedPants;
     newOrderItem.quantity = 1;
     newOrderItem.subTotal = this.totalAmount;
 

@@ -78,7 +78,7 @@ export class CustomizedProductService {
       );
     return this.httpClient
       .put<number>(
-        this.baseUrl + '/createCustomizedPants',
+        this.baseUrl + '/createCustomizedJacket',
         createCustomizedJacketReq,
         httpOptions
       )
