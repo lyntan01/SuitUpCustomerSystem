@@ -166,12 +166,14 @@ export class ViewAllAddressesComponent implements OnInit {
             });
           },
           error: (error) => {
+            let errorArray = String(error).split('HTTP 400: ');
+            console.log(errorArray);
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
               detail:
                 'An error has occured while attempting to delete address: ' +
-                error,
+                errorArray[1],
             });
           },
         });
