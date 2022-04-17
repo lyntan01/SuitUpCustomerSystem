@@ -44,23 +44,32 @@
   </div>
 </div>
 
-<ng-template [ngIf]="selectJacket">
+<div *ngIf="selectJacket">
   <p-tabView>
     <p-tabPanel header="Jacket Style">
       <div class="cards">
         <ng-container *ngFor="let jacketStyle of jacketStyles">
           <p-card
-            header="Advanced Card"
-            subheader="Card Subheader"
+            header="{{ jacketStyle.name }}"
+            subheader="{{ jacketStyle.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
-              <img alt="Card" [src]="jacketStyle.image" />
+              <img
+                  [src]="
+                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                    jacketStyle.image
+                  "
+                  [alt]="jacketStyle.name"
+                  class="customization"
+                  width="auto"
+                  height="300px"
+                />
             </ng-template>
-            <p>Name: {{ jacketStyle.name }}</p>
-            <p>Description: {{ jacketStyle.description }}</p>
-            <p>Additional Price: {{ jacketStyle.additionalPrice }}</p>
+            <p>
+              Additional Price: {{ jacketStyle.additionalPrice | currency }}
+            </p>
             <ng-template pTemplate="footer">
               <input
                 type="checkbox"
@@ -75,6 +84,7 @@
                 "
                 [checked]="newCustomizedJacket.jacketStyle == jacketStyle"
               />
+              <label>Select this Style</label>
             </ng-template>
           </p-card>
         </ng-container>
@@ -84,17 +94,26 @@
       <div class="cards">
         <ng-container *ngFor="let pocketStyle of pocketStyles">
           <p-card
-            header="Advanced Card"
-            subheader="Card Subheader"
+          header="{{ pocketStyle.name }}"
+          subheader="{{ pocketStyle.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
-              <img alt="Card" [src]="pocketStyle.image" />
+              <img
+                  [src]="
+                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                    pocketStyle.image
+                  "
+                  [alt]="pocketStyle.name"
+                  class="customization"
+                  width="auto"
+                  height="300px"
+                />
             </ng-template>
-            <p>Name: {{ pocketStyle.name }}</p>
-            <p>Description: {{ pocketStyle.description }}</p>
-            <p>Additional Price: {{ pocketStyle.additionalPrice }}</p>
+            <p>
+              Additional Price: {{ pocketStyle.additionalPrice | currency }}
+            </p>
             <ng-template pTemplate="footer">
               <input
                 type="checkbox"
@@ -109,6 +128,7 @@
                 "
                 [checked]="newCustomizedJacket.pocketStyle == pocketStyle"
               />
+              <label>Select this Style</label>
             </ng-template>
           </p-card>
         </ng-container>
@@ -118,17 +138,24 @@
       <div class="cards">
         <ng-container *ngFor="let fabric of fabrics">
           <p-card
-            header="Advanced Card"
-            subheader="Card Subheader"
+          header="{{ fabric.name }}"
+          subheader="{{ fabric.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
-              <img alt="Card" [src]="fabric.image" />
+              <img
+                  [src]="
+                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                    fabric.image
+                  "
+                  [alt]="fabric.name"
+                  class="customization"
+                  width="auto"
+                  height="300px"
+                />
             </ng-template>
-            <p>Name: {{ fabric.name }}</p>
-            <p>Description: {{ fabric.description }}</p>
-            <p>Additional Price: {{ fabric.additionalPrice }}</p>
+            <p>Additional Price: {{ fabric.additionalPrice | currency }}</p>
             <p>Colour: {{ fabric.colour?.name }}</p>
             <ng-template pTemplate="footer">
               <input
@@ -144,6 +171,7 @@
                 "
                 [checked]="newCustomizedJacket.innerFabric == fabric"
               />
+              <label>Select this Style</label>
             </ng-template>
           </p-card>
         </ng-container>
@@ -153,17 +181,24 @@
       <div class="cards">
         <ng-container *ngFor="let fabric of fabrics">
           <p-card
-            header="Advanced Card"
-            subheader="Card Subheader"
+          header="{{ fabric.name }}"
+          subheader="{{ fabric.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
-              <img alt="Card" [src]="fabric.image" />
+              <img
+                  [src]="
+                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                    fabric.image
+                  "
+                  [alt]="fabric.name"
+                  class="customization"
+                  width="auto"
+                  height="300px"
+                />
             </ng-template>
-            <p>Name: {{ fabric.name }}</p>
-            <p>Description: {{ fabric.description }}</p>
-            <p>Additional Price: {{ fabric.additionalPrice }}</p>
+            <p>Additional Price: {{ fabric.additionalPrice | currency }}</p>
             <p>Colour: {{ fabric.colour?.name }}</p>
             <ng-template pTemplate="footer">
               <input
@@ -179,6 +214,7 @@
                 "
                 [checked]="newCustomizedJacket.outerFabric == fabric"
               />
+              <label>Select this Style</label>
             </ng-template>
           </p-card>
         </ng-container>
@@ -186,8 +222,24 @@
     </p-tabPanel>
   </p-tabView>
   <div class="container">
+    <p-radioButton
+      name="gender"
+      value="Female"
+      [(ngModel)]="gender"
+      inputId="female"
+    ></p-radioButton>
+    <p><label for="female">Female</label></p>
+
+    <p-radioButton
+      name="gender"
+      value="Male"
+      [(ngModel)]="gender"
+      inputId="male"
+    ></p-radioButton>
+    <p><label for="male">Male</label></p>
+
     <p>
-      <b>Total Amount: ${{ totalAmount }} </b>
+      <b>Total Amount: ${{ totalAmount | currency }} </b>
     </p>
     <button
       pButton
@@ -201,25 +253,32 @@
       "
     ></button>
   </div>
-</ng-template>
+</div>
 
-<ng-template [ngIf]="selectPants">
+<div *ngIf="selectPants">
   <p-tabView>
     <p-tabPanel header="Fabric">
       <div class="cards">
         <ng-container *ngFor="let fabric of fabrics">
           <p-card
-            header="Advanced Card"
-            subheader="Card Subheader"
+          header="{{ fabric.name }}"
+          subheader="{{ fabric.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
-              <img alt="Card" [src]="fabric.image" />
+              <img
+                  [src]="
+                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                    fabric.image
+                  "
+                  [alt]="fabric.name"
+                  class="customization"
+                  width="auto"
+                  height="300px"
+                />
             </ng-template>
-            <p>Name: {{ fabric.name }}</p>
-            <p>Description: {{ fabric.description }}</p>
-            <p>Additional Price: {{ fabric.additionalPrice }}</p>
+            <p>Additional Price: {{ fabric.additionalPrice | currency }}</p>
             <p>Colour: {{ fabric.colour?.name }}</p>
             <ng-template pTemplate="footer">
               <input
@@ -235,26 +294,34 @@
                 "
                 [checked]="newCustomizedPants.fabric == fabric"
               />
+              <label>Select this Style</label>
             </ng-template>
           </p-card>
         </ng-container>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="Pants Cutting"> 
+    <p-tabPanel header="Pants Cutting">
       <div class="cards">
         <ng-container *ngFor="let cut of pantsCutting">
           <p-card
-            header="Advanced Card"
-            subheader="Card Subheader"
+          header="{{ cut.name }}"
+          subheader="{{ cut.description }}"
             [style]="{ width: '20%' }"
             styleClass="p-card-shadow"
           >
             <ng-template pTemplate="header">
-              <img alt="Card" [src]="cut.image" />
+              <img
+                  [src]="
+                    'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                    cut.image
+                  "
+                  [alt]="cut.name"
+                  class="customization"
+                  width="auto"
+                  height="300px"
+                />
             </ng-template>
-            <p>Name: {{ cut.name }}</p>
-            <p>Description: {{ cut.description }}</p>
-            <p>Additional Price: {{ cut.additionalPrice }}</p>
+            <p>Additional Price: {{ cut.additionalPrice | currency }}</p>
             <ng-template pTemplate="footer">
               <input
                 type="checkbox"
@@ -269,15 +336,32 @@
                 "
                 [checked]="newCustomizedPants.pantsCutting == cut"
               />
+              <label>Select this Style</label>
             </ng-template>
           </p-card>
         </ng-container>
-      </div>  
+      </div>
     </p-tabPanel>
   </p-tabView>
   <div class="container">
+    <p-radioButton
+      name="gender"
+      value="Female"
+      [(ngModel)]="gender"
+      inputId="female"
+    ></p-radioButton>
+    <p><label for="female">Female</label></p>
+
+    <p-radioButton
+      name="gender"
+      value="Male"
+      [(ngModel)]="gender"
+      inputId="male"
+    ></p-radioButton>
+    <p><label for="male">Male</label></p>
+
     <p>
-      <b>Total Amount: ${{ totalAmount }} </b>
+      <b>Total Amount: ${{ totalAmount | currency }} </b>
     </p>
     <button
       pButton
@@ -289,4 +373,4 @@
       [disabled]="!hasFabric || !hasPantsCutting"
     ></button>
   </div>
-</ng-template>
+</div>
