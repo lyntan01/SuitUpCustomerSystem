@@ -117,7 +117,7 @@
             <th pSortableColumn="description">
               Description<p-sortIcon field="description"></p-sortIcon>
             </th>
-            <th pSortableColumn="date">
+            <th pSortableColumn="date" style="width: 10rem">
               Date<p-sortIcon field="date"></p-sortIcon>
             </th>
             <th pSortableColumn="resolved">
@@ -134,7 +134,7 @@
             </td>
 
             <td>{{ supportTicket.description }}</td>
-            <td>{{ supportTicket.dateTime }}</td>
+            <td>{{ supportTicket.dateTime.toString().substring(0, 10) }}</td>
             <td>
               <p *ngIf="supportTicket.isResolved">
                 <span class="pill-resolved"> Yes</span>
