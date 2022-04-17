@@ -44,6 +44,7 @@ export class CustomizedMainComponent implements OnInit {
   hasPocketStyle: boolean = false;
 
   totalAmount: number;
+  gender: string;
 
   constructor(
     public sessionService: SessionService,
@@ -54,28 +55,10 @@ export class CustomizedMainComponent implements OnInit {
   ) {
     this.cart = [];
     this.totalAmount = 0;
+    this.gender = '';
     this.newCustomizedJacket = new CustomizedJacket();
     this.newCustomizedPants = new CustomizedPants();
   }
-
-  // mockJacketStyles = [
-  //   {
-  //     customizationId: 1,
-  //     name: 'Test JacketStyles',
-  //     description: 'Description',
-  //     additionalPrice: 30,
-  //     isDisabled: false,
-  //     image: 'assets/images/customized-main-2.jpeg',
-  //   },
-  //   {
-  //     customizationId: 2,
-  //     name: 'Test JacketStyles 2',
-  //     description: 'Description',
-  //     additionalPrice: 40,
-  //     isDisabled: false,
-  //     image: 'assets/images/customized-main-2.jpeg',
-  //   },
-  // ];
 
   ngOnInit(): void {
     let currentCart = this.sessionService.getCart();
@@ -122,13 +105,11 @@ export class CustomizedMainComponent implements OnInit {
         console.log('Pants Cutting Not Found!');
       }
     });
-
-    // this.jacketStyles = this.mockJacketStyles;
-    // console.log(this.jacketStyles);
   }
 
   refresh() {
     this.totalAmount = 0;
+    this.gender = '';
     this.newCustomizedJacket = new CustomizedJacket();
     this.newCustomizedPants = new CustomizedPants();
 
@@ -139,15 +120,23 @@ export class CustomizedMainComponent implements OnInit {
   }
 
   activateJacket() {
+    this.refresh();
+
     this.selectJacket = true;
     this.selectPants = false;
-    this.refresh();
+    this.newCustomizedJacket.basePrice = 200
+    this.totalAmount = 200;
+    this.newCustomizedJacket.name = "Customized Jacket";
   }
 
   activatePants() {
+    this.refresh();
+
     this.selectPants = true;
     this.selectJacket = false;
-    this.refresh();
+    this.newCustomizedPants.basePrice = 100;
+    this.totalAmount = 100;
+    this.newCustomizedPants.name = "Customized Pants";
   }
 
   selectCustomization(
@@ -192,7 +181,6 @@ export class CustomizedMainComponent implements OnInit {
   }
 
   tabulateTotalPrice() {
-    this.totalAmount = 0;
     if (this.selectJacket) {
       this.totalAmount += (this.newCustomizedJacket.jacketStyle === undefined) ? 0 : this.newCustomizedJacket.jacketStyle?.additionalPrice as number;
       this.totalAmount += (this.newCustomizedJacket.pocketStyle === undefined) ? 0 : this.newCustomizedJacket.pocketStyle?.additionalPrice as number;
@@ -206,6 +194,16 @@ export class CustomizedMainComponent implements OnInit {
   }
 
   addToCart(item: string) {
+    if (this.gender === '') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Hi!',
+        detail: 'Please select a gender before adding to cart',
+      });
+
+      return;
+    }
+
     let newOrderItem = new OrderLineItem();
 
     newOrderItem.product =

@@ -14,20 +14,16 @@ border-color: #02075d !important;
 .container {
 display: flex;
 flex-direction: row;
-justify-content: space-between;
-padding-left: 80%;
+justify-content: end;
+gap: 16px;
 padding-top: 16px;
 padding-bottom: 16px;
 background-color: #D3D3D3;
 }
 
-.card {
+.cards {
 display: flex;
-flex-direction: column;
-justify-content: space-between;
+flex-direction: row;
+gap: 30px;
 flex-wrap:wrap;
-}
-
-.p-card {
-    margin: 0px;
 }

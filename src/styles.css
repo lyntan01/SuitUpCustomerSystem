@@ -161,3 +161,9 @@ p-menubarsub.p-element {
   margin-bottom: 0.5em;
   color: #d1022f;
 }
+
+.cards .p-card {
+  margin: 0px;
+  width: 100% !important;
+  
+}
