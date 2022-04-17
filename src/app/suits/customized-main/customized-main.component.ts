@@ -225,7 +225,7 @@ export class CustomizedMainComponent implements OnInit {
     newOrderItem.product =
       item == 'jacket' ? this.newCustomizedJacket as CustomizedJacket : this.newCustomizedPants as CustomizedPants;
     newOrderItem.quantity = 1;
-    newOrderItem.subTotal = this.totalAmount;
+    newOrderItem.subTotal = Number(this.totalAmount.toFixed(2));
 
     this.cart.push(newOrderItem);
     this.sessionService.setCart(this.cart);
