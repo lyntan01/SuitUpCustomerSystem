@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { MessageService, MenuItem } from 'primeng/api';
 
 import { SessionService } from '../../services/session.service';
 import { StandardProductService } from '../../services/standard-product.service';
@@ -24,6 +24,8 @@ export class ViewProductDetailsComponent implements OnInit {
   resultSuccess: boolean;
   resultError: boolean;
 
+  items: MenuItem[];
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -36,6 +38,7 @@ export class ViewProductDetailsComponent implements OnInit {
     this.retrieveStandardProductError = false;
     this.resultSuccess = false;
     this.resultError = false;
+    this.items = [];
   }
 
   ngOnInit(): void {
@@ -51,21 +54,28 @@ export class ViewProductDetailsComponent implements OnInit {
           console.log(this.standardProductToView);
           console.log(this.standardProductToView.image);
 
+          this.items = [
+            {
+              label: 'Standard Products',
+              routerLink: '/viewAllProducts',
+            },
+            {
+              label: this.standardProductToView.name,
+            },
+          ];
+
           if (
             this.standardProductToView.quantityInStock &&
             this.standardProductToView.quantityInStock > 0
           ) {
             return true;
           } else return false;
+
+          
         });
     }
-    //     (error) => {
-    //         this.retrieveStandardProductError = true;
-    //         console.log(
-    //             '********** ViewstandardProductDetailsComponent.ts: ' + error
-    //         );
-    //     }
-    // );
+
+    
   }
 
   addToCart(addToCartForm: NgForm) {
@@ -142,15 +152,4 @@ export class ViewProductDetailsComponent implements OnInit {
       console.log('********** ViewstandardProductDetailsComponent.ts: ');
     }
   }
-
-  // getDiscountedUnitPrice(standardProductToView: standardProduct): number {
-  //     if (standardProductToView.unitPrice && standardProductToView.saleEntity?.discountRate) {
-  //         return (
-  //             standardProductToView.unitPrice -
-  //             standardProductToView.unitPrice * standardProductToView.saleEntity?.discountRate
-  //         );
-  //     } else {
-  //         return 0;
-  //     }
-  // }
 }

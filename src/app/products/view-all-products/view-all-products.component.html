@@ -1,7 +1,8 @@
-<div class="standardProducts-container p-grid">
-  <app-filter-bar></app-filter-bar>
+<div class="standardProducts-container grid">
+  <app-filter-bar class="col-2"></app-filter-bar>
 
   <p-dataView
+    #dv
     [value]="standardProducts"
     [paginator]="true"
     [rows]="16"
@@ -10,15 +11,19 @@
     [sortOrder]="sortOrder"
     filterBy="name"
     layout="grid"
+    class="col-10"
   >
     <ng-template pTemplate="header">
-      <div class="sortBy">
+      <div class="flex flex-column md:flex-row md:justify-content-between">
+        <span class="p-input-icon-left mb-2 md:mb-0">
+          <i class="pi pi-search"></i>
+          <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($any($event.target).value)">
+      </span>
         <p-dropdown
           [options]="sortOptions"
           [(ngModel)]="sortKey"
           placeholder="Sort By"
           (onChange)="onSortChange($event)"
-          styleClass="p-mb-2 p-mb-md-0"
         ></p-dropdown>
       </div>
     </ng-template>
@@ -29,7 +34,7 @@
           href="#"
           routerLink="/viewProductDetails/{{ standardProduct.productId }}"
         >
-          <div class="standardProduct-grid-item card p-shadow-6">
+          <div class="standardProduct-grid-item card">
             <div class="standardProduct-grid-item-top">
               <div>
                 <i class="pi pi-tag product-category-icon"></i>
@@ -39,7 +44,7 @@
               </div>
             </div>
             <div class="standardProduct-grid-item-content">
-              <div class="img-box">
+              <div class="img-box mt-2 mb-3">
                 <img
                   [src]="
                     'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
@@ -55,8 +60,8 @@
             <div class="standardProduct-name">
               {{ standardProduct.name }}
             </div>
-            <div class="standardProduct-unitPrice">
-              $ {{ standardProduct.unitPrice }}
+            <div class="standardProduct-unitPrice mt-2">
+              {{ standardProduct.unitPrice | currency }}
             </div>
           </div>
         </a>

@@ -1,1 +1,142 @@
-<p>view-all-orders works!</p>
+<div class="account-container p-grid">
+  <app-account-menu class="p-col"></app-account-menu>
+
+  <div class="p-md-9 p-col-10 account-card">
+    <h2>My Orders</h2>
+
+    <p>View my Orders</p>
+
+    <hr style="opacity: 0.1" />
+
+    <!-- (onRowSelect)="onRowSelect($event)" -->
+
+    <div>
+      <p-table [value]="orders" selectionMode="single">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="orderDateTime">
+              Order Date<p-sortIcon field="orderDateTime"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="collectionMethodEnum">
+              Collection Type<p-sortIcon
+                field="collectionMethodEnum"
+              ></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="totalQuantity">
+              Total Number of Items<p-sortIcon
+                field="totalQuantity"
+              ></p-sortIcon>
+            </th>
+            <th pSortableColumn="totalAmount">
+              Total Price<p-sortIcon field="totalAmount"></p-sortIcon>
+            </th>
+            <th pSortableColumn="orderStatusEnum">
+              Order Status<p-sortIcon field="orderStatusEnum"></p-sortIcon>
+            </th>
+            <th style="width: 5rem"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-order>
+          <!-- <div>
+            <a href="#" routerLink="/viewProductDetails/{{ order.orderId }}">
+            </a>
+          </div> -->
+          <tr>
+            <td>
+              {{ formattedDate(order.orderDateTime) }}
+            </td>
+            <td>
+              {{ order.collectionMethodEnum }}
+            </td>
+            <td>{{ order.totalQuantity }}</td>
+            <td>{{ order.totalAmount | currency }}</td>
+            <td>{{ order.orderStatusEnum }}</td>
+            <td>
+              <button
+                pButton
+                pRipple
+                title="View Order Details"
+                icon="pi pi-eye"
+                class="p-button-rounded p-button-danger p-button-text"
+                (click)="viewOrderDetails(order)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are
+            {{ orders ? orders.length : 0 }} orders.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="account-container p-grid">
+  <app-account-menu class="p-col"></app-account-menu>
+
+  <div class="p-md-9 p-col-10 account-card">
+    <h2>My Orders</h2>
+    <p>View your orders</p>
+
+    <hr style="opacity: 0.1" />
+
+    <div class="orders-container" *ngFor="let order of orders">
+      <p>Serial Number: {{ order.serialNumber }}</p>
+      <p>
+        Transaction Date:
+        {{ order.orderDateTime | date: "dd/MM/yy" }}
+      </p>
+      <div *ngIf="order.collectionMethodEnum === 'DELIVERY'; else pickup">
+        <p>Payment Type: Delivery</p>
+      </div>
+      <ng-template #pickup>
+        <p>Payment Type: Pick Up</p>
+      </ng-template>
+
+      <hr />
+
+      <div class="orderItem" *ngFor="let orderItem of order.orderLineItems">
+        <div class="p-grid p-d-flex p-ai-center">
+          <div class="p-col-2">
+            <img
+              [src]="
+                'http://localhost:8080/SuitUp-war/uploadedFiles/productImages/' +
+                orderItem.product?.image
+              "
+              [alt]="orderItem.product?.name"
+              class="standardProduct-img"
+              width="80%"
+              height="100%"
+            />
+          </div>
+          <div class="p-col-8">
+            <h3>
+              {{ orderItem.product?.name }}
+            </h3>
+            <p>x{{ orderItem.quantity }}</p>
+          </div>
+          <div class="p-col-2 subTotal right">
+            <p>${{ orderItem.subTotal | currency }}</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      <div class="right">
+        <p class="bigFont">Order Total: {{ order.totalAmount | currency }}</p>
+        <p-button
+          label="View Details"
+          routerLink="/viewOrderItemDetails/{{ order.orderId }}"
+          type="button"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+</div> -->

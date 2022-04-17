@@ -3,7 +3,7 @@
   <hr />
   <div class="category-menu">
     <h4>CATEGORIES</h4>
-    <div *ngFor="let category of categories" class="p-field-checkbox">
+    <div *ngFor="let category of categories" class="field-checkbox">
       <p-checkbox
         name="category"
         value="category"
@@ -37,9 +37,9 @@
     <p-slider
       [(ngModel)]="selectedPriceRange"
       [range]="true"
-      [step]="10"
+      [step]="5"
       [min]="0"
-      [max]="1500"
+      [max]="100"
       (onSlideEnd)="onPriceChange($event)"
     ></p-slider>
   </div>
