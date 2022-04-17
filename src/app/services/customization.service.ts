@@ -31,7 +31,7 @@ export class Customization {
 
   getPantsCuttings(): Observable<PantsCutting[]> {
     return this.httpClient
-      .get<PantsCutting[]>(this.baseUrl + '/retrieveAllPantsCutting')
+      .get<PantsCutting[]>(this.baseUrl + '/retrieveAllPantsCuttings')
       .pipe(catchError(this.handleError));
   }
 
@@ -45,7 +45,7 @@ export class Customization {
 
   getJacketStyles(): Observable<JacketStyle[]> {
     return this.httpClient
-      .get<JacketStyle[]>(this.baseUrl + '/retrieveAllJacketStyle')
+      .get<JacketStyle[]>(this.baseUrl + '/retrieveAllJacketStyles')
       .pipe(catchError(this.handleError));
   }
 
@@ -59,7 +59,7 @@ export class Customization {
 
   getPocketStyles(): Observable<PocketStyle[]> {
     return this.httpClient
-      .get<PocketStyle[]>(this.baseUrl + '/retrieveAllPocketStyle')
+      .get<PocketStyle[]>(this.baseUrl + '/retrieveAllPocketStyles')
       .pipe(catchError(this.handleError));
   }
 
@@ -85,7 +85,7 @@ export class Customization {
 
   getFabrics(): Observable<Fabric[]> {
     return this.httpClient
-      .get<Fabric[]>(this.baseUrl + '/retrieveAllFabrics')
+      .get<Fabric[]>(this.baseUrl + '/retrieveAllFabric')
       .pipe(catchError(this.handleError));
   }
 
