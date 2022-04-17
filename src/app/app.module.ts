@@ -34,7 +34,8 @@ import { ListboxModule } from 'primeng/listbox';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TabViewModule } from 'primeng/tabview';
-
+import { TagModule } from 'primeng/tag';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -144,7 +145,9 @@ import { CustomizedMainComponent } from './suits/customized-main/customized-main
     ListboxModule,
     SelectButtonModule,
     RadioButtonModule,
-    TabViewModule
+    TabViewModule,
+    TagModule,
+    BreadcrumbModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -167,3 +167,16 @@ p-menubarsub.p-element {
   width: 100% !important;
   
 }
+
+/* VIEW PRODUCT DETAILS */
+.p-tag {
+  /* background-color: #4b5264 !important; */
+  padding: 0.5rem 0.4rem !important; 
+}
+
+.p-breadcrumb, .product-details-breadcrumb div {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-weight: bold;
+}

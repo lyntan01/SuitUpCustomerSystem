@@ -23,7 +23,7 @@ export class FilterBarComponent implements OnInit {
     private router: Router
   ) {
     this.categories = new Array();
-    this.selectedPriceRange = [0, 1000];
+    this.selectedPriceRange = [0, 100];
     this.tags = new Array();
   }
 
@@ -112,7 +112,7 @@ export class FilterBarComponent implements OnInit {
   //   let max = this.activatedRoute.snapshot.queryParamMap.get('priceMax');
 
   //   if (min && max) {
-  //     this.selectedPriceRange = [0, 1500];
+  //     this.selectedPriceRange = [0, 100];
   //     this.selectedPriceRange = [+min, +max];
   //   }
   // }
