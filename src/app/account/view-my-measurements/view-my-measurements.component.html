@@ -457,12 +457,12 @@
                 </div>
 
                 <div class="p-field p-grid space-input">
-                  <label for="hipGirth">Hip Girth</label>
+                  <label for="hipGirth2">Hip Girth</label>
                   <div>
                     <input
-                      #hipGirth="ngModel"
-                      id="hipGirth"
-                      name="hipGirth"
+                      #hipGirth2="ngModel"
+                      id="hipGirth2"
+                      name="hipGirth2"
                       type="text"
                       [(ngModel)]="loadedPantsMeasurement.hipGirth"
                       required
@@ -471,12 +471,12 @@
                   </div>
                   <div
                     *ngIf="
-                      hipGirth.invalid &&
-                      (hipGirth.dirty || hipGirth.touched || submitted)
+                      hipGirth2.invalid &&
+                      (hipGirth2.dirty || hipGirth2.touched || submitted)
                     "
                     class="errorText"
                   >
-                    <div *ngIf="hipGirth.errors?.['required']">
+                    <div *ngIf="hipGirth2.errors?.['required']">
                       Hip Girth is required.
                     </div>
                   </div>
