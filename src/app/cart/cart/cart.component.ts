@@ -1,3 +1,5 @@
+import { CustomizedPants } from 'src/app/models/customized-pants';
+import { CustomizedJacket } from './../../models/customized-jacket';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -260,6 +262,7 @@ export class CartComponent implements OnInit {
 
   checkoutCart(): void {
     if (this.sessionService.getIsLogin()) {
+      this.setMeasurements();
       this.sessionService.setCart(this.cart);
       if (this.promotion) {
         this.sessionService.setPromotion(this.promotion);
@@ -271,6 +274,16 @@ export class CartComponent implements OnInit {
         summary: 'Hi!',
         detail: 'Please login before checking out',
       });
+    }
+  }
+
+  setMeasurements() {
+    for (let item of this.cart) {
+      if (item.product instanceof CustomizedJacket) {
+        item.product.jacketMeasurement = this.sessionService.getCurrentCustomer().jacketMeasurement;
+      } else if (item.product instanceof CustomizedPants) {
+        item.product.pantsMeasurement = this.sessionService.getCurrentCustomer().pantsMeasurement;
+      }
     }
   }
 }
