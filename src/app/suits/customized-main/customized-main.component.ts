@@ -33,7 +33,7 @@ export class CustomizedMainComponent implements OnInit {
   pantsCutting: PantsCutting[] = [];
 
   selectJacket: boolean = false;
-  selectPants: boolean = true;
+  selectPants: boolean = false;
 
   hasFabric: boolean = false;
   hasPantsCutting: boolean = false;
