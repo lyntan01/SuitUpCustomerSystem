@@ -36,6 +36,9 @@ export class ViewAllProductsComponent implements OnInit {
       let keyword: String | undefined = params['keyword'];
       let categoryIds: number[] | undefined = params['category'];
       let tagIds: number[] | undefined = params['tag'];
+      let priceMin: number | undefined = params['priceMin'];
+      let priceMax: number | undefined = params['priceMax'];
+
       if (categoryIds && !Array.isArray(categoryIds)) {
         categoryIds = new Array(categoryIds);
       }
@@ -43,12 +46,18 @@ export class ViewAllProductsComponent implements OnInit {
         tagIds = new Array(tagIds);
       }
 
-      this.fetchProducts(keyword, categoryIds, tagIds);
+      this.fetchProducts(keyword, categoryIds, tagIds, priceMin, priceMax);
       console.log('catid count = ' + categoryIds);
     });
   }
 
-  fetchProducts(keyword?: String, categoryIds?: number[], tagIds?: number[]) {
+  fetchProducts(
+    keyword?: String,
+    categoryIds?: number[],
+    tagIds?: number[],
+    priceMin?: number,
+    priceMax?: number
+  ) {
     // console.log('********** ViewAllProductsComponent.ts: FETCH');
     this.standardProductService.getStandardProducts().subscribe((response) => {
       this.standardProducts = response.filter((standardProduct) => {
@@ -70,6 +79,7 @@ export class ViewAllProductsComponent implements OnInit {
         (standardProduct) => {
           let categoryShow: boolean | undefined = true;
           let tagShow: boolean | undefined = true;
+          let priceShow: boolean | undefined = true;
           //   if (keyword) {
           //     searchShow = standardProduct.name
           //       ?.toLowerCase()
@@ -92,17 +102,35 @@ export class ViewAllProductsComponent implements OnInit {
             categoryShow = true;
           }
 
-          if (tagIds) {
-            for (let tagId of tagIds) {
-              if (standardProduct.tags) {
-                for (let tag of standardProduct.tags) {
-                  tagShow = tag.tagId == tagId;
+          if (priceMin && priceMax && standardProduct.unitPrice) {
+            if (
+              standardProduct.unitPrice >= priceMin &&
+              standardProduct.unitPrice <= priceMax
+            )
+              priceShow = true;
+            else priceShow = false;
+          } else if (
+            priceMin == standardProduct.unitPrice &&
+            priceMax == standardProduct.unitPrice
+          ) {
+            priceShow = true;
+          }
+          if (priceMin == undefined && priceMax == undefined) {
+            priceShow = true;
+          }
+
+          if (standardProduct.tags && tagIds) {
+            for (let tag of standardProduct.tags) {
+              for (let tagId of tagIds) {
+                tagShow = tag.tagId == tagId;
+                if (tagShow) {
+                  break;
                 }
               }
             }
           } else if (tagIds == undefined) tagShow = true;
 
-          if (categoryShow && tagShow) {
+          if (categoryShow && tagShow && priceShow) {
             return true;
           }
           return false;
